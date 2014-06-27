@@ -15,7 +15,8 @@ public class StatisticRow extends JPanel {
 	private Border padd = null;
 	
 	public StatisticRow(String time, String dest, String source, String status, String type){
-		padd = BorderFactory.createEmptyBorder(5, 5, 5, 5);
+		//padd = BorderFactory.createEmptyBorder(1, 3, 2, 3);
+		padd = null;
 		this.setLayout(new FlowLayout(FlowLayout.LEFT, 0, 0));
 
 		labTime = new JLabel(time);
@@ -53,7 +54,8 @@ public class StatisticRow extends JPanel {
 	}
 	
 	public StatisticRow(){
-		padd = BorderFactory.createEmptyBorder(5, 5, 5, 5);
+		padd = BorderFactory.createEmptyBorder(1, 2, 1, 1);
+		//padd = null;
 		this.setLayout(new FlowLayout(FlowLayout.LEFT, 0, 0));
 		
 		labTime = new JLabel("23:55", SwingConstants.LEFT);
@@ -79,7 +81,7 @@ public class StatisticRow extends JPanel {
 		labType = new JLabel("ICMP", SwingConstants.LEFT);
 		labType.setBackground(Color.WHITE);
 		labType.setBorder(padd);//(BorderFactory.createMatteBorder(0, 0, 0, 1, Color.BLACK));
-		labType.setPreferredSize(new Dimension(50, 20));
+		labType.setPreferredSize(new Dimension(48, 20));
 		
 		this.add(labTime);
 		this.add(labDest);

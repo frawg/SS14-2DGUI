@@ -20,7 +20,7 @@ public class WorkAreaUI extends JPanel {
 		//work.setLayout(null);
 		work.setPreferredSize(new Dimension(1600,1200));
 //		work.setMinimumSize(new Dimension(1600,1200));
-//		work.setBackground(Color.BLACK);
+		work.setBackground(Color.WHITE);
 //		JLabel temp = new JLabel();
 //		temp.setSize(new Dimension(1600,1200));
 //		work.add(temp);

@@ -6,10 +6,12 @@ import java.awt.Dimension;
 import java.awt.FlowLayout;
 import java.awt.GridLayout;
 
+import javax.swing.BorderFactory;
 import javax.swing.ImageIcon;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.JTabbedPane;
+import javax.swing.border.LineBorder;
 
 public class PalateUI extends JPanel
 {
@@ -26,19 +28,22 @@ public class PalateUI extends JPanel
 		tab.setTabPlacement(JTabbedPane.LEFT);
 		tab.setPreferredSize(new Dimension(200, 400));
 		tab.setOpaque(false);
+		tab.setBorder(new LineBorder(Color.WHITE));
 		
 		this.setLayout(new BorderLayout());
-		this.setSize(new Dimension(200, 400));
+		this.setPreferredSize(new Dimension(200, 400));
+		this.setMaximumSize(this.getPreferredSize());
+		this.setMinimumSize(this.getPreferredSize());
 		
 		iconPC = new ImageIcon(PalateUI.class.getResource("/Images/PC.png"), "Computer");
 		iconSWITCH = new ImageIcon(PalateUI.class.getResource("/Images/switch.png"), "Switch");
 		iconHUB = new ImageIcon(PalateUI.class.getResource("/Images/hub.gif"), "Hub");
 		iconROUTER = new ImageIcon(PalateUI.class.getResource("/Images/router.jpeg"), "Router");
 		
-		iconPC.getImage().getScaledInstance(x, y, 0);
-		iconHUB.getImage().getScaledInstance(x, y, 0);
-		iconROUTER.getImage().getScaledInstance(x, y, 0);
-		iconSWITCH.getImage().getScaledInstance(x, y, 0);
+//		iconPC.getImage().getScaledInstance(x, y, 0);
+//		iconHUB.getImage().getScaledInstance(x, y, 0);
+//		iconROUTER.getImage().getScaledInstance(x, y, 0);
+//		iconSWITCH.getImage().getScaledInstance(x, y, 0);
 		
 		icPCLabel = new JLabel("Computer", new ImageIcon(iconPC.getImage().getScaledInstance(50, 50, 0)), JLabel.CENTER);
 		icPCLabel.setHorizontalTextPosition(JLabel.CENTER);
@@ -58,6 +63,7 @@ public class PalateUI extends JPanel
 		
 		this.devGrid = new GridLayout(0,2);
 		this.devPalate = new JPanel();
+		devPalate.setBorder(new LineBorder(Color.WHITE));
 		this.devPalate.setBackground(Color.WHITE);
 		
 		devPalate.setLayout(devGrid);
@@ -67,13 +73,13 @@ public class PalateUI extends JPanel
 		devPalate.add(icROUTERLabel);
 		tab.addTab("<html><p style=\"padding:1\">D<br/>E<br/>V<br/>I<br/>C<br/>E</p></html>", devPalate);
 		
-		
 		this.toolsPalate = new JPanel();
 		this.toolsPalate.setLayout(new GridLayout(0,2));
 		this.toolsPalate.setBackground(Color.WHITE);
 		tab.addTab("<html><p style=\"padding:1\">T<br/>O<br/>O<br/>L<br/>S</p></html>", toolsPalate);
 		
 		this.add(tab, BorderLayout.CENTER);
+		this.setOpaque(false);
 		
 //		this.devPLabel = new JLabel("Device");
 //		this.devPLabel.setUI(new VerticalLabelUI(false));

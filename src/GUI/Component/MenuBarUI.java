@@ -3,22 +3,22 @@ import java.awt.Color;
 import java.awt.ComponentOrientation;
 import java.awt.Dimension;
 import java.awt.FlowLayout;
-import java.awt.Rectangle;
 
+import javax.swing.ImageIcon;
 import javax.swing.JButton;
-import javax.swing.JLabel;
 import javax.swing.JPanel;
-import javax.swing.JTabbedPane;
-import javax.swing.border.Border;
 
 public class MenuBarUI extends JPanel {
 	//private JLabel btnNew, btnSave, btnLoad, btnPrint, btnCopy, btnPaste, btnUndo, btnRedo, btnZoomIn, btnZoomOut, btnZoomDef = null;
+	private ImageIcon imgNew, imgSave, imgLoad, imgPrint, imgCopy, imgPaste, imgUndo, imgRedo, imgZoomIn, imgZoomOut, imgZoomDef = null;
 	private JButton btnNew, btnSave, btnLoad, btnPrint, btnCopy, btnPaste, btnUndo, btnRedo, btnZoomIn, btnZoomOut, btnZoomDef = null;
 	private JPanel projPane, editPane, zoomPane = null;
 	
 	public MenuBarUI(){
 		this.setLayout(new FlowLayout(FlowLayout.LEFT, 1, 0));
-		this.setPreferredSize(new Dimension(800,34));
+		//this.setPreferredSize(new Dimension(800,34));
+		//this.setMaximumSize(this.getPreferredSize());
+		this.setMinimumSize(new Dimension(800,34));
 		this.setComponentOrientation(ComponentOrientation.LEFT_TO_RIGHT);
 		this.setBackground(Color.WHITE);
 		

@@ -5,6 +5,7 @@ import java.awt.Component;
 import java.awt.Dimension;
 import java.awt.FlowLayout;
 
+import javax.swing.BorderFactory;
 import javax.swing.BoxLayout;
 import javax.swing.ImageIcon;
 import javax.swing.JButton;
@@ -23,8 +24,9 @@ public class LoginUI extends JPanel {
 	
 	public LoginUI(){
 		this.setBackground(Color.WHITE);
-		this.setSize(new Dimension(600,300));
+		//this.setSize(new Dimension(600,300));
 		this.setAlignmentX(CENTER_ALIGNMENT);
+		this.setAlignmentY(CENTER_ALIGNMENT);
 		this.setPreferredSize(new Dimension(600, 300));
 		this.setMaximumSize(new Dimension(600,300));
 		this.setMinimumSize(new Dimension(600,300));
@@ -38,42 +40,46 @@ public class LoginUI extends JPanel {
 		userField = new JTextField(20);
 		
 		userPanel = new JPanel(new FlowLayout());
+		userPanel.setPreferredSize(new Dimension(300,30));
+		userPanel.setMaximumSize(userPanel.getPreferredSize());
 		userPanel.setBackground(Color.WHITE);
 		userPanel.add(userLabel);
 		userPanel.add(userField);
-		
 		
 		pwLabel = new JLabel("Password: ");
 		pwField = new JPasswordField(20);
 		
 		pwPanel = new JPanel(new FlowLayout());
+		pwPanel.setPreferredSize(new Dimension(300,30));
+		pwPanel.setMaximumSize(userPanel.getPreferredSize());
 		pwPanel.setBackground(Color.WHITE);
 		pwPanel.add(pwLabel);
 		pwPanel.add(pwField);
-		
-		loginPanel = new JPanel();//new BoxLayout(loginPanel, BoxLayout.Y_AXIS));
-		loginPanel.setBackground(Color.WHITE);
-		loginPanel.setLayout(new BoxLayout(loginPanel, BoxLayout.Y_AXIS));
-		loginPanel.setSize(new Dimension(300,200));
-		loginPanel.add(userPanel);
-		loginPanel.add(pwPanel);
 		
 		btnSubmit = new JButton("Submit");
 		btnCancel = new JButton("Cancel");
 		
 		JLabel blank = new JLabel("");
-		blank.setPreferredSize(new Dimension(90,10));
+		blank.setPreferredSize(new Dimension(80,10));
 		buttonPanel = new JPanel(new FlowLayout());
+		buttonPanel.setPreferredSize(new Dimension(300,35));
+		buttonPanel.setMaximumSize(buttonPanel.getPreferredSize());
 		buttonPanel.setBackground(Color.WHITE);
 		buttonPanel.add(btnSubmit);
-		//buttonPanel.add(new JLabel("               "));
 		buttonPanel.add(blank);
 		buttonPanel.add(btnCancel);
 		
+		loginPanel = new JPanel();
+		loginPanel.setBackground(Color.WHITE);
+		loginPanel.setBorder(BorderFactory.createCompoundBorder(BorderFactory.createLineBorder(Color.LIGHT_GRAY, 1), BorderFactory.createEmptyBorder(5, 5, 5, 5)));
+		loginPanel.setLayout(new BoxLayout(loginPanel, BoxLayout.Y_AXIS));
+		loginPanel.setPreferredSize(new Dimension(300,105));
+		loginPanel.setMaximumSize(loginPanel.getPreferredSize());
+		loginPanel.add(userPanel, Component.LEFT_ALIGNMENT);
+		loginPanel.add(pwPanel, Component.LEFT_ALIGNMENT);
+		loginPanel.add(buttonPanel, Component.LEFT_ALIGNMENT);
+		
 		this.add(logoLabel);
-		//this.add(userPanel);
-		//this.add(pwPanel);
 		this.add(loginPanel);
-		this.add(buttonPanel);
 	}
 }

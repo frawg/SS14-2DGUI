@@ -28,6 +28,7 @@ public class PDUPanel extends JPanel {
 		
 		header = new JPanel(new FlowLayout(FlowLayout.LEFT, 0, 0));
 		header.setBackground(Color.WHITE);
+		header.setAlignmentX(Component.RIGHT_ALIGNMENT);
 		header.setPreferredSize(new Dimension(100 + 100 + 50 + 50 + 80 + 20, 20));
 		header.setMaximumSize(header.getPreferredSize());
 		header.setMinimumSize(header.getPreferredSize());
@@ -65,11 +66,15 @@ public class PDUPanel extends JPanel {
 		header.add(labType);
 		
 		this.setLayout(new BoxLayout(this, BoxLayout.Y_AXIS));
-		this.setPreferredSize(new Dimension(100 + 100 + 50 + 50 + 80 + 20, 200));
+		this.setPreferredSize(new Dimension(400, 200));
+		this.setMaximumSize(this.getPreferredSize());
+		this.setMinimumSize(this.getPreferredSize());
 		this.setBackground(Color.WHITE);
-		header.setAlignmentX(Component.RIGHT_ALIGNMENT);
+		
 		this.add(header);
 		this.add(scroll);
+		
+		this.setBorder(BorderFactory.createLineBorder(Color.black, 1));
 		AddRecord();
 	}
 	

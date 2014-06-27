@@ -35,6 +35,9 @@ public class PDUPanel extends JPanel {
 		
 		content = new JPanel();
 		content.setLayout(new BoxLayout(content, BoxLayout.Y_AXIS));
+		content.setPreferredSize(new Dimension(370, 170));
+		content.setMaximumSize(content.getPreferredSize());
+		content.setMinimumSize(content.getPreferredSize());
 		
 		scroll = new JScrollPane(content);
 		scroll.setVerticalScrollBarPolicy(ScrollPaneConstants.VERTICAL_SCROLLBAR_ALWAYS);

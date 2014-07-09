@@ -8,6 +8,7 @@ import java.awt.GridLayout;
 
 import javax.swing.BorderFactory;
 import javax.swing.ImageIcon;
+import javax.swing.JButton;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.JTabbedPane;
@@ -15,7 +16,8 @@ import javax.swing.border.LineBorder;
 
 public class PalateUI extends JPanel
 {
-	private JLabel devPLabel, toolsPLabel, icPCLabel, icHUBLabel, icROUTERLabel, icSWITCHLabel = null;
+//	private JLabel devPLabel, toolsPLabel, icPCLabel, icHUBLabel, icROUTERLabel, icSWITCHLabel = null;
+	private JButton devPLabel, toolsPLabel, icPCLabel, icHUBLabel, icROUTERLabel, icSWITCHLabel = null;
 	private JTabbedPane tab = null;
 	private JPanel devPalate, toolsPalate = null;
 	private ImageIcon iconPC, iconHUB, iconROUTER, iconSWITCH = null;
@@ -45,19 +47,31 @@ public class PalateUI extends JPanel
 //		iconROUTER.getImage().getScaledInstance(x, y, 0);
 //		iconSWITCH.getImage().getScaledInstance(x, y, 0);
 		
-		icPCLabel = new JLabel("Computer", new ImageIcon(iconPC.getImage().getScaledInstance(50, 50, 0)), JLabel.CENTER);
+		icPCLabel = new JButton("Computer");
+		icPCLabel.setIcon(new ImageIcon(iconPC.getImage().getScaledInstance(50, 50, 0)));
+		icPCLabel.setOpaque(false);
+		icPCLabel.setBorder(null);
 		icPCLabel.setHorizontalTextPosition(JLabel.CENTER);
 		icPCLabel.setVerticalTextPosition(JLabel.BOTTOM);
 		
-		icHUBLabel = new JLabel("Hub", new ImageIcon(iconHUB.getImage().getScaledInstance(50, 50, 0)), JLabel.CENTER);
+		icHUBLabel = new JButton("Hub");
+		icHUBLabel.setIcon(new ImageIcon(iconHUB.getImage().getScaledInstance(50, 50, 0)));
+		icHUBLabel.setOpaque(false);
+		icHUBLabel.setBorder(null);
 		icHUBLabel.setHorizontalTextPosition(JLabel.CENTER);
 		icHUBLabel.setVerticalTextPosition(JLabel.BOTTOM);
 		
-		icSWITCHLabel = new JLabel("Switch", new ImageIcon(iconSWITCH.getImage().getScaledInstance(50, 50, 0)), JLabel.CENTER);
+		icSWITCHLabel = new JButton("Switch");
+		icSWITCHLabel.setIcon(new ImageIcon(iconSWITCH.getImage().getScaledInstance(50, 50, 0)));
+		icSWITCHLabel.setOpaque(false);
+		icSWITCHLabel.setBorder(null);
 		icSWITCHLabel.setHorizontalTextPosition(JLabel.CENTER);
 		icSWITCHLabel.setVerticalTextPosition(JLabel.BOTTOM);
 		
-		icROUTERLabel = new JLabel("Router", new ImageIcon(iconROUTER.getImage().getScaledInstance(50, 50, 0)), JLabel.CENTER);
+		icROUTERLabel = new JButton("Router");
+		icROUTERLabel.setIcon(new ImageIcon(iconROUTER.getImage().getScaledInstance(50, 50, 0)));
+		icROUTERLabel.setOpaque(false);
+		icROUTERLabel.setBorder(null);
 		icROUTERLabel.setHorizontalTextPosition(JLabel.CENTER);
 		icROUTERLabel.setVerticalTextPosition(JLabel.BOTTOM);
 		

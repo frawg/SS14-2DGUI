@@ -16,12 +16,9 @@ import javax.swing.JPanel;
 import javax.swing.JTabbedPane;
 import javax.swing.border.LineBorder;
 
-import GUI.Component.Labels.JCustomHubLabel;
-import GUI.Component.Labels.JCustomPCLabel;
-import GUI.Component.Labels.JCustomSwitchLabel;
+import GUI.Component.Labels.JCustomBtnLabel;
 
-public class PalateUI extends JPanel implements MouseListener
-{
+public class PalateUI extends JPanel {
 	private JLabel devPLabel, toolsPLabel, icPCLabel, icHUBLabel, /*icROUTERLabel,*/ icSWITCHLabel = null;
 	//private JButton devPLabel, toolsPLabel, icPCLabel, icHUBLabel, icROUTERLabel, icSWITCHLabel = null;
 	private JTabbedPane tab = null;
@@ -29,21 +26,24 @@ public class PalateUI extends JPanel implements MouseListener
 	private ImageIcon iconPC, iconHUB, iconROUTER, iconSWITCH = null;
 	private GridLayout devGrid, toolsGrid = null;
 	private int x, y = 100;
-	private JCustomSwitchLabel switchLabel = null;
-	private JCustomPCLabel pcLabel = null;
-	private JCustomHubLabel hubLabel = null;
+	private JCustomBtnLabel hubLabel, switchLabel, pcLabel = null;
+	private WorkAreaUI work = null;
+	private int com, hub, swi = 0;
 	
-	public PalateUI()
+	public PalateUI(WorkAreaUI twork)
 	{
+		this.work = twork;
+		
 		tab = new JTabbedPane();
 		tab.setTabPlacement(JTabbedPane.LEFT);
 		tab.setPreferredSize(new Dimension(200, 400));
 		tab.setOpaque(false);
-		tab.setBorder(new LineBorder(Color.WHITE));
+		//tab.setBorder(new LineBorder(Color.WHITE));
+		tab.setBorder(null);
 		
 		this.setLayout(new BorderLayout());
 		this.setPreferredSize(new Dimension(200, 400));
-		this.setMaximumSize(this.getPreferredSize());
+		//this.setMaximumSize(this.getPreferredSize());
 		this.setMinimumSize(this.getPreferredSize());
 		
 		iconPC = new ImageIcon(PalateUI.class.getResource("/Images/PC.png"), "Computer");
@@ -68,9 +68,65 @@ public class PalateUI extends JPanel implements MouseListener
 //		icSWITCHLabel.setVerticalTextPosition(JLabel.BOTTOM);
 //		icSWITCHLabel.setHorizontalTextPosition(JLabel.CENTER);
 		
-		pcLabel = new JCustomPCLabel();
-		hubLabel = new JCustomHubLabel();
-		switchLabel = new JCustomSwitchLabel();
+		pcLabel = new JCustomBtnLabel("Computer", iconPC);
+		pcLabel.addMouseListener(new MouseListener() {
+			@Override
+			public void mouseReleased(MouseEvent arg0) {}
+			@Override
+			public void mousePressed(MouseEvent arg0) {
+				JLabel temp = new JLabel("Computer"+com, new ImageIcon(iconPC.getImage().getScaledInstance(50, 50, 0)), JLabel.CENTER);
+				temp.setVerticalTextPosition(JLabel.BOTTOM);
+				temp.setHorizontalTextPosition(JLabel.CENTER);
+				work.setSelected(temp);
+				com += 1;
+			}
+			@Override
+			public void mouseExited(MouseEvent arg0) {}
+			@Override
+			public void mouseEntered(MouseEvent arg0) {}
+			@Override
+			public void mouseClicked(MouseEvent arg0) {}
+		});
+		
+		hubLabel = new JCustomBtnLabel("Hub", iconHUB);
+		hubLabel.addMouseListener(new MouseListener() {
+			@Override
+			public void mouseReleased(MouseEvent arg0) {}
+			@Override
+			public void mousePressed(MouseEvent arg0) {
+				JLabel temp = new JLabel("HUB"+hub, new ImageIcon(iconHUB.getImage().getScaledInstance(50, 50, 0)), JLabel.CENTER);
+				temp.setVerticalTextPosition(JLabel.BOTTOM);
+				temp.setHorizontalTextPosition(JLabel.CENTER);
+				work.setSelected(temp);
+				hub += 1;
+			}
+			@Override
+			public void mouseExited(MouseEvent arg0) {}
+			@Override
+			public void mouseEntered(MouseEvent arg0) {}
+			@Override
+			public void mouseClicked(MouseEvent arg0) {}
+		});
+		
+		switchLabel = new JCustomBtnLabel("Switch", iconSWITCH);
+		switchLabel.addMouseListener(new MouseListener() {
+			@Override
+			public void mouseReleased(MouseEvent arg0) {}
+			@Override
+			public void mousePressed(MouseEvent arg0) {
+				JLabel temp = new JLabel("Switch"+swi, new ImageIcon(iconSWITCH.getImage().getScaledInstance(50, 50, 0)), JLabel.CENTER);
+				temp.setVerticalTextPosition(JLabel.BOTTOM);
+				temp.setHorizontalTextPosition(JLabel.CENTER);
+				work.setSelected(temp);
+				swi += 1;
+			}
+			@Override
+			public void mouseExited(MouseEvent arg0) {}
+			@Override
+			public void mouseEntered(MouseEvent arg0) {}
+			@Override
+			public void mouseClicked(MouseEvent arg0) {}
+		});
 		
 //		icPCLabel = new JButton("Computer");
 //		icPCLabel.setIcon(new ImageIcon(iconPC.getImage().getScaledInstance(50, 50, 0)));
@@ -129,35 +185,5 @@ public class PalateUI extends JPanel implements MouseListener
 //		this.toolsPLabel = new JLabel("Tools");
 //		this.toolsPLabel.setUI(new VerticalLabelUI(false)); 
 //		this.setTabComponentAt(1, toolsPLabel);
-	}
-
-	@Override
-	public void mouseClicked(MouseEvent e) {
-		// TODO Auto-generated method stub
-		
-	}
-
-	@Override
-	public void mouseEntered(MouseEvent e) {
-		// TODO Auto-generated method stub
-		
-	}
-
-	@Override
-	public void mouseExited(MouseEvent e) {
-		// TODO Auto-generated method stub
-		
-	}
-
-	@Override
-	public void mousePressed(MouseEvent e) {
-		// TODO Auto-generated method stub
-		
-	}
-
-	@Override
-	public void mouseReleased(MouseEvent e) {
-		// TODO Auto-generated method stub
-		
 	}
 }

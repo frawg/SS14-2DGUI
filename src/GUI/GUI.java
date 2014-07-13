@@ -54,7 +54,7 @@ public class GUI extends JApplet {
 		
 		palate = new PalateUI(work);
 		//palate.setBounds(0, menu.getPreferredSize().height, palate.getPreferredSize().width, this.getPreferredSize().height - menu.getPreferredSize().height - stats.getPreferredSize().height); //palate.getPreferredSize().height);
-		palate.setBounds(0, menu.getPreferredSize().height + 40, palate.getPreferredSize().width, palate.getPreferredSize().height);
+		palate.setBounds(0, menu.getPreferredSize().height + 65, palate.getPreferredSize().width, palate.getPreferredSize().height);
 		
 		mainPanel.add(menu);
 		mainPanel.add(palate, JLayeredPane.PALETTE_LAYER);

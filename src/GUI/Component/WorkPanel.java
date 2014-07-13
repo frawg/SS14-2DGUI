@@ -1,5 +1,6 @@
 package GUI.Component;
 
+import java.awt.Color;
 import java.awt.event.MouseEvent;
 import java.awt.event.MouseListener;
 import java.awt.event.MouseMotionListener;
@@ -35,6 +36,8 @@ public class WorkPanel extends JPanel implements MouseListener, MouseMotionListe
 	@Override
 	public void mouseExited(MouseEvent e) {
 		// TODO Auto-generated method stub
+		if (newItem)
+			remove(selected);
 		selected = null;
 	}
 
@@ -92,6 +95,26 @@ public class WorkPanel extends JPanel implements MouseListener, MouseMotionListe
 	@Override
 	public void mouseDragged(MouseEvent e) {
 		// TODO Auto-generated method stub
+		moveItem(e);
+	}
+
+	@Override
+	public void mouseMoved(MouseEvent e) {
+		if (newItem)
+			if (selected != null)
+				if(selected.getParent() != this)
+				{
+					selected.setForeground(new Color(0, 0, 0, .5f));
+					this.add(selected);
+				}
+				else
+				{
+					moveItem(e);
+				}
+	}
+	
+	private void moveItem(MouseEvent e)
+	{
 		if (selected != null && !newItem) {   // Non-null if pressed inside card image.
             
             int newX = e.getX() - _dragFromX;
@@ -110,7 +133,4 @@ public class WorkPanel extends JPanel implements MouseListener, MouseMotionListe
             this.repaint(); // Repaint because position changed.
 		}
 	}
-
-	@Override
-	public void mouseMoved(MouseEvent e) {}
 }

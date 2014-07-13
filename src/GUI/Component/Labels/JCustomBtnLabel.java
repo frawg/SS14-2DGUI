@@ -1,7 +1,10 @@
 package GUI.Component.Labels;
 
+import java.awt.AlphaComposite;
 import java.awt.Color;
 import java.awt.Dimension;
+import java.awt.Graphics;
+import java.awt.Graphics2D;
 import java.awt.Point;
 import java.awt.event.MouseEvent;
 import java.awt.event.MouseListener;
@@ -14,8 +17,10 @@ import javax.swing.border.EtchedBorder;
 public class JCustomBtnLabel extends JLabel {
 	private int width, height = 65;
 	private boolean opaque;
+	private int transparency;
 
 	private void setCommon(ImageIcon icon){
+		transparency = 100;
 		//this.setIcon(new ImageIcon(new ImageIcon(this.getClass().getResource("/Images/hub.gif"), "Switch").getImage().getScaledInstance(50, 50, 0)));
 		this.setIcon(new ImageIcon(icon.getImage().getScaledInstance(50, 50, 0)));
 		this.setHorizontalTextPosition(JLabel.CENTER);
@@ -72,6 +77,14 @@ public class JCustomBtnLabel extends JLabel {
 		super(text+i, JLabel.CENTER);
 		setCommon(icon);
 	}
+	
+	public void paint(Graphics g)
+	{
+		Graphics2D g2 = (Graphics2D)g.create();
+		g2.setComposite(AlphaComposite.getInstance(AlphaComposite.SRC_OVER, (float)((double)transparency / (double)100)));
+		super.paint(g2);
+		g2.dispose();
+	}
 
 	public Point getPosition(){ return this.getLocation(); }
 	public int getCHeight(){ return height; }
@@ -79,4 +92,7 @@ public class JCustomBtnLabel extends JLabel {
 	private void setColor(Color c){ this.setBackground(c); }
 	private void falseOpaque() { this.setOpaque(false); opaque = false; }
 	private void trueOpaque() { this.setOpaque(true); opaque = true; }
+	
+	public void setTransparency(int i) { this.transparency = i; }
+	public int getTransparency() { return transparency; }
 }

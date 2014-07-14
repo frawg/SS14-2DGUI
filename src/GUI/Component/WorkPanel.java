@@ -10,6 +10,8 @@ import java.util.ArrayList;
 
 import javax.swing.JComponent;
 
+import javax.swing.SwingUtilities;
+
 //import javax.swing.JLabel;
 import GUI.Component.Labels.JLabel;
 
@@ -17,7 +19,7 @@ import javax.swing.JPanel;
 
 public class WorkPanel extends JPanel implements MouseListener, MouseMotionListener {
 	private ArrayList<JLabel> items = null;
-	private JLabel selected = null;
+	private JLabel selected, mouseOver = null;
 	private int _dragFromX, _dragFromY, _initX, _initY;
 	private boolean newItem;
 	
@@ -76,6 +78,16 @@ public class WorkPanel extends JPanel implements MouseListener, MouseMotionListe
 	
 	@Override
 	public void mousePressed(MouseEvent e) { 
+		if (SwingUtilities.isRightMouseButton(e))
+		{
+			for (JLabel j : items)
+				if (j.contains(e.getPoint()))
+				{
+					System.out.println(j.getText() + " right click.");
+					break;
+				}
+		}
+		
 		System.out.println(getParent().getWidth() + ", " + getParent().getHeight() + "\t\t" + e.getX() + ", " + e.getY());
 		int x = e.getX();   // Save the x coord of the click
 		int y = e.getY();   // Save the y coord of the click
@@ -132,6 +144,17 @@ public class WorkPanel extends JPanel implements MouseListener, MouseMotionListe
 
 	@Override
 	public void mouseMoved(MouseEvent e) {
+		if (selected == null)
+			for (JLabel j : items)
+				if (j.contains(e.getPoint()) && mouseOver != j)
+				{
+					mouseOver = j;
+					System.out.println(j.getText() + " mouse over.");
+					break;
+				}
+		if (mouseOver != null)
+			if (!mouseOver.contains(e.getPoint()))
+				mouseOver = null;
 		//System.out.println(e.getPoint());
 		//if (newItem)
 			if (selected != null)
@@ -153,6 +176,8 @@ public class WorkPanel extends JPanel implements MouseListener, MouseMotionListe
             newY = Math.max(newY, 0);
             newY = Math.min(newY, getHeight() - selected.getHeight());
             selected.setLocation(newX, newY);
+            remove(selected);
+            add(selected, 0);
             //selected.setLocation(e.getX(), e.getY());
             
             this.repaint(); // Repaint because position changed.

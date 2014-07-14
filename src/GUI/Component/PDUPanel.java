@@ -14,6 +14,8 @@ import javax.swing.JScrollPane;
 import javax.swing.border.Border;
 import javax.swing.ScrollPaneConstants;
 
+import GUI.Component.Labels.StatisticRow;
+
 public class PDUPanel extends JPanel {
 
 	private JLabel labTime, labDest, labSource, labStatus, labType = null;

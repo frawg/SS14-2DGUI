@@ -3,6 +3,7 @@ package GUI.Component.Labels;
 import java.awt.AlphaComposite;
 import java.awt.Graphics;
 import java.awt.Graphics2D;
+import java.awt.Point;
 
 public class JLabel extends javax.swing.JLabel{
 	
@@ -53,5 +54,21 @@ public class JLabel extends javax.swing.JLabel{
 		g2.setComposite(AlphaComposite.getInstance(AlphaComposite.SRC_OVER, solidity));
 		super.paint(g2);
 		g2.dispose();
+	}
+	
+	public void setLocation(Point p)
+	{
+		this.setLocation((int)p.getX(), (int)p.getY());
+	}
+	
+	public void setLocation(int x, int y)
+	{
+		super.setBounds(x, y, (int)getPreferredSize().getWidth(), (int)getPreferredSize().getHeight());
+	}
+	
+	public boolean contains(int x, int y)
+	{
+			return (getLocation().getX() < (double)x && (getLocation().getX() + (double)getWidth()) > (double)x 
+					&& getLocation().getY() < (double)y && (getLocation().getY() + (double)getHeight()) > (double)y);
 	}
 }

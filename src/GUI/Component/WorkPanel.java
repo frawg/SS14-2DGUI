@@ -30,7 +30,7 @@ public class WorkPanel extends JPanel implements MouseListener, MouseMotionListe
 		addMouseMotionListener(this);
 	}
 
-	public void setSelected(JLabel temp) { this.selected = temp; newItem = true; System.out.println(temp.getText() + " clicked"); }
+	public void setSelected(JLabel temp) { this.selected = temp; newItem = true; System.out.println(temp.getText() + " clicked"); System.out.println(selected.getPreferredSize()); }
 	
 	@Override
 	public void mouseClicked(MouseEvent e) {}
@@ -42,7 +42,8 @@ public class WorkPanel extends JPanel implements MouseListener, MouseMotionListe
 		{
 			//selected.setForeground(new Color(0, 0, 0, .5f));
 			selected.setSolidity(0.5f);
-			selected.setBounds(e.getX() - 32, e.getY() - 32, 65, 65);
+//			selected.setBounds(e.getX() - (32), e.getY() - (32), (int)selected.getPreferredSize().getWidth(), (int)selected.getPreferredSize().getHeight());
+			selected.setLocation(e.getX() - (32), e.getY() - (32));
 			_dragFromX = 32;
 			_dragFromY = 32;
 			System.out.println(selected.getBounds() + "\t" + e.getPoint());
@@ -91,7 +92,8 @@ public class WorkPanel extends JPanel implements MouseListener, MouseMotionListe
 //				for (int crd = 0; crd < items.size(); crd++)
 				{
 					JLabel testCard = items.get(crd);
-					if (compareLocation(testCard, x, y)) {
+//					if (compareLocation(testCard, x, y)) {
+					if (testCard.contains(x, y)) {
 						//... Found, remember this card for dragging.
 						_dragFromX = x - testCard.getX();  // how far from left
 						_dragFromY = y - testCard.getY();  // how far from top
@@ -104,6 +106,7 @@ public class WorkPanel extends JPanel implements MouseListener, MouseMotionListe
 		else
 		{
 			System.out.println("\tNew item: " + selected.getText() + ".");
+//			selected.setBounds(e.getX() - (32), e.getY() - (32), (int)selected.getPreferredSize().getWidth(), (int)selected.getPreferredSize().getHeight());
 			selected.setLocation(e.getX() - (32), e.getY() - (32));
 			selected.setSolidity(1.0f);
 			_dragFromX = 32;

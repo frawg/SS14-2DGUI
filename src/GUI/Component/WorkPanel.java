@@ -1,13 +1,18 @@
 package GUI.Component;
 
 import java.awt.Color;
+import java.awt.Component;
+import java.awt.Graphics;
 import java.awt.event.MouseEvent;
 import java.awt.event.MouseListener;
 import java.awt.event.MouseMotionListener;
 import java.util.ArrayList;
 
 import javax.swing.JComponent;
-import javax.swing.JLabel;
+
+//import javax.swing.JLabel;
+import GUI.Component.Labels.JLabel;
+
 import javax.swing.JPanel;
 
 public class WorkPanel extends JPanel implements MouseListener, MouseMotionListener {
@@ -25,7 +30,7 @@ public class WorkPanel extends JPanel implements MouseListener, MouseMotionListe
 		addMouseMotionListener(this);
 	}
 
-	public void setSelected(JLabel temp) { this.selected = temp; newItem = true; }
+	public void setSelected(JLabel temp) { this.selected = temp; newItem = true; System.out.println(temp.getText() + " clicked"); }
 	
 	@Override
 	public void mouseClicked(MouseEvent e) {}
@@ -33,14 +38,16 @@ public class WorkPanel extends JPanel implements MouseListener, MouseMotionListe
 	@Override
 	public void mouseEntered(MouseEvent e) {
 		System.out.println("Mouse entered.");
-		if (((e.getX() > 200) || (e.getY() > 465 && e.getX() > 400)) && selected != null && newItem && selected.getParent() != this)
+		if (selected != null && newItem && selected.getParent() != this)
 		{
-			selected.setForeground(new Color(0, 0, 0, .5f));
+			//selected.setForeground(new Color(0, 0, 0, .5f));
+			selected.setSolidity(0.5f);
 			selected.setBounds(e.getX() - 32, e.getY() - 32, 65, 65);
 			_dragFromX = 32;
 			_dragFromY = 32;
 			System.out.println(selected.getBounds() + "\t" + e.getPoint());
-			this.add(selected);
+			this.add(selected, 0);
+//			this.add(selected);
 			repaint();
 		}
 	}
@@ -52,8 +59,9 @@ public class WorkPanel extends JPanel implements MouseListener, MouseMotionListe
 		if (newItem)
 		{
 			remove(selected);
-			newItem = false;
 		}
+
+		newItem = false;
 		selected = null;
 		
 		this.repaint();
@@ -80,6 +88,7 @@ public class WorkPanel extends JPanel implements MouseListener, MouseMotionListe
 			{
 				System.out.println("\tSelected is null.");
 				for (int crd=items.size()-1; crd>=0; crd--)
+//				for (int crd = 0; crd < items.size(); crd++)
 				{
 					JLabel testCard = items.get(crd);
 					if (compareLocation(testCard, x, y)) {
@@ -92,25 +101,22 @@ public class WorkPanel extends JPanel implements MouseListener, MouseMotionListe
 				}
 			}
 		}
+		else
+		{
+			System.out.println("\tNew item: " + selected.getText() + ".");
+			selected.setLocation(e.getX() - (32), e.getY() - (32));
+			selected.setSolidity(1.0f);
+			_dragFromX = 32;
+			_dragFromY = 32;
+			this.add(selected, 0);
+			items.add(selected);
+			newItem = false;
+			this.repaint();
+		}
 	}
 
 	@Override
 	public void mouseReleased(MouseEvent e) {
-//		if (selected != null && newItem)
-//			items.add(selected);
-		if (newItem)
-			if (selected == null)
-			{
-				System.out.println("\tNew item: " + selected.getText() + ".");
-				//selected.setLocation(x, y);
-				selected.setBounds(e.getX() - (32), e.getY() - (32), 65, 65);
-				_dragFromX = 32;
-				_dragFromY = 32;
-				this.add(selected);
-				items.add(selected);
-				newItem = false;
-				this.repaint();
-			}
 		selected = null;
 		newItem = false;
 	}
@@ -125,7 +131,7 @@ public class WorkPanel extends JPanel implements MouseListener, MouseMotionListe
 	public void mouseMoved(MouseEvent e) {
 		//System.out.println(e.getPoint());
 		//if (newItem)
-			//if (selected != null)
+			if (selected != null)
 				moveItem(e);
 	}
 	

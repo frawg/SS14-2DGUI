@@ -32,5 +32,5 @@ public class WorkAreaUI extends JPanel {
 		add(scroll, BorderLayout.CENTER);
 	}
 	
-	public void setSelected(JLabel temp) { work.setSelected(temp); }
+	public void setSelected(GUI.Component.Labels.JLabel temp) { work.setSelected(temp); }
 }

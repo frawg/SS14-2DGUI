@@ -74,7 +74,7 @@ public class PalateUI extends JPanel {
 			public void mouseReleased(MouseEvent arg0) {}
 			@Override
 			public void mousePressed(MouseEvent arg0) {
-				JLabel temp = new JLabel("Computer"+com, new ImageIcon(iconPC.getImage().getScaledInstance(50, 50, 0)), JLabel.CENTER);
+				GUI.Component.Labels.JLabel temp = new GUI.Component.Labels.JLabel("Computer"+com, new ImageIcon(iconPC.getImage().getScaledInstance(50, 50, 0)), JLabel.CENTER);
 				temp.setVerticalTextPosition(JLabel.BOTTOM);
 				temp.setHorizontalTextPosition(JLabel.CENTER);
 				work.setSelected(temp);
@@ -94,7 +94,7 @@ public class PalateUI extends JPanel {
 			public void mouseReleased(MouseEvent arg0) {}
 			@Override
 			public void mousePressed(MouseEvent arg0) {
-				JLabel temp = new JLabel("HUB"+hub, new ImageIcon(iconHUB.getImage().getScaledInstance(50, 50, 0)), JLabel.CENTER);
+				GUI.Component.Labels.JLabel temp = new GUI.Component.Labels.JLabel("HUB"+hub, new ImageIcon(iconHUB.getImage().getScaledInstance(50, 50, 0)), JLabel.CENTER);
 				temp.setVerticalTextPosition(JLabel.BOTTOM);
 				temp.setHorizontalTextPosition(JLabel.CENTER);
 				work.setSelected(temp);
@@ -114,7 +114,7 @@ public class PalateUI extends JPanel {
 			public void mouseReleased(MouseEvent arg0) {}
 			@Override
 			public void mousePressed(MouseEvent arg0) {
-				JLabel temp = new JLabel("Switch"+swi, new ImageIcon(iconSWITCH.getImage().getScaledInstance(50, 50, 0)), JLabel.CENTER);
+				GUI.Component.Labels.JLabel temp = new GUI.Component.Labels.JLabel("Switch"+swi, new ImageIcon(iconSWITCH.getImage().getScaledInstance(50, 50, 0)), JLabel.CENTER);
 				temp.setVerticalTextPosition(JLabel.BOTTOM);
 				temp.setHorizontalTextPosition(JLabel.CENTER);
 				work.setSelected(temp);

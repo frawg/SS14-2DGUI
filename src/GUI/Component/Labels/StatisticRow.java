@@ -1,4 +1,4 @@
-package GUI.Component;
+package GUI.Component.Labels;
 
 import java.awt.Color;
 import java.awt.Dimension;

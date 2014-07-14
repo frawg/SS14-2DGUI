@@ -35,7 +35,11 @@ public class WorkPanel extends JPanel implements MouseListener, MouseMotionListe
 	public void setSelected(JLabel temp) { this.selected = temp; newItem = true; System.out.println(temp.getText() + " clicked"); System.out.println(selected.getPreferredSize()); }
 	
 	@Override
-	public void mouseClicked(MouseEvent e) {}
+	public void mouseClicked(MouseEvent e) {
+//		for (JLabel j : items)
+//			if (j.contains(e.getPoint()))
+//				line = new Line(j);
+	}
 
 	@Override
 	public void mouseEntered(MouseEvent e) {
@@ -68,12 +72,6 @@ public class WorkPanel extends JPanel implements MouseListener, MouseMotionListe
 		selected = null;
 		
 		this.repaint();
-	}
-
-	private boolean compareLocation(JLabel temp, int tx, int ty)
-	{
-		return (temp.getLocation().getX() < (double)tx && (temp.getLocation().getX() + (double)temp.getWidth()) > (double)tx 
-				&& temp.getLocation().getY() < (double)ty && (temp.getLocation().getY() + (double)temp.getHeight()) > (double)ty);
 	}
 	
 	@Override
@@ -178,6 +176,8 @@ public class WorkPanel extends JPanel implements MouseListener, MouseMotionListe
             selected.setLocation(newX, newY);
             remove(selected);
             add(selected, 0);
+            items.remove(selected);
+            items.add(selected);
             //selected.setLocation(e.getX(), e.getY());
             
             this.repaint(); // Repaint because position changed.

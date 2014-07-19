@@ -5,8 +5,13 @@ import java.awt.Component;
 import java.awt.Dimension;
 import java.awt.FlowLayout;
 import java.awt.GridLayout;
+import java.awt.Point;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
+import java.awt.event.ItemEvent;
 import java.awt.event.MouseEvent;
 import java.awt.event.MouseListener;
+import java.awt.event.ItemListener;
 
 import javax.swing.BorderFactory;
 import javax.swing.ImageIcon;
@@ -14,21 +19,25 @@ import javax.swing.JButton;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.JTabbedPane;
+import javax.swing.JToggleButton;
 import javax.swing.border.LineBorder;
 
 import GUI.Component.Labels.JCustomBtnLabel;
 
 public class PalateUI extends JPanel {
-	private JLabel devPLabel, toolsPLabel, icPCLabel, icHUBLabel, /*icROUTERLabel,*/ icSWITCHLabel = null;
+	private JLabel devPLabel, toolsPLabel, icPCLabel, icHUBLabel, /*icROUTERLabel,*/ icSWITCHLabel, icLINELabel = null;
 	//private JButton devPLabel, toolsPLabel, icPCLabel, icHUBLabel, icROUTERLabel, icSWITCHLabel = null;
+	public JToggleButton lineButton;
 	private JTabbedPane tab = null;
 	private JPanel devPalate, toolsPalate = null;
-	private ImageIcon iconPC, iconHUB, iconROUTER, iconSWITCH = null;
+	private ImageIcon iconPC, iconHUB, iconROUTER, iconSWITCH, iconLINE = null;
 	private GridLayout devGrid, toolsGrid = null;
 	private int x, y = 100;
-	private JCustomBtnLabel hubLabel, switchLabel, pcLabel = null;
+	private JCustomBtnLabel hubLabel, switchLabel, pcLabel, lineLabel= null;
 	private WorkAreaUI work = null;
 	private int com, hub, swi = 0;
+	private Point start,end; 
+	
 	
 	public PalateUI(WorkAreaUI twork)
 	{
@@ -50,6 +59,7 @@ public class PalateUI extends JPanel {
 		iconSWITCH = new ImageIcon(PalateUI.class.getResource("/Images/switch.png"), "Switch");
 		iconHUB = new ImageIcon(PalateUI.class.getResource("/Images/hub.gif"), "Hub");
 		iconROUTER = new ImageIcon(PalateUI.class.getResource("/Images/router.jpeg"), "Router");
+		iconLINE = new ImageIcon(PalateUI.class.getResource("/Images/line.jpg"), "Line");
 		
 //		iconPC.getImage().getScaledInstance(x, y, 0);
 //		iconHUB.getImage().getScaledInstance(x, y, 0);
@@ -86,7 +96,7 @@ public class PalateUI extends JPanel {
 			public void mouseEntered(MouseEvent arg0) {}
 			@Override
 			public void mouseClicked(MouseEvent arg0) {}
-		});
+			});
 		
 		hubLabel = new JCustomBtnLabel("Hub", iconHUB);
 		hubLabel.addMouseListener(new MouseListener() {
@@ -171,9 +181,39 @@ public class PalateUI extends JPanel {
 		devPalate.add(switchLabel);
 		tab.addTab("<html><p style=\"padding:1\">D<br/>E<br/>V<br/>I<br/>C<br/>E</p></html>", devPalate);
 		
+		lineButton = new JToggleButton("Line");
+		lineButton.setSelected(false);
+		lineButton.setBackground(Color.WHITE);
+		lineButton.setOpaque(false);
+		lineButton.setBorder(null);
+		lineButton.setIcon(new ImageIcon(iconLINE.getImage()));
+		lineButton.setHorizontalTextPosition(JToggleButton.CENTER);
+		lineButton.setVerticalTextPosition(JToggleButton.BOTTOM);
+		lineButton.addItemListener(new ItemListener() {
+			@Override
+			public void itemStateChanged(ItemEvent evt) {
+				if(evt.getStateChange()==ItemEvent.SELECTED)
+				{
+					//flag here
+					work.setLine(lineButton, true);
+				}
+				if(evt.getStateChange()==ItemEvent.DESELECTED)
+				{
+					//flag here
+					work.cancelLine(false);
+				}
+			}
+		});
+		
 		this.toolsPalate = new JPanel();
 		this.toolsPalate.setLayout(new GridLayout(0,2));
 		this.toolsPalate.setBackground(Color.WHITE);
+		
+		toolsPalate.add(lineButton);
+		toolsPalate.add(new JLabel());
+		toolsPalate.add(new JLabel());
+		toolsPalate.add(new JLabel());
+		
 		tab.addTab("<html><p style=\"padding:1\">T<br/>O<br/>O<br/>L<br/>S</p></html>", toolsPalate);
 		
 		this.add(tab, BorderLayout.CENTER);
@@ -186,4 +226,5 @@ public class PalateUI extends JPanel {
 //		this.toolsPLabel.setUI(new VerticalLabelUI(false)); 
 //		this.setTabComponentAt(1, toolsPLabel);
 	}
+	//public void toggleButton(boolean c){lineButton.setSelected(false);}
 }

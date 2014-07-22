@@ -9,6 +9,8 @@ import java.awt.Point;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.ItemEvent;
+import java.awt.event.KeyEvent;
+import java.awt.event.KeyListener;
 import java.awt.event.MouseEvent;
 import java.awt.event.MouseListener;
 import java.awt.event.ItemListener;
@@ -22,9 +24,11 @@ import javax.swing.JTabbedPane;
 import javax.swing.JToggleButton;
 import javax.swing.border.LineBorder;
 
+
+
 import GUI.Component.Labels.JCustomBtnLabel;
 
-public class PalateUI extends JPanel {
+public class PalateUI extends JPanel{
 	private JLabel devPLabel, toolsPLabel, icPCLabel, icHUBLabel, /*icROUTERLabel,*/ icSWITCHLabel, icLINELabel = null;
 	//private JButton devPLabel, toolsPLabel, icPCLabel, icHUBLabel, icROUTERLabel, icSWITCHLabel = null;
 	public JToggleButton lineButton;
@@ -227,4 +231,5 @@ public class PalateUI extends JPanel {
 //		this.setTabComponentAt(1, toolsPLabel);
 	}
 	//public void toggleButton(boolean c){lineButton.setSelected(false);}
+	
 }

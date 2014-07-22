@@ -35,7 +35,7 @@ public class Connection{
 	{
 		Line2D temp = new Line2D.Float(jlStart.getLocation(), jlEnd.getLocation());
 		if (temp.ptLineDist(e) <= 1)
-			return true;
+			{return true;}
 		return false;
 	}
 	
@@ -51,10 +51,12 @@ public class Connection{
 		g2.setColor(Color.BLACK);
 		
 		if (jlEnd != null)
-			g2.drawLine((int)jlStart.getMiddleOfIcon().getX(), (int)jlStart.getMiddleOfIcon().getY(), (int)jlEnd.getMiddleOfIcon().getX(), (int)jlEnd.getMiddleOfIcon().getY());
+			{g2.drawLine((int)jlStart.getMiddleOfIcon().getX(), (int)jlStart.getMiddleOfIcon().getY(), (int)jlEnd.getMiddleOfIcon().getX(), (int)jlEnd.getMiddleOfIcon().getY());}
 		else if (jlEnd == null)
+		{
 			g2.drawLine((int)jlStart.getMiddleOfIcon().getX(), (int)jlStart.getMiddleOfIcon().getY(), (int)end.getX(), (int)end.getY());
 		g2.dispose();
+		}
 	}
 }
 

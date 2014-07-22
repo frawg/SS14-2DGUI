@@ -1,4 +1,4 @@
-package GUI.Component;
+package GUI.Component.Labels;
 
 import java.awt.BasicStroke;
 import java.awt.Color;
@@ -14,13 +14,11 @@ import java.util.ArrayList;
 
 import javax.swing.JComponent;
 
-import GUI.Component.Labels.JLabel;
-
 public class Connection{
 
 	JLabel jlStart, jlEnd = null;
 	Point end = null;
-	ArrayList<Points> list = new ArrayList<Points>();
+	ArrayList<Point> list = new ArrayList<Point>();
 	
 	public Connection(JLabel start, Point e)
 	{

@@ -72,8 +72,7 @@ public class JLabel extends javax.swing.JLabel{
 					&& getLocation().getY() < (double)y && (getLocation().getY() + (double)getHeight()) > (double)y);
 	}
 	
-	public Point getMiddleOfIcon()
-	{
-		return new Point(getX() + 25 , getY() + 25);
-	}
+	public Point getMiddleOfIcon() { return new Point(getX() + 25 , getY() + 25); }
+	public Point getBottomRightOfIcon() { return new Point(getX() + getWidth(), getY() + getHeight()); }
+	public Point getMiddleRightOfIcon() { return new Point(getX() + getWidth(), getY() + (getHeight() / 2 )); }
 }

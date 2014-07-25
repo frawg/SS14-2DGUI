@@ -26,18 +26,21 @@ import javax.swing.border.LineBorder;
 
 
 
+import javax.swing.event.ChangeEvent;
+import javax.swing.event.ChangeListener;
+
 import GUI.Component.Labels.JCustomBtnLabel;
 
 public class PalateUI extends JPanel{
-	private JLabel devPLabel, toolsPLabel, icPCLabel, icHUBLabel, /*icROUTERLabel,*/ icSWITCHLabel, icLINELabel = null;
+	private JLabel devPLabel, toolsPLabel, icPCLabel, icHUBLabel, /*icROUTERLabel,*/ icSWITCHLabel, icLINELabel, icDeleteLabel = null;
 	//private JButton devPLabel, toolsPLabel, icPCLabel, icHUBLabel, icROUTERLabel, icSWITCHLabel = null;
-	public JToggleButton lineButton;
+	public JToggleButton lineButton,deleteButton;
 	private JTabbedPane tab = null;
 	private JPanel devPalate, toolsPalate = null;
-	private ImageIcon iconPC, iconHUB, iconROUTER, iconSWITCH, iconLINE = null;
+	private ImageIcon iconPC, iconHUB, iconROUTER, iconSWITCH, iconLINE,iconDELETE = null;
 	private GridLayout devGrid, toolsGrid = null;
 	private int x, y = 100;
-	private JCustomBtnLabel hubLabel, switchLabel, pcLabel, lineLabel= null;
+	private JCustomBtnLabel hubLabel, switchLabel, pcLabel, lineLabel,deleteLabel= null;
 	private WorkAreaUI work = null;
 	private int com, hub, swi = 0;
 	private Point start,end; 
@@ -64,6 +67,7 @@ public class PalateUI extends JPanel{
 		iconHUB = new ImageIcon(PalateUI.class.getResource("/Images/hub.gif"), "Hub");
 		iconROUTER = new ImageIcon(PalateUI.class.getResource("/Images/router.jpeg"), "Router");
 		iconLINE = new ImageIcon(PalateUI.class.getResource("/Images/line.jpg"), "Line");
+		iconDELETE = new ImageIcon(PalateUI.class.getResource("/Images/cross.png"), "Cross");
 		
 //		iconPC.getImage().getScaledInstance(x, y, 0);
 //		iconHUB.getImage().getScaledInstance(x, y, 0);
@@ -200,6 +204,7 @@ public class PalateUI extends JPanel{
 				{
 					//flag here
 					work.setLine(lineButton, true);
+					deleteButton.setSelected(false);
 				}
 				if(evt.getStateChange()==ItemEvent.DESELECTED)
 				{
@@ -209,16 +214,60 @@ public class PalateUI extends JPanel{
 			}
 		});
 		
+		deleteButton = new JToggleButton("Delete");
+		deleteButton.setSelected(false);
+		deleteButton.setBackground(Color.WHITE);
+		deleteButton.setOpaque(false);
+		deleteButton.setBorder(null);
+		deleteButton.setIcon(new ImageIcon(iconDELETE.getImage()));
+		deleteButton.setHorizontalTextPosition(JToggleButton.CENTER);
+		deleteButton.setVerticalTextPosition(JToggleButton.BOTTOM);
+		deleteButton.addItemListener(new ItemListener() {
+			@Override
+			public void itemStateChanged(ItemEvent evt) {
+				if(evt.getStateChange()==ItemEvent.SELECTED)
+				{
+					//flag here
+				//	work.setLine(lineButton, true);
+					work.deleteLine(deleteButton,true);
+					
+					lineButton.setSelected(false);
+				}
+				if(evt.getStateChange()==ItemEvent.DESELECTED)
+				{
+					//flag here
+					work.cancelDeleteLine(false);
+				}
+			}
+		});
+		
 		this.toolsPalate = new JPanel();
 		this.toolsPalate.setLayout(new GridLayout(0,2));
 		this.toolsPalate.setBackground(Color.WHITE);
 		
 		toolsPalate.add(lineButton);
+		toolsPalate.add(deleteButton);
 		toolsPalate.add(new JLabel());
 		toolsPalate.add(new JLabel());
 		toolsPalate.add(new JLabel());
 		
 		tab.addTab("<html><p style=\"padding:1\">T<br/>O<br/>O<br/>L<br/>S</p></html>", toolsPalate);
+		tab.addChangeListener(new ChangeListener() {
+			
+			@Override
+			public void stateChanged(ChangeEvent e) {
+				// TODO Auto-generated method stub
+				JTabbedPane tabbedPane = (JTabbedPane) e.getSource();
+				if(tabbedPane.getSelectedIndex()==1 || tabbedPane.getSelectedIndex()==2)
+				{
+					lineButton.setSelected(false);
+					deleteButton.setSelected(false);
+					
+				}
+			}
+		});
+			
+		
 		
 		this.add(tab, BorderLayout.CENTER);
 		this.setOpaque(false);

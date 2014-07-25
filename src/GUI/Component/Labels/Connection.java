@@ -11,11 +11,11 @@ import java.awt.event.MouseListener;
 import java.awt.event.MouseMotionListener;
 import java.awt.geom.Line2D;
 import java.util.ArrayList;
-
+import static java.lang.Math.abs;
 import javax.swing.JComponent;
 
 public class Connection{
-
+	 float EPSILON = 0.001f;
 	JLabel jlStart, jlEnd = null;
 	Point end = null;
 	ArrayList<Point> list = new ArrayList<Point>();
@@ -30,6 +30,9 @@ public class Connection{
 	public void setJLEnd(JLabel jend){ jlEnd = jend; end = null; }
 	public JLabel getJLStart(){ return jlStart; }
 	public void setEnd(Point p){ this.end = p; }
+	public Point returnJLEnd(){return jlEnd.getLocation();}
+	public Point returnJLStart(){return jlStart.getLocation();}
+	
 	
 	public boolean contains(Point e)
 	{

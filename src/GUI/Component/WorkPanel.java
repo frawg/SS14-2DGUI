@@ -4,6 +4,7 @@ import java.awt.Color;
 import java.awt.Component;
 import java.awt.Event;
 import java.awt.Graphics;
+import java.awt.Point;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.KeyEvent;
@@ -11,6 +12,7 @@ import java.awt.event.KeyListener;
 import java.awt.event.MouseEvent;
 import java.awt.event.MouseListener;
 import java.awt.event.MouseMotionListener;
+import java.awt.geom.Line2D;
 import java.util.ArrayList;
 
 import javax.swing.JComponent;
@@ -32,7 +34,7 @@ import javax.swing.event.PopupMenuListener;
 public class WorkPanel extends JPanel implements MouseListener, MouseMotionListener,KeyListener{
 	public enum SelectedType
 	{
-		NOTHING, LINE, DEVICE
+		NOTHING, LINE, DEVICE, DELETE
 	};
 	private ArrayList<JLabel> items = null;
 	private JLabel selected, mouseOver = null;
@@ -42,12 +44,14 @@ public class WorkPanel extends JPanel implements MouseListener, MouseMotionListe
 	private ArrayList<Connection> connections = null;
 	private JToggleButton toolToReset = null;
 	private WorkAreaUI pui = null;
+	private PalateUI palate = null;
 	private DeviceToolTip devtip = null;
 	private JPopupMenu popupMenu = new JPopupMenu();
 	private JMenu menuDevice = new JMenu("Device");
 	private JMenuItem menuEdit = new JMenuItem("Edit");
 	private JMenuItem menuDelete = new JMenuItem("Delete");
 	public boolean checkMouseOverItem = false;
+	private static final int HIT_BOX_SIZE = 35;
 	
 	public WorkPanel()
 	{
@@ -82,8 +86,10 @@ public class WorkPanel extends JPanel implements MouseListener, MouseMotionListe
 		
 	}
 	public void setSelected(JLabel temp) { this.selected = temp; this.seltype = SelectedType.DEVICE/* System.out.println(temp.getText() + " clicked"); System.out.println(selected.getPreferredSize())*/; }
-	public void setLine(JToggleButton t,boolean b){ this.selected = null; this.seltype = SelectedType.LINE; toolToReset = t; System.out.println("selected"); }
+	public void setLine(JToggleButton t,boolean b){ this.selected = null; this.seltype = SelectedType.LINE; toolToReset = t; /*System.out.println("selected");*/ }
+	public void deleteLine(JToggleButton u, boolean b){this.selected = null; this.seltype = SelectedType.DELETE; toolToReset = u; System.out.println("delete line selected");}
 	public void cancelLine(boolean b){ this.selected = null; this.drawLine = null; this.seltype = SelectedType.NOTHING; toolToReset = null; repaint(); }
+	public void cancelDeleteLine(boolean b){this.selected = null; this.seltype=SelectedType.NOTHING; toolToReset = null;System.out.println("cancel delete line");}
 	
 	@Override
 	public void paintComponent(Graphics g)
@@ -97,13 +103,56 @@ public class WorkPanel extends JPanel implements MouseListener, MouseMotionListe
 	
 	@Override
 	public void mouseClicked(MouseEvent e) {
-//		for (JLabel j : items)
-//			if (j.contains(e.getPoint()))
+		int count = 0;
+		for (JLabel j : items)
+			//			if (j.contains(e.getPoint()))
 //				drawLine = new Connection(j);
+		{
+			System.out.println(count);
+			System.out.println(j);
+			count++;
+		}
+		if(seltype==SelectedType.DELETE)
+		{
+			  getClickedLine(e.getX(),e.getY());
+			  repaint();
+			  
+			//System.out.println(c.IsPointOnLine(c.returnJLStart(),c.returnJLEnd(), e.getPoint()));
+			
+		}
+	}
+	
+	private void getClickedLine(int x, int y) {
+		// TODO Auto-generated method stub
+		
+		int boxX = x - HIT_BOX_SIZE;
+		int boxY = y - HIT_BOX_SIZE;
+		boolean a = false;
+		int width = HIT_BOX_SIZE;
+		int height = HIT_BOX_SIZE;
+		int count = 0;
+		System.out.println(boxX+","+boxY+","+width+","+height);
+		
+		for (Connection c:connections)
+		{
+			
+			System.out.println(c.returnJLStart()+"START");
+			System.out.println(c.returnJLEnd()+"END");
+			System.out.println(boxX+" box x");
+			System.out.println(boxY+" box y");
+			Line2D line = new Line2D.Float();
+			line.setLine(c.returnJLStart().getX(),c.returnJLStart().getY(),c.returnJLEnd().getX(),c.returnJLEnd().getY());
+			
+			if(line.intersects(boxX,boxY,width,height))
+			{
+				connections.remove(count);
+				break;
+			}	
+				count++;
+		}
 		
 	}
 	
-
 	@Override
 	public void mouseEntered(MouseEvent e) {
 		System.out.println("Mouse entered.");
@@ -355,4 +404,6 @@ public class WorkPanel extends JPanel implements MouseListener, MouseMotionListe
 		}
 	}
 	
+	
+
 }

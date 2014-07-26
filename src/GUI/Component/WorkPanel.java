@@ -99,6 +99,7 @@ public class WorkPanel extends JPanel implements MouseListener, MouseMotionListe
 			drawLine.paint(g);
 		for (Connection c : connections)
 			c.paint(g);
+		//g.dispose();
 	}
 	
 	@Override

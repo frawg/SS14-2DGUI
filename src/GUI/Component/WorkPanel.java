@@ -337,7 +337,7 @@ public class WorkPanel extends JPanel implements MouseListener, MouseMotionListe
 		devtip.Add();
 		devtip.Add();
 		devtip.refreshSize();
-		add(devtip);
+		add(devtip, 0);
 		devtip.revalidate();
 	}
 	

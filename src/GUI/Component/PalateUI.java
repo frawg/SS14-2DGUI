@@ -230,7 +230,6 @@ public class PalateUI extends JPanel{
 					//flag here
 				//	work.setLine(lineButton, true);
 					work.deleteLine(deleteButton,true);
-					
 					lineButton.setSelected(false);
 				}
 				if(evt.getStateChange()==ItemEvent.DESELECTED)
@@ -258,8 +257,9 @@ public class PalateUI extends JPanel{
 			public void stateChanged(ChangeEvent e) {
 				// TODO Auto-generated method stub
 				JTabbedPane tabbedPane = (JTabbedPane) e.getSource();
-				if(tabbedPane.getSelectedIndex()==1 || tabbedPane.getSelectedIndex()==2)
+				if(tabbedPane.getSelectedIndex()==0 )
 				{
+					System.out.println(tabbedPane.getSelectedIndex());
 					lineButton.setSelected(false);
 					deleteButton.setSelected(false);
 					

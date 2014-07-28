@@ -6,7 +6,11 @@ import java.awt.Graphics2D;
 import java.awt.Point;
 
 public class JLabel extends javax.swing.JLabel{
+	public enum Type{
+		COMPUTER,SWITCH,HUB,ROUTER
+	};
 	
+	private Type type;
 	private float solidity;
 	
 	public JLabel() {
@@ -70,6 +74,16 @@ public class JLabel extends javax.swing.JLabel{
 	{
 			return (getLocation().getX() < (double)x && (getLocation().getX() + (double)getWidth()) > (double)x 
 					&& getLocation().getY() < (double)y && (getLocation().getY() + (double)getHeight()) > (double)y);
+	}
+	
+	public void setType(Type t)
+	{
+		type = t;
+	}
+	
+	public Type getType()
+	{
+		return type;
 	}
 	
 	public Point getMiddleOfIcon() { return new Point(getX() + 25 , getY() + 25); }

@@ -3,7 +3,9 @@ import java.awt.BorderLayout;
 import java.awt.Dimension;
 import java.awt.Graphics;
 
+import javax.swing.JFileChooser;
 import javax.swing.JLabel;
+import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.JScrollPane;
 import javax.swing.JToggleButton;
@@ -15,6 +17,10 @@ import java.awt.Color;
 import java.awt.event.MouseEvent;
 import java.awt.event.MouseListener;
 import java.awt.event.MouseMotionListener;
+import java.io.BufferedWriter;
+import java.io.File;
+import java.io.FileWriter;
+import java.io.IOException;
 import java.util.ArrayList;
 
 public class WorkAreaUI extends JPanel {
@@ -42,4 +48,5 @@ public class WorkAreaUI extends JPanel {
 	public void deleteLine(JToggleButton u, boolean b){ work.deleteLine(u,b); }
 	public void cancelDeleteLine(boolean b){ work.cancelDeleteLine(b); }
 //	public void toggleButton(boolean c){pui.toggleButton(c);}
+	
 }

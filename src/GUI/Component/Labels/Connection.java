@@ -61,5 +61,15 @@ public class Connection{
 		g2.dispose();
 		}
 	}
+	
+	public JLabel getStart()
+	{
+		return jlStart;
+	}
+	
+	public JLabel getEnd()
+	{
+		return jlEnd;
+	}
 }
 

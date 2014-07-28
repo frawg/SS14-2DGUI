@@ -4,11 +4,23 @@ import java.awt.ComponentOrientation;
 import java.awt.Dimension;
 import java.awt.FlowLayout;
 import java.awt.Insets;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
+import java.io.BufferedWriter;
+import java.io.File;
+import java.io.FileWriter;
+import java.io.IOException;
+import java.util.ArrayList;
 
 import javax.swing.BorderFactory;
 import javax.swing.ImageIcon;
 import javax.swing.JButton;
+import javax.swing.JFileChooser;
+import javax.swing.JOptionPane;
 import javax.swing.JPanel;
+
+import GUI.Component.Labels.Connection;
+import GUI.Component.Labels.JLabel;
 
 public class MenuBarUI extends JPanel {
 	//private JLabel btnNew, btnSave, btnLoad, btnPrint, btnCopy, btnPaste, btnUndo, btnRedo, btnZoomIn, btnZoomOut, btnZoomDef = null;
@@ -41,6 +53,7 @@ public class MenuBarUI extends JPanel {
 		btnSave.setMargin(new Insets(0, 0, 0, 0));
 		btnSave.setBorderPainted(false);
 		btnSave.setOpaque(false);
+		btnSave.addActionListener(new ButtonListener());
 		
 		btnLoad = new JButton();
 		btnLoad.setIcon(new ImageIcon(imgLoad.getImage().getScaledInstance(iconSize, iconSize, 0)));
@@ -133,5 +146,74 @@ public class MenuBarUI extends JPanel {
 		this.add(projPane);
 		this.add(editPane);
 		this.add(zoomPane);
+	}
+	
+	public void save()
+	{
+		ArrayList<JLabel> itemList = WorkPanel.getItemsList();
+		ArrayList<Connection> connList = WorkPanel.getConnList();
+		
+		JFileChooser chooser = new JFileChooser();
+		chooser.setCurrentDirectory( new File( "./") );
+		int actionDialog = chooser.showSaveDialog(this);
+		
+		if(actionDialog == JFileChooser.APPROVE_OPTION)
+		{
+			File fileName = new File( chooser.getSelectedFile( ) + ".log" );
+		    if(fileName == null)
+		        return;
+		    if(fileName.exists())
+		    {
+		        actionDialog = JOptionPane.showConfirmDialog(this,
+		                           "Replace existing file?");
+		        // may need to check for cancel option as well
+		        if (actionDialog == JOptionPane.NO_OPTION)
+		            return;
+		    }
+		    // okay to write file
+		    try
+		    {
+		    	BufferedWriter outFile = new BufferedWriter( new FileWriter( fileName ) );
+		    	
+		    	for(int i=1;i<itemList.size();i++)
+		    	{
+		    		String name = itemList.get(i).getText();
+		    		String type = itemList.get(i).getType().toString();
+		    		double x = itemList.get(i).getLocation().getX();
+		    		double y = itemList.get(i).getLocation().getY();
+		    		
+		    		outFile.write(name+"!"+type+"!"+x+"!"+y+"!");
+		    	}
+		    	
+		    	for(int i=0;i<connList.size();i++)
+		    	{
+		    		double startX = connList.get(i).getStart().getLocation().getX();
+		    		double startY = connList.get(i).getStart().getLocation().getY();
+		    		double endX = connList.get(i).getEnd().getLocation().getX();
+		    		double endY = connList.get(i).getEnd().getLocation().getY();
+		    		
+		    		outFile.write(startX+"!"+startY+"!"+endX+"!"+endY);
+		    	}
+		    	System.out.println(connList.size());
+		    	
+		    	outFile.close( );
+		    }
+		    catch(IOException e)
+		    {
+		    	
+		    }
+		    
+		}
+	}
+	
+	private class ButtonListener implements ActionListener
+	{
+		public void actionPerformed(ActionEvent e)
+		{
+			if(e.getSource()==btnSave)
+			{
+				save();
+			}
+		}
 	}
 }

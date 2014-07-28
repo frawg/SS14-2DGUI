@@ -13,11 +13,18 @@ import java.awt.event.MouseEvent;
 import java.awt.event.MouseListener;
 import java.awt.event.MouseMotionListener;
 import java.awt.geom.Line2D;
+import java.io.BufferedWriter;
+import java.io.File;
+import java.io.FileWriter;
+import java.io.IOException;
 import java.util.ArrayList;
 
+import javax.swing.JButton;
 import javax.swing.JComponent;
+import javax.swing.JFileChooser;
 import javax.swing.JMenu;
 import javax.swing.JMenuItem;
+import javax.swing.JOptionPane;
 import javax.swing.JPopupMenu;
 import javax.swing.JToggleButton;
 import javax.swing.SwingUtilities;
@@ -36,12 +43,12 @@ public class WorkPanel extends JPanel implements MouseListener, MouseMotionListe
 	{
 		NOTHING, LINE, DEVICE, DELETE
 	};
-	private ArrayList<JLabel> items = null;
+	private static ArrayList<JLabel> items = null;
 	private JLabel selected, mouseOver = null;
 	private int _dragFromX, _dragFromY, _initX, _initY;
 	private SelectedType seltype;
 	private Connection drawLine = null;
-	private ArrayList<Connection> connections = null;
+	private static ArrayList<Connection> connections = null;
 	private JToggleButton toolToReset = null;
 	private WorkAreaUI pui = null;
 	private PalateUI palate = null;
@@ -52,6 +59,8 @@ public class WorkPanel extends JPanel implements MouseListener, MouseMotionListe
 	private JMenuItem menuDelete = new JMenuItem("Delete");
 	public boolean checkMouseOverItem = false;
 	private static final int HIT_BOX_SIZE = 35;
+	
+	private JButton savebtn = new JButton("Save");
 	
 	public WorkPanel()
 	{
@@ -67,6 +76,8 @@ public class WorkPanel extends JPanel implements MouseListener, MouseMotionListe
 		popupMenu.add(menuEdit);
 		popupMenu.add(menuDelete);
 		setFocusable(true);
+		
+		
 		
 		menuEdit.addActionListener(new ActionListener()
 		{
@@ -405,6 +416,14 @@ public class WorkPanel extends JPanel implements MouseListener, MouseMotionListe
 		}
 	}
 	
+	public static ArrayList<JLabel> getItemsList()
+	{
+		return items;
+	}
 	
-
+	public static ArrayList<Connection> getConnList()
+	{
+		return connections;
+	}
+	
 }

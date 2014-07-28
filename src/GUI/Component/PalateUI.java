@@ -30,6 +30,7 @@ import javax.swing.event.ChangeEvent;
 import javax.swing.event.ChangeListener;
 
 import GUI.Component.Labels.JCustomBtnLabel;
+import GUI.Component.Labels.JLabel.Type;
 
 public class PalateUI extends JPanel{
 	private JLabel devPLabel, toolsPLabel, icPCLabel, icHUBLabel, /*icROUTERLabel,*/ icSWITCHLabel, icLINELabel, icDeleteLabel = null;
@@ -93,6 +94,7 @@ public class PalateUI extends JPanel{
 			@Override
 			public void mousePressed(MouseEvent arg0) {
 				GUI.Component.Labels.JLabel temp = new GUI.Component.Labels.JLabel("Computer"+com, new ImageIcon(iconPC.getImage().getScaledInstance(50, 50, 0)), JLabel.CENTER);
+				temp.setType(Type.COMPUTER);
 				temp.setVerticalTextPosition(JLabel.BOTTOM);
 				temp.setHorizontalTextPosition(JLabel.CENTER);
 				work.setSelected(temp);
@@ -113,6 +115,7 @@ public class PalateUI extends JPanel{
 			@Override
 			public void mousePressed(MouseEvent arg0) {
 				GUI.Component.Labels.JLabel temp = new GUI.Component.Labels.JLabel("HUB"+hub, new ImageIcon(iconHUB.getImage().getScaledInstance(50, 50, 0)), JLabel.CENTER);
+				temp.setType(Type.HUB);
 				temp.setVerticalTextPosition(JLabel.BOTTOM);
 				temp.setHorizontalTextPosition(JLabel.CENTER);
 				work.setSelected(temp);
@@ -133,6 +136,7 @@ public class PalateUI extends JPanel{
 			@Override
 			public void mousePressed(MouseEvent arg0) {
 				GUI.Component.Labels.JLabel temp = new GUI.Component.Labels.JLabel("Switch"+swi, new ImageIcon(iconSWITCH.getImage().getScaledInstance(50, 50, 0)), JLabel.CENTER);
+				temp.setType(Type.SWITCH);
 				temp.setVerticalTextPosition(JLabel.BOTTOM);
 				temp.setHorizontalTextPosition(JLabel.CENTER);
 				work.setSelected(temp);

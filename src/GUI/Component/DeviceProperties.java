@@ -38,8 +38,6 @@ public class DeviceProperties extends JFrame
 	
 	public DeviceProperties() {
 		
-		
-		 
 		mainPanel = new JPanel();
 		topPanel = new JPanel();
 		midPanel = new JPanel();

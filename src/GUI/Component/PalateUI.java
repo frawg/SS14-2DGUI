@@ -184,8 +184,8 @@ public class PalateUI extends JPanel{
 		this.devPalate.setBackground(Color.WHITE);
 		
 		devPalate.setLayout(devGrid);
-//		devPalate.add(icPCLabel);
-//		devPalate.add(icHUBLabel);
+		//	devPalate.add(icPCLabel);
+		//	devPalate.add(icHUBLabel);
 		//devPalate.add(icSWITCHLabel);
 		//devPalate.add(icROUTERLabel);
 		devPalate.add(pcLabel);
@@ -231,15 +231,13 @@ public class PalateUI extends JPanel{
 			public void itemStateChanged(ItemEvent evt) {
 				if(evt.getStateChange()==ItemEvent.SELECTED)
 				{
-					//flag here
-				//	work.setLine(lineButton, true);
 					work.deleteLine(deleteButton,true);
 					lineButton.setSelected(false);
 				}
 				if(evt.getStateChange()==ItemEvent.DESELECTED)
 				{
 					//flag here
-					work.cancelDeleteLine(false);
+					work.cancelDelete(false);
 				}
 			}
 		});
@@ -263,9 +261,9 @@ public class PalateUI extends JPanel{
 				JTabbedPane tabbedPane = (JTabbedPane) e.getSource();
 				if(tabbedPane.getSelectedIndex()==0 )
 				{
-					System.out.println(tabbedPane.getSelectedIndex());
 					lineButton.setSelected(false);
 					deleteButton.setSelected(false);
+					work.cancelDelete(false);
 					
 				}
 			}

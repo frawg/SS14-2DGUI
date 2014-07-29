@@ -46,7 +46,7 @@ public class WorkAreaUI extends JPanel {
 	public void setLine(JToggleButton t, boolean b){ work.setLine(t,b); }
 	public void cancelLine(boolean b){ work.cancelLine(b); }
 	public void deleteLine(JToggleButton u, boolean b){ work.deleteLine(u,b); }
-	public void cancelDeleteLine(boolean b){ work.cancelDeleteLine(b); }
+	public void cancelDelete(boolean b){ work.cancelDelete(b); }
 //	public void toggleButton(boolean c){pui.toggleButton(c);}
 	
 }

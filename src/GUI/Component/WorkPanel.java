@@ -50,8 +50,8 @@ public class WorkPanel extends JPanel implements MouseListener, MouseMotionListe
 	private Connection drawLine = null;
 	private static ArrayList<Connection> connections = null;
 	private JToggleButton toolToReset = null;
-	private WorkAreaUI pui = null;
-	private PalateUI palate = null;
+	//private WorkAreaUI pui = null;
+	//private PalateUI palate = null;
 	private DeviceToolTip devtip = null;
 	private JPopupMenu popupMenu = new JPopupMenu();
 	private JMenuItem menuEdit = new JMenuItem("Edit");
@@ -78,12 +78,10 @@ public class WorkPanel extends JPanel implements MouseListener, MouseMotionListe
 		popupMenu.add(menuDelete);
 		setFocusable(true);
 		
-		
-		
 		menuEdit.addActionListener(new ActionListener()
 		{
 			public void actionPerformed(ActionEvent e)
-			{
+			{ 
 				if(isDevicePropertiesOpen == false)
 				{
 				DeviceProperties dp = new DeviceProperties();
@@ -105,7 +103,7 @@ public class WorkPanel extends JPanel implements MouseListener, MouseMotionListe
 	public void setLine(JToggleButton t,boolean b){ this.selected = null; this.seltype = SelectedType.LINE; toolToReset = t; /*System.out.println("selected");*/ }
 	public void deleteLine(JToggleButton u, boolean b){this.selected = null; this.seltype = SelectedType.DELETE; toolToReset = u; /*System.out.println("delete line selected")*/;}
 	public void cancelLine(boolean b){ this.selected = null; this.drawLine = null; this.seltype = SelectedType.NOTHING; toolToReset = null; repaint(); }
-	public void cancelDeleteLine(boolean b){this.selected = null; this.seltype=SelectedType.NOTHING; toolToReset = null;/*System.out.println("cancel delete line")*/;}
+	public void cancelDelete(boolean b){this.selected = null; this.seltype=SelectedType.NOTHING; toolToReset = null;/*System.out.println("cancel delete line")*/;}
 	
 	@Override
 	public void paintComponent(Graphics g)
@@ -120,14 +118,12 @@ public class WorkPanel extends JPanel implements MouseListener, MouseMotionListe
 	
 	@Override
 	public void mouseClicked(MouseEvent e) {
-		int count = 0;
-		System.out.println("X = "+e.getX()+"Y = "+e.getY());
-		boolean checkClickLine = checkRightClickLine(e.getX(),e.getY());
 		
+		boolean checkClickLine = checkRightClickLine(e.getX(),e.getY());
+		pointOfClick = e.getPoint();
 		
 		if(checkClickLine == true && SwingUtilities.isRightMouseButton(e) )
-		{
-			pointOfClick = e.getPoint();
+		{			
 			showPopup(e);
 		}
 		
@@ -135,34 +131,15 @@ public class WorkPanel extends JPanel implements MouseListener, MouseMotionListe
 		{
 			  getClickedLine(e.getX(),e.getY());
 			  repaint();
-			  
-			//System.out.println(c.IsPointOnLine(c.returnJLStart(),c.returnJLEnd(), e.getPoint()));
-			
 		}
 	}
 	
 	private boolean checkRightClickLine(int x, int y)
-	{
-		int boxX = x - HIT_BOX_SIZE;
-		int boxY = y - HIT_BOX_SIZE;
+	{		
 		boolean a = false;
-		int width = HIT_BOX_SIZE;
-		int height = HIT_BOX_SIZE;
-		
+	
 		for (Connection c:connections)
 		{
-		//	System.out.println(c.returnJLStart()+"START");
-		//System.out.println(c.returnJLEnd()+"END");
-		//	System.out.println(boxX+" box x");
-			//System.out.println(boxY+" box y");
-//			Line2D line = new Line2D.Float();
-//			line.setLine(c.returnJLStart().getX(),c.returnJLStart().getY(),c.returnJLEnd().getX(),c.returnJLEnd().getY());
-//			
-//			if(line.intersects(boxX,boxY,width,height))
-//			{
-//				a=true;
-//				break;
-//			}
 			a = c.contains(new Point(x, y));
 			if (a)
 				return a;
@@ -181,11 +158,24 @@ public class WorkPanel extends JPanel implements MouseListener, MouseMotionListe
 		int height = HIT_BOX_SIZE;
 		int count = 0;
 		//System.out.println(boxX+","+boxY+","+width+","+height);
-		
+		for (Connection c:connections)
+		{
+			Line2D line = new Line2D.Float();
+			line.setLine(c.returnJLStart().getX(),c.returnJLStart().getY(),c.returnJLEnd().getX(),c.returnJLEnd().getY());
+			
+			if(line.intersects(boxX,boxY,width,height))
+			{
+				
+				connections.remove(count);
+				break;
+			}	
+			System.out.println("testing");
+		}
 		for (int crd=0; crd<items.size(); crd++) 
 		{
+			
 			//System.out.println(items.size()+"item size");
-			System.out.println(items.get(crd)+"items");
+		
 			//System.out.println(crd+ " crd");
 			JLabel testCard = items.get(crd);
 			if (testCard.contains((int)x, (int)y))
@@ -195,19 +185,7 @@ public class WorkPanel extends JPanel implements MouseListener, MouseMotionListe
 				break;
 			}
 		}
-		//System.out.println("breaking");
-		for (Connection c:connections)
-		{
-			Line2D line = new Line2D.Float();
-			line.setLine(c.returnJLStart().getX(),c.returnJLStart().getY(),c.returnJLEnd().getX(),c.returnJLEnd().getY());
-			
-			if(line.intersects(boxX,boxY,width,height))
-			{
-				connections.remove(count);
-				break;
-			}	
 		count ++;	
-		}
 		
 	}
 	
@@ -328,7 +306,8 @@ public class WorkPanel extends JPanel implements MouseListener, MouseMotionListe
 		items.add(selected);
 		selected = null;
 		this.repaint();
-	}
+	//	DeviceProperties dp = new DeviceProperties();	
+		}
 	
 	@Override
 	public void mouseReleased(MouseEvent e) {

@@ -15,6 +15,8 @@ import java.awt.event.MouseListener;
 import java.awt.event.MouseMotionListener;
 import java.awt.geom.AffineTransform;
 import java.awt.geom.Line2D;
+import java.awt.geom.NoninvertibleTransformException;
+import java.awt.geom.Point2D;
 import java.io.BufferedWriter;
 import java.io.File;
 import java.io.FileWriter;
@@ -58,6 +60,7 @@ public class WorkPanel extends JPanel implements MouseListener, MouseMotionListe
 	private Point pointOfClick = new Point();
 	private static final int HIT_BOX_SIZE = 35;
 	
+	private AffineTransform scaleTrans;
 	private double scale;
 	private Point scalePoint = null;
 	
@@ -79,6 +82,7 @@ public class WorkPanel extends JPanel implements MouseListener, MouseMotionListe
 		setFocusable(true);
 		
 		scale = 1.0;
+		scaleTrans = AffineTransform.getScaleInstance(scale, scale);
 		
 		menuEdit.addActionListener(new ActionListener()
 		{
@@ -127,18 +131,15 @@ public class WorkPanel extends JPanel implements MouseListener, MouseMotionListe
 	{
 //		super.paintComponents(g);
 		Graphics2D g2 = (Graphics2D)g.create();
-		if (scalePoint == null)
-		{
-			super.paint(g);
-		}
-		else
+		//AffineTransform back = g2.getTransform();
+		if (scalePoint != null)
 		{
 			System.out.println("scalePoint != null");
-//			AffineTransform back = g2.getTransform()
-			//super.paintComponent(g2);
 			scalePoint = null;
 		};
-		g2.scale(scale, scale);
+		//g2.scale(scale, scale);
+		scaleTrans = AffineTransform.getScaleInstance(scale, scale);
+		g2.transform(scaleTrans);
 		super.paint(g2);
 		g2.dispose();
 	}
@@ -147,7 +148,6 @@ public class WorkPanel extends JPanel implements MouseListener, MouseMotionListe
 	public void mouseClicked(MouseEvent e) {
 		
 		boolean checkClickLine = checkRightClickLine(e.getX(),e.getY());
-		pointOfClick = e.getPoint();
 		
 		if(checkClickLine == true && SwingUtilities.isRightMouseButton(e) && seltype == SelectedType.NOTHING)
 		{			
@@ -157,7 +157,7 @@ public class WorkPanel extends JPanel implements MouseListener, MouseMotionListe
 		{
 			if(seltype==SelectedType.DELETE)
 			{
-				  getClickedLine(e.getX(),e.getY());
+				  getClickedLine(scaleInt(e.getX()), scaleInt(e.getY()));
 			}
 			else if (seltype == SelectedType.ZOOMIN)
 			{
@@ -178,6 +178,14 @@ public class WorkPanel extends JPanel implements MouseListener, MouseMotionListe
 				System.out.println("Zoom default");
 			}
 			repaint();
+			Point2D m = e.getPoint();
+			try {
+				 m = scaleTrans.inverseTransform(e.getPoint(), e.getPoint());
+			} catch (NoninvertibleTransformException e1) {
+				// TODO Auto-generated catch block
+				e1.printStackTrace();
+			}
+			System.out.println(m.getX() + " " + m.getY() + " " + scaleInt(e.getX()) + " " + scaleInt(e.getY()));
 		}
 	}
 	
@@ -195,6 +203,7 @@ public class WorkPanel extends JPanel implements MouseListener, MouseMotionListe
 		
 	}
 	
+	// input must be scaled
 	private void getClickedLine(double x, double y) {
 		// TODO Auto-generated method stub
 		
@@ -204,7 +213,6 @@ public class WorkPanel extends JPanel implements MouseListener, MouseMotionListe
 		int width = HIT_BOX_SIZE;
 		int height = HIT_BOX_SIZE;
 		int count = 0;
-		//System.out.println(boxX+","+boxY+","+width+","+height);
 		for (Connection c:connections)
 		{
 			Line2D line = new Line2D.Float();
@@ -232,13 +240,13 @@ public class WorkPanel extends JPanel implements MouseListener, MouseMotionListe
 		
 	}
 	
-	@Override
+	@Override // handles scaling
 	public void mouseEntered(MouseEvent e) {
 		//System.out.println("Mouse entered.");
 		if (selected != null && seltype == SelectedType.DEVICE && selected.getParent() != this)
 		{
 			selected.setSolidity(0.5f);
-			selected.setLocation(e.getX() - (32), e.getY() - (32));
+			selected.setLocation(scaleInt(e.getX()) - (32), scaleInt(e.getY()) - (32));
 			_dragFromX = 32;
 			_dragFromY = 32;
 			this.add(selected, 0);
@@ -288,12 +296,11 @@ public class WorkPanel extends JPanel implements MouseListener, MouseMotionListe
 					}
 					else if (seltype == SelectedType.LINE && drawLine == null && selected != null)
 					{
-						drawLine = new Connection(selected, e.getPoint());
+						drawLine = new Connection(selected, new Point(scaleInt(e.getX()), scaleInt(e.getY())));
 						selected = null;
 						repaint();
 					}
 				}
-				
 			}
 			else if (seltype == SelectedType.DEVICE)
 			{
@@ -302,29 +309,29 @@ public class WorkPanel extends JPanel implements MouseListener, MouseMotionListe
 		}
 	}
 	
+	// handles scaling
 	private void selectItem(MouseEvent e)
 	{
-		
 		for (int crd=items.size()-1; crd>=0; crd--) //... Find card image this is in.  Check from top down.
 //		for (int crd = 0; crd < items.size(); crd++)
 		{
 			JLabel testCard = items.get(crd);
-			if (testCard.contains(e.getX(), e.getY()))
+			if (testCard.contains(scaleInt(e.getX()), scaleInt(e.getY())))
 			{
 				//... Found, remember this card for dragging.
-				_dragFromX = e.getX() - testCard.getX();  // how far from left
-				_dragFromY = e.getY() - testCard.getY();  // how far from top
+				_dragFromX = scaleInt(e.getX()) - testCard.getX();  // how far from left
+				_dragFromY = scaleInt(e.getY()) - testCard.getY();  // how far from top
 				selected = testCard;  // Remember what we're dragging.
 				break;	
 			}	
 		}
-		
 	}
 	
+	// handles scaling
 	private void placeNewItem(MouseEvent e)
 	{
 		seltype = SelectedType.NOTHING;
-		selected.setLocation(e.getX() - (32), e.getY() - (32));
+		selected.setLocation(scaleInt(e.getX()) - (32), scaleInt(e.getY()) - (32));
 		selected.setSolidity(1.0f);
 		_dragFromX = 32;
 		_dragFromY = 32;
@@ -334,7 +341,7 @@ public class WorkPanel extends JPanel implements MouseListener, MouseMotionListe
 		selected = null;
 		this.repaint();
 	//	DeviceProperties dp = new DeviceProperties();	
-		}
+	}
 	
 	@Override
 	public void mouseReleased(MouseEvent e) {
@@ -359,32 +366,33 @@ public class WorkPanel extends JPanel implements MouseListener, MouseMotionListe
 		}
 	}
 
-	@Override
+	@Override // handles scaling
 	public void mouseMoved(MouseEvent e) {
 		if (seltype == SelectedType.NOTHING)
 		{
 			if (mouseOver != null)
-				{checkMouseOverItem = true;
-				if (!mouseOver.contains(e.getPoint()))
 				{
-					invalidateMouseOver();
-				}
+					checkMouseOverItem = true;
+					if (!mouseOver.contains(scaleInt(e.getX()), scaleInt(e.getY())));
+					{
+						invalidateMouseOver();
+					}
 				}
 			if (selected == null && mouseOver == null)
 				checkMouseOverItem = false;
-				for (JLabel j : items)
-					if (j.contains(e.getPoint()) && mouseOver ==  null)
-					{
-						doMouseOver(j);
-						break;
-					}
+			for (JLabel j : items)
+				if (j.contains(scaleInt(e.getX()), scaleInt(e.getY())) && mouseOver ==  null)
+				{
+					doMouseOver(j);
+					break;
+				}
 		}
 		if (seltype == SelectedType.DEVICE)
 			if (selected != null)
 				moveItem(e);
 		if (seltype == SelectedType.LINE && drawLine != null)
 		{
-			drawLine.setEnd(e.getPoint());
+			drawLine.setEnd(new Point(scaleInt(e.getX()), scaleInt(e.getY())));
 		}
 		repaint();
 	}
@@ -409,12 +417,13 @@ public class WorkPanel extends JPanel implements MouseListener, MouseMotionListe
 		repaint();
 	}
 	
+	// handles scaling
 	private void moveItem(MouseEvent e)
 	{
 		if (selected != null) {   // Non-null if pressed inside card image.
             
-            int newX = e.getX() - _dragFromX;
-            int newY = e.getY() - _dragFromY;
+            int newX = scaleInt(e.getX()) - _dragFromX;
+            int newY = scaleInt(e.getY()) - _dragFromY;
             
             //--- Don't move the image off the screen sides
             newX = Math.max(newX, 0);
@@ -430,23 +439,24 @@ public class WorkPanel extends JPanel implements MouseListener, MouseMotionListe
          //   items.add(selected);
 		}
 	}
+	
+	//handle the scaling
 	private void showPopup(MouseEvent e)
 	{
 		selectItem(e);
-		popupMenu.show(e.getComponent(),e.getX(),e.getY());
+		popupMenu.show(e.getComponent(), scaleInt(e.getX()), scaleInt(e.getY()));
 	}
 	
 	public void keyPressed(KeyEvent key)
 	{
-		//System.out.println("delete key pressed");
 		if(key.getKeyCode()==KeyEvent.VK_DELETE)
 		{
+			//System.out.println("delete key pressed");
 		}
 	}
 	
 	@Override
 	public void keyReleased(KeyEvent key) {
-		// TODO Auto-generated method stub
 		if(key.getKeyChar()==KeyEvent.VK_DELETE)
 		{
 		}
@@ -455,7 +465,6 @@ public class WorkPanel extends JPanel implements MouseListener, MouseMotionListe
 	
 	@Override
 	public void keyTyped(KeyEvent key) {
-		// TODO Auto-generated method stub
 		if(key.getKeyCode()==KeyEvent.VK_DELETE)
 		{
 		}
@@ -467,13 +476,14 @@ public class WorkPanel extends JPanel implements MouseListener, MouseMotionListe
 	
 	
 	private void scaleOrigin() { scale = 1; }
-	private void scaleMinus() { if (scale > 0) scale -= 0.1; }
-	private void scalePlus() { if (scale < 2) scale += 0.1; }
+	private void scaleMinus() { if (scale > 0.8) scale -= 0.05; }
+	private void scalePlus() { if (scale < 1.2) scale += 0.05; }
 	
+	// handles scaling
 	private Point checkFocus(Point t)
 	{
-		int newX = (int)t.getX();
-		int newY = (int)t.getY();
+		int newX = scaleInt((int)t.getX());
+		int newY = scaleInt((int)t.getY());
 
         //--- Don't move focus off the screen sides
         newX = Math.max(newX, 1024 / 2);
@@ -485,4 +495,8 @@ public class WorkPanel extends JPanel implements MouseListener, MouseMotionListe
 		
 		return new Point(newX, newY);
 	}
+	
+	private int scaleInt(int i)
+	{ return (int)Math.round(i / scale); }
+
 }

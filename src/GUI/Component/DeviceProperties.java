@@ -2,7 +2,11 @@ package GUI.Component;
 
 import java.awt.Dimension;
 import java.awt.FlowLayout;
+import java.awt.Frame;
 import java.awt.GridLayout;
+import java.awt.event.MouseEvent;
+import java.awt.event.MouseListener;
+import java.awt.event.WindowEvent;
 
 import javax.swing.BorderFactory;
 import javax.swing.Box;
@@ -14,8 +18,6 @@ import javax.swing.JFrame;
 import javax.swing.JPanel;
 import javax.swing.JTextField;
 import javax.swing.SwingConstants;
-import javax.swing.UIManager;
-import javax.swing.UnsupportedLookAndFeelException;
 import javax.swing.border.Border;
 import javax.swing.border.TitledBorder;
 
@@ -34,9 +36,9 @@ public class DeviceProperties extends JFrame
 	private JPanel mainPanel, topPanel,midPanel,btmPanel,containerPanel,comboBoxPanel;
 	private JComboBox<String> jcbPort;
 	private TitledBorder deviceTitle = null,portTitle = null;
-	String[] ports = { "Port1", "Port2", "Port3", "Port4", "Port5" };
+	String[] ports = { "Port 1", "Port 2", "Port 3", "Port 4", "Port 5" };
 	
-	public DeviceProperties() {
+	public DeviceProperties(String t) {
 		
 		mainPanel = new JPanel();
 		topPanel = new JPanel();
@@ -58,6 +60,18 @@ public class DeviceProperties extends JFrame
 		
 		jbApply = new JButton("Apply");
 		jbCancel = new JButton("Cancel");
+		jbCancel.addMouseListener(new MouseListener() {
+			@Override
+			public void mouseReleased(MouseEvent e) {}
+			@Override
+			public void mousePressed(MouseEvent e) {}
+			@Override
+			public void mouseExited(MouseEvent e) {}
+			@Override
+			public void mouseEntered(MouseEvent e) {}
+			@Override
+			public void mouseClicked(MouseEvent e) { closeThis(); }
+		});
 		
 		jlHostName = new JLabel("HostName");
 		jlReceiveBuff = new JLabel("Receive Buffer");
@@ -121,15 +135,19 @@ public class DeviceProperties extends JFrame
 		
 		this.add(mainPanel);  
 		
-		setTitle("Properties");
+		setTitle(t + " Properties");
 		setVisible(true);
 		setResizable(false);
 		setPreferredSize(new Dimension(getPreferredSize()));
-		pack();	
+		pack();
 		
-}
+		
+	}
 	
-	 }
+	private void closeThis(){
+		this.dispatchEvent(new WindowEvent(this, WindowEvent.WINDOW_CLOSING));
+	}
+}
 	
 	
 	

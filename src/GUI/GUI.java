@@ -27,43 +27,13 @@ import GUI.Component.PalateUI;
 import GUI.Component.WorkAreaUI;
 
 public class GUI extends JApplet {
+	public GUI() {
+	}
 	JLayeredPane mainPanel;
 	private PalateUI palate = null;
 	private PDUPanel stats = null;
 	private MenuBarUI menu = null;
 	private WorkAreaUI work = null;
-	
-//	public GUI(){
-//		int bottomBar = 0;//24;
-//		//this.setResizable(false);
-//		this.setPreferredSize(new Dimension(1024, 720));
-//		this.setSize(this.getPreferredSize());
-//		this.setMinimumSize(this.getPreferredSize());
-//		
-//		mainPanel = new JLayeredPane();
-//		//mainPanel.setLayout(new BoxLayout(mainPanel, BoxLayout.Y_AXIS));
-//		mainPanel.setLayout(null);
-//		
-//		menu = new MenuBarUI();
-//		menu.setBounds(0, 0, this.getPreferredSize().width, menu.getPreferredSize().height);
-//		
-//		work = new WorkAreaUI();
-//		work.setBounds(0, menu.getPreferredSize().height, this.getPreferredSize().width, this.getPreferredSize().height - menu.getPreferredSize().height - bottomBar);
-//		
-//		stats = new PDUPanel();
-//		stats.setBounds(0, this.getPreferredSize().height - stats.getPreferredSize().height - bottomBar - 2, stats.getPreferredSize().width, stats.getPreferredSize().height);
-//		
-//		palate = new PalateUI(work);
-//		//palate.setBounds(0, menu.getPreferredSize().height, palate.getPreferredSize().width, this.getPreferredSize().height - menu.getPreferredSize().height - stats.getPreferredSize().height); //palate.getPreferredSize().height);
-//		palate.setBounds(0, menu.getPreferredSize().height + 65, palate.getPreferredSize().width, palate.getPreferredSize().height);
-//		
-//		mainPanel.add(menu);
-//		mainPanel.add(palate, JLayeredPane.PALETTE_LAYER);
-//		mainPanel.add(stats);
-//		mainPanel.add(work, JLayeredPane.DEFAULT_LAYER);
-//		
-//		this.setContentPane(mainPanel);
-//	}
 	
 	public void init(){
 		EventQueue.invokeLater(new Runnable() {
@@ -87,15 +57,17 @@ public class GUI extends JApplet {
 				menu = new MenuBarUI();
 				menu.setBounds(0, 0, app.getPreferredSize().width, menu.getPreferredSize().height);
 				
-				work = new WorkAreaUI();
-				work.setBounds(0, menu.getPreferredSize().height, app.getPreferredSize().width, app.getPreferredSize().height - menu.getPreferredSize().height - bottomBar);
-				
 				stats = new PDUPanel();
-				stats.setBounds(0, app.getPreferredSize().height - stats.getPreferredSize().height - bottomBar - 2, stats.getPreferredSize().width, stats.getPreferredSize().height);
+				stats.setBounds(0, app.getPreferredSize().height - stats.getPreferredSize().height - bottomBar, stats.getPreferredSize().width, stats.getPreferredSize().height);
+				
+				work = new WorkAreaUI();
+				work.setBounds(0, menu.getPreferredSize().height, app.getPreferredSize().width, app.getPreferredSize().height - stats.getPreferredSize().height - menu.getPreferredSize().height);
 				
 				palate = new PalateUI(work);
 				//palate.setBounds(0, menu.getPreferredSize().height, palate.getPreferredSize().width, this.getPreferredSize().height - menu.getPreferredSize().height - stats.getPreferredSize().height); //palate.getPreferredSize().height);
-				palate.setBounds(0, menu.getPreferredSize().height + 65, palate.getPreferredSize().width, palate.getPreferredSize().height);
+//				palate.setBounds(0, menu.getPreferredSize().height + 65, palate.getPreferredSize().width, palate.getPreferredSize().height);
+//				palate.setBounds(app.getPreferredSize().width - palate.getPreferredSize().width, app.getPreferredSize().height - palate.getPreferredSize().height, palate.getPreferredSize().width, palate.getPreferredSize().height);
+				palate.setBounds(stats.getPreferredSize().width, app.getPreferredSize().height - palate.getPreferredSize().height, app.getPreferredSize().width - stats.getPreferredSize().width, palate.getPreferredSize().height);
 				
 				mainPanel.add(menu);
 				mainPanel.add(palate, JLayeredPane.PALETTE_LAYER);

@@ -22,9 +22,13 @@ import GUI.Component.Labels.JCustomBtnLabel;
 import GUI.Component.Labels.JLabel.Type;
 
 public class PalateUI extends JPanel{
+	private final String vertDev = "<html><p style=\"padding:1\">D<br/>E<br/>V<br/>I<br/>C<br/>E</p></html>";
+	private final String vertTool = "<html><p style=\"padding:1\">T<br/>O<br/>O<br/>L<br/>S</p></html>";
+	private final String horiDev = "DEVICE";
+	private final String horiTool = "TOOLS";
 	public JToggleButton lineButton,deleteButton;
 	private JTabbedPane tab = null;
-	private JPanel devPalate, toolsPalate = null;
+	private JPanel devPalate, toolPalate = null;
 	private ImageIcon iconPC, iconHUB, iconROUTER, iconSWITCH, iconLINE,iconDELETE = null;
 	private GridLayout devGrid, toolsGrid = null;
 	private int x, y = 100;
@@ -38,7 +42,7 @@ public class PalateUI extends JPanel{
 		
 		tab = new JTabbedPane();
 		tab.setTabPlacement(JTabbedPane.LEFT);
-		tab.setPreferredSize(new Dimension(200, 400));
+		//tab.setPreferredSize(new Dimension(200, 400));
 		tab.setOpaque(false);
 		tab.setBorder(null);
 		
@@ -148,7 +152,7 @@ public class PalateUI extends JPanel{
 		devPalate.add(routLabel);
 		devPalate.add(hubLabel);
 		devPalate.add(switchLabel);
-		tab.addTab("<html><p style=\"padding:1\">D<br/>E<br/>V<br/>I<br/>C<br/>E</p></html>", devPalate);
+		tab.addTab(vertDev, devPalate);
 		
 		lineButton = new JToggleButton("Line");
 		lineButton.setSelected(false);
@@ -199,17 +203,17 @@ public class PalateUI extends JPanel{
 			}
 		});
 		
-		this.toolsPalate = new JPanel();
-		this.toolsPalate.setLayout(new GridLayout(0,2));
-		this.toolsPalate.setBackground(Color.WHITE);
+		this.toolPalate = new JPanel();
+		this.toolPalate.setLayout(new GridLayout(0,2));
+		this.toolPalate.setBackground(Color.WHITE);
 		
-		toolsPalate.add(lineButton);
-		toolsPalate.add(deleteButton);
-		toolsPalate.add(new JLabel());
-		toolsPalate.add(new JLabel());
-		toolsPalate.add(new JLabel());
+		toolPalate.add(lineButton);
+		toolPalate.add(deleteButton);
+//		toolPalate.add(new JLabel());
+//		toolPalate.add(new JLabel());
+//		toolPalate.add(new JLabel());
 		
-		tab.addTab("<html><p style=\"padding:1\">T<br/>O<br/>O<br/>L<br/>S</p></html>", toolsPalate);
+		tab.addTab(vertTool, toolPalate);
 		tab.addChangeListener(new ChangeListener() {
 			
 			@Override
@@ -226,7 +230,26 @@ public class PalateUI extends JPanel{
 			}
 		});
 		
+		horizontalOutlook();
+		
 		this.add(tab, BorderLayout.CENTER);
 		this.setOpaque(false);
+	}
+	
+	private void horizontalOutlook()
+	{
+		this.setPreferredSize(new Dimension(400, 200));
+		this.setMinimumSize(this.getPreferredSize());
+		tab.setTabPlacement(JTabbedPane.TOP);
+		tab.setTitleAt(0, horiDev);
+		tab.setTitleAt(1, horiTool);
+	}
+	
+	private void verticalOutlook()
+	{
+		this.setPreferredSize(new Dimension(200, 400));
+		this.setMinimumSize(this.getPreferredSize());
+		tab.setTitleAt(0, vertDev);
+		tab.setTitleAt(1, vertTool);
 	}
 }

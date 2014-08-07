@@ -26,27 +26,28 @@ import java.util.ArrayList;
 public class WorkAreaUI extends JPanel {
 	private WorkPanel work = null;
 	private JScrollPane scroll = null;
-//	private PalateUI pui = null;
 	
 	public WorkAreaUI(){
 		this.setLayout(new BorderLayout());
 		work = new WorkPanel();
 		work.setPreferredSize(new Dimension(1600,1200));
-//		work.setMinimumSize(new Dimension(1600,1200));
 		work.setBackground(Color.WHITE);
 		
 		scroll = new JScrollPane(work);
-		scroll.setHorizontalScrollBarPolicy(ScrollPaneConstants.HORIZONTAL_SCROLLBAR_ALWAYS);
-		scroll.setVerticalScrollBarPolicy(ScrollPaneConstants.VERTICAL_SCROLLBAR_ALWAYS);
+		scroll.setHorizontalScrollBarPolicy(ScrollPaneConstants.HORIZONTAL_SCROLLBAR_NEVER);
+		scroll.setVerticalScrollBarPolicy(ScrollPaneConstants.VERTICAL_SCROLLBAR_NEVER);
 		this.setPreferredSize(new Dimension(800, 600));
 		add(scroll, BorderLayout.CENTER);
 	}
 	
 	public void setSelected(GUI.Component.Labels.JLabel temp) { work.setSelected(temp); }
-	public void setLine(JToggleButton t, boolean b){ work.setLine(t,b); }
-	public void cancelLine(boolean b){ work.cancelLine(b); }
-	public void deleteLine(JToggleButton u, boolean b){ work.deleteLine(u,b); }
-	public void cancelDelete(boolean b){ work.cancelDelete(b); }
-//	public void toggleButton(boolean c){pui.toggleButton(c);}
+	public void setLine(JToggleButton t){ work.setLine(t); }
+	public void cancelLine(){ work.cancelLine(); }
+	public void deleteLine(JToggleButton u){ work.deleteLine(u); }
+	public void cancelDelete(){ work.cancelDelete(); }
 	
+	public void zoomIn(JToggleButton t) { work.setZoomIn(t); }
+	public void zoomOut(JToggleButton t) { work.setZoomOut(t); }
+	public void zoom(JToggleButton t) { work.setZoom(t); }
+	public void cancelZoom(){ work.cancelZoom(); }
 }

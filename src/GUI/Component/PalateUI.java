@@ -26,12 +26,13 @@ public class PalateUI extends JPanel{
 	private final String vertTool = "<html><p style=\"padding:1\">T<br/>O<br/>O<br/>L<br/>S</p></html>";
 	private final String horiDev = "DEVICE";
 	private final String horiTool = "TOOLS";
-	public JToggleButton lineButton,deleteButton;
+	
+	private JToggleButton lineButton, deleteButton, zoomInButton, zoomOutButton, zoomButton;
 	private JTabbedPane tab = null;
 	private JPanel devPalate, toolPalate = null;
-	private ImageIcon iconPC, iconHUB, iconROUTER, iconSWITCH, iconLINE,iconDELETE = null;
+	private ImageIcon iconPC, iconHUB, iconROUTER, iconSWITCH, iconLINE, iconDELETE, iconZoomIn, iconZoomOut, iconZoom = null;
 	private GridLayout devGrid, toolsGrid = null;
-	private int x, y = 100;
+	private int x, y = 50;
 	private JCustomBtnLabel hubLabel, switchLabel, routLabel, pcLabel = null;
 	private WorkAreaUI work = null;
 	private int com, hub, swi = 0;
@@ -56,6 +57,9 @@ public class PalateUI extends JPanel{
 		iconROUTER = new ImageIcon(PalateUI.class.getResource("/Images/router.jpeg"), "Router");
 		iconLINE = new ImageIcon(PalateUI.class.getResource("/Images/line.jpg"), "Line");
 		iconDELETE = new ImageIcon(PalateUI.class.getResource("/Images/cross.png"), "Cross");
+		iconZoomIn = new ImageIcon(getClass().getResource("/Images/1403889420_519953-014_ZoomIn.png"));
+		iconZoomOut = new ImageIcon(getClass().getResource("/Images/1403889424_519894-015_ZoomOut.png"));
+		iconZoom = new ImageIcon(getClass().getResource("/Images/1403889427_519895-013_MagnifyingGlass.png"));
 		
 		pcLabel = new JCustomBtnLabel("Computer", iconPC);
 		pcLabel.addMouseListener(new MouseListener() {
@@ -159,7 +163,7 @@ public class PalateUI extends JPanel{
 		lineButton.setBackground(Color.WHITE);
 		lineButton.setOpaque(false);
 		lineButton.setBorder(null);
-		lineButton.setIcon(new ImageIcon(iconLINE.getImage()));
+		lineButton.setIcon(new ImageIcon(iconLINE.getImage().getScaledInstance(50, 50, 0)));
 		lineButton.setHorizontalTextPosition(JToggleButton.CENTER);
 		lineButton.setVerticalTextPosition(JToggleButton.BOTTOM);
 		lineButton.addItemListener(new ItemListener() {
@@ -167,15 +171,13 @@ public class PalateUI extends JPanel{
 			public void itemStateChanged(ItemEvent evt) {
 				if(evt.getStateChange()==ItemEvent.SELECTED)
 				{
-					//flag here
-					work.setLine(lineButton, true);
 					deleteButton.setSelected(false);
+					zoomButton.setSelected(false);
+					zoomInButton.setSelected(false);
+					zoomOutButton.setSelected(false);
+					work.setLine(lineButton);
 				}
-				if(evt.getStateChange()==ItemEvent.DESELECTED)
-				{
-					//flag here
-					work.cancelLine(false);
-				}
+				if(evt.getStateChange()==ItemEvent.DESELECTED) { work.cancelLine(); }
 			}
 		});
 		
@@ -184,7 +186,7 @@ public class PalateUI extends JPanel{
 		deleteButton.setBackground(Color.WHITE);
 		deleteButton.setOpaque(false);
 		deleteButton.setBorder(null);
-		deleteButton.setIcon(new ImageIcon(iconDELETE.getImage()));
+		deleteButton.setIcon(new ImageIcon(iconDELETE.getImage().getScaledInstance(50, 50, 0)));
 		deleteButton.setHorizontalTextPosition(JToggleButton.CENTER);
 		deleteButton.setVerticalTextPosition(JToggleButton.BOTTOM);
 		deleteButton.addItemListener(new ItemListener() {
@@ -192,30 +194,98 @@ public class PalateUI extends JPanel{
 			public void itemStateChanged(ItemEvent evt) {
 				if(evt.getStateChange()==ItemEvent.SELECTED)
 				{
-					work.deleteLine(deleteButton,true);
 					lineButton.setSelected(false);
+					zoomButton.setSelected(false);
+					zoomInButton.setSelected(false);
+					zoomOutButton.setSelected(false);
+					work.deleteLine(deleteButton);
 				}
-				if(evt.getStateChange()==ItemEvent.DESELECTED)
+				if(evt.getStateChange()==ItemEvent.DESELECTED) { work.cancelDelete(); }
+			}
+		});
+		
+		zoomInButton = new JToggleButton("Zoom In");
+		zoomInButton.setSelected(false);
+		zoomInButton.setBackground(Color.WHITE);
+		zoomInButton.setOpaque(false);
+		zoomInButton.setBorder(null);
+		zoomInButton.setIcon(new ImageIcon(iconZoomIn.getImage().getScaledInstance(50, 50, 0)));
+		zoomInButton.setHorizontalTextPosition(JToggleButton.CENTER);
+		zoomInButton.setVerticalTextPosition(JToggleButton.BOTTOM);
+		zoomInButton.addItemListener(new ItemListener() {
+			@Override
+			public void itemStateChanged(ItemEvent evt) {
+				if(evt.getStateChange()==ItemEvent.SELECTED)
 				{
-					//flag here
-					work.cancelDelete(false);
+					lineButton.setSelected(false);
+					deleteButton.setSelected(false);
+					zoomButton.setSelected(false);
+					zoomOutButton.setSelected(false);
+					work.zoomIn(zoomInButton);
 				}
+				if(evt.getStateChange()==ItemEvent.DESELECTED) { work.cancelZoom(); }
+			}
+		});
+		
+		zoomOutButton = new JToggleButton("Zoom Out");
+		zoomOutButton.setSelected(false);
+		zoomOutButton.setBackground(Color.WHITE);
+		zoomOutButton.setOpaque(false);
+		zoomOutButton.setBorder(null);
+		zoomOutButton.setIcon(new ImageIcon(iconZoomOut.getImage().getScaledInstance(50, 50, 0)));
+		zoomOutButton.setHorizontalTextPosition(JToggleButton.CENTER);
+		zoomOutButton.setVerticalTextPosition(JToggleButton.BOTTOM);
+		zoomOutButton.addItemListener(new ItemListener() {
+			@Override
+			public void itemStateChanged(ItemEvent evt) {
+				if(evt.getStateChange()==ItemEvent.SELECTED)
+				{
+					lineButton.setSelected(false);
+					deleteButton.setSelected(false);
+					zoomButton.setSelected(false);
+					zoomInButton.setSelected(false);
+					work.zoomOut(zoomOutButton);
+				}
+				if(evt.getStateChange()==ItemEvent.DESELECTED) { work.cancelZoom(); }
+			}
+		});
+		
+		zoomButton = new JToggleButton("Default Zoom");
+		zoomButton.setSelected(false);
+		zoomButton.setBackground(Color.WHITE);
+		zoomButton.setOpaque(false);
+		zoomButton.setBorder(null);
+		zoomButton.setIcon(new ImageIcon(iconZoom.getImage().getScaledInstance(50, 50, 0)));
+		zoomButton.setHorizontalTextPosition(JToggleButton.CENTER);
+		zoomButton.setVerticalTextPosition(JToggleButton.BOTTOM);
+		zoomButton.addItemListener(new ItemListener() {
+			@Override
+			public void itemStateChanged(ItemEvent evt) {
+				if(evt.getStateChange()==ItemEvent.SELECTED)
+				{
+					lineButton.setSelected(false);
+					deleteButton.setSelected(false);
+					zoomOutButton.setSelected(false);
+					zoomInButton.setSelected(false);
+					work.zoom(zoomButton);
+				}
+				if(evt.getStateChange()==ItemEvent.DESELECTED) { work.cancelZoom(); }
 			}
 		});
 		
 		this.toolPalate = new JPanel();
-		this.toolPalate.setLayout(new GridLayout(0,2));
+		this.toolPalate.setLayout(new GridLayout(2, 0));
 		this.toolPalate.setBackground(Color.WHITE);
 		
 		toolPalate.add(lineButton);
 		toolPalate.add(deleteButton);
-//		toolPalate.add(new JLabel());
-//		toolPalate.add(new JLabel());
-//		toolPalate.add(new JLabel());
+		toolPalate.add(new JLabel());
+		toolPalate.add(zoomInButton);
+		toolPalate.add(zoomOutButton);
+		toolPalate.add(zoomButton);
 		
 		tab.addTab(vertTool, toolPalate);
 		tab.addChangeListener(new ChangeListener() {
-			
 			@Override
 			public void stateChanged(ChangeEvent e) {
 				// TODO Auto-generated method stub
@@ -224,8 +294,10 @@ public class PalateUI extends JPanel{
 				{
 					lineButton.setSelected(false);
 					deleteButton.setSelected(false);
-					work.cancelDelete(false);
-					
+					zoomOutButton.setSelected(false);
+					zoomInButton.setSelected(false);
+					zoomButton.setSelected(false);
+					work.cancelLine();
 				}
 			}
 		});

@@ -4,6 +4,7 @@ import java.awt.Color;
 import java.awt.Component;
 import java.awt.Event;
 import java.awt.Graphics;
+import java.awt.Graphics2D;
 import java.awt.Point;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
@@ -12,6 +13,7 @@ import java.awt.event.KeyListener;
 import java.awt.event.MouseEvent;
 import java.awt.event.MouseListener;
 import java.awt.event.MouseMotionListener;
+import java.awt.geom.AffineTransform;
 import java.awt.geom.Line2D;
 import java.io.BufferedWriter;
 import java.io.File;
@@ -39,10 +41,7 @@ import javax.swing.event.PopupMenuListener;
 
 
 public class WorkPanel extends JPanel implements MouseListener, MouseMotionListener,KeyListener{
-	public enum SelectedType
-	{
-		NOTHING, LINE, DEVICE, DELETE
-	};
+	public enum SelectedType { NOTHING, LINE, DEVICE, DELETE, ZOOMIN, ZOOMOUT, ZOOMORIGIN };
 	private static ArrayList<JLabel> items = null;
 	private JLabel selected, mouseOver = null;
 	private int _dragFromX, _dragFromY, _initX, _initY;
@@ -50,8 +49,6 @@ public class WorkPanel extends JPanel implements MouseListener, MouseMotionListe
 	private Connection drawLine = null;
 	private static ArrayList<Connection> connections = null;
 	private JToggleButton toolToReset = null;
-	//private WorkAreaUI pui = null;
-	//private PalateUI palate = null;
 	private DeviceToolTip devtip = null;
 	private JPopupMenu popupMenu = new JPopupMenu();
 	private JMenuItem menuEdit = new JMenuItem("Edit");
@@ -60,6 +57,9 @@ public class WorkPanel extends JPanel implements MouseListener, MouseMotionListe
 	private boolean isDevicePropertiesOpen = false;
 	private Point pointOfClick = new Point();
 	private static final int HIT_BOX_SIZE = 35;
+	
+	private double scale;
+	private Point scalePoint = null;
 	
 	private JButton savebtn = new JButton("Save");
 	
@@ -78,15 +78,18 @@ public class WorkPanel extends JPanel implements MouseListener, MouseMotionListe
 		popupMenu.add(menuDelete);
 		setFocusable(true);
 		
+		scale = 1.0;
+		
 		menuEdit.addActionListener(new ActionListener()
 		{
 			public void actionPerformed(ActionEvent e)
 			{ 
 				if(isDevicePropertiesOpen == false)
 				{
-				DeviceProperties dp = new DeviceProperties();
-			}
+					DeviceProperties dp = new DeviceProperties(selected.getText());
+					selected = null;
 				}
+			}
 		});
 		
 		menuDelete.addActionListener(new ActionListener()
@@ -99,11 +102,15 @@ public class WorkPanel extends JPanel implements MouseListener, MouseMotionListe
 		});
 		
 	}
-	public void setSelected(JLabel temp) { this.selected = temp; this.seltype = SelectedType.DEVICE/* System.out.println(temp.getText() + " clicked"); System.out.println(selected.getPreferredSize())*/; }
-	public void setLine(JToggleButton t,boolean b){ this.selected = null; this.seltype = SelectedType.LINE; toolToReset = t; /*System.out.println("selected");*/ }
-	public void deleteLine(JToggleButton u, boolean b){this.selected = null; this.seltype = SelectedType.DELETE; toolToReset = u; /*System.out.println("delete line selected")*/;}
-	public void cancelLine(boolean b){ this.selected = null; this.drawLine = null; this.seltype = SelectedType.NOTHING; toolToReset = null; repaint(); }
-	public void cancelDelete(boolean b){this.selected = null; this.seltype=SelectedType.NOTHING; toolToReset = null;/*System.out.println("cancel delete line")*/;}
+	public void setSelected(JLabel temp) { this.selected = temp; this.seltype = SelectedType.DEVICE; }
+	public void setLine(JToggleButton t){ this.selected = null; this.seltype = SelectedType.LINE; toolToReset = t; }
+	public void deleteLine(JToggleButton u){this.selected = null; this.seltype = SelectedType.DELETE; toolToReset = u; }
+	public void setZoomIn(JToggleButton t){ this.selected = null; this.seltype = SelectedType.ZOOMIN; toolToReset = t; }
+	public void setZoomOut(JToggleButton t){ this.selected = null; this.seltype = SelectedType.ZOOMOUT; toolToReset = t; }
+	public void setZoom(JToggleButton t){ this.selected = null; this.seltype = SelectedType.ZOOMORIGIN; toolToReset = t; }
+	public void cancelLine(){ this.selected = null; this.drawLine = null; this.seltype = SelectedType.NOTHING; toolToReset = null; }
+	public void cancelDelete(){this.selected = null; this.seltype = SelectedType.NOTHING; toolToReset = null;}
+	public void cancelZoom(){ this.selected = null; this.seltype = SelectedType.NOTHING; toolToReset = null; }
 	
 	@Override
 	public void paintComponent(Graphics g)
@@ -113,7 +120,27 @@ public class WorkPanel extends JPanel implements MouseListener, MouseMotionListe
 			drawLine.paint(g);
 		for (Connection c : connections)
 			c.paint(g);
-		//g.dispose();
+	}
+	
+	@Override
+	public void paint(Graphics g)
+	{
+//		super.paintComponents(g);
+		Graphics2D g2 = (Graphics2D)g.create();
+		if (scalePoint == null)
+		{
+			super.paint(g);
+		}
+		else
+		{
+			System.out.println("scalePoint != null");
+//			AffineTransform back = g2.getTransform()
+			//super.paintComponent(g2);
+			scalePoint = null;
+		};
+		g2.scale(scale, scale);
+		super.paint(g2);
+		g2.dispose();
 	}
 	
 	@Override
@@ -122,15 +149,35 @@ public class WorkPanel extends JPanel implements MouseListener, MouseMotionListe
 		boolean checkClickLine = checkRightClickLine(e.getX(),e.getY());
 		pointOfClick = e.getPoint();
 		
-		if(checkClickLine == true && SwingUtilities.isRightMouseButton(e) )
+		if(checkClickLine == true && SwingUtilities.isRightMouseButton(e) && seltype == SelectedType.NOTHING)
 		{			
 			showPopup(e);
 		}
-		
-		if(seltype==SelectedType.DELETE)
+		if (SwingUtilities.isLeftMouseButton(e))
 		{
-			  getClickedLine(e.getX(),e.getY());
-			  repaint();
+			if(seltype==SelectedType.DELETE)
+			{
+				  getClickedLine(e.getX(),e.getY());
+			}
+			else if (seltype == SelectedType.ZOOMIN)
+			{
+				scalePoint = checkFocus(e.getPoint());
+				scalePlus();
+				System.out.println("Zoom in");
+			}
+			else if (seltype == SelectedType.ZOOMOUT)
+			{
+				scalePoint = checkFocus(e.getPoint());
+				scaleMinus();
+				System.out.println("Zoom Out");
+			}
+			else if (seltype == SelectedType.ZOOMORIGIN)
+			{
+				scalePoint = checkFocus(e.getPoint());
+				scaleOrigin();
+				System.out.println("Zoom default");
+			}
+			repaint();
 		}
 	}
 	
@@ -173,10 +220,6 @@ public class WorkPanel extends JPanel implements MouseListener, MouseMotionListe
 		}
 		for (int crd=0; crd<items.size(); crd++) 
 		{
-			
-			//System.out.println(items.size()+"item size");
-		
-			//System.out.println(crd+ " crd");
 			JLabel testCard = items.get(crd);
 			if (testCard.contains((int)x, (int)y))
 			{
@@ -194,15 +237,11 @@ public class WorkPanel extends JPanel implements MouseListener, MouseMotionListe
 		//System.out.println("Mouse entered.");
 		if (selected != null && seltype == SelectedType.DEVICE && selected.getParent() != this)
 		{
-			//selected.setForeground(new Color(0, 0, 0, .5f));
 			selected.setSolidity(0.5f);
-//			selected.setBounds(e.getX() - (32), e.getY() - (32), (int)selected.getPreferredSize().getWidth(), (int)selected.getPreferredSize().getHeight());
 			selected.setLocation(e.getX() - (32), e.getY() - (32));
 			_dragFromX = 32;
 			_dragFromY = 32;
-	//		System.out.println(selected.getBounds() + "\t" + e.getPoint());
 			this.add(selected, 0);
-//			this.add(selected);
 			repaint();
 		}
 	}
@@ -210,14 +249,10 @@ public class WorkPanel extends JPanel implements MouseListener, MouseMotionListe
 	@Override
 	public void mouseExited(MouseEvent e) {
 		// TODO Auto-generated method stub
-	//	System.out.println("Mouse exit.");
 		if (seltype == SelectedType.DEVICE)
 		{
 			remove(selected);
 		}
-	//	System.out.println(seltype);
-	//	seltype = SelectedType.NOTHING;
-	//	selected = null;
 		
 		this.repaint();
 	}
@@ -227,18 +262,14 @@ public class WorkPanel extends JPanel implements MouseListener, MouseMotionListe
 	{	
 		if (SwingUtilities.isRightMouseButton(e) && checkMouseOverItem ==true)
 		{		
-			//	System.out.println("Right Click");
-				showPopup(e);
+			showPopup(e);
 		}
-			if (SwingUtilities.isLeftMouseButton(e))
+		if (SwingUtilities.isLeftMouseButton(e))
 		{
-	//		System.out.println(getParent().getWidth() + ", " + getParent().getHeight() + "\t\t" + e.getX() + ", " + e.getY());
-		//	System.out.println(e.getX() + ", " + e.getY());
 		
 			if (seltype != SelectedType.DEVICE) // not new item
 			{
 			
-			//	System.out.print("\tNot new item");
 				if (selected == null)  // Assume not in any image.
 				{	
 					selectItem(e);			
@@ -257,7 +288,6 @@ public class WorkPanel extends JPanel implements MouseListener, MouseMotionListe
 					}
 					else if (seltype == SelectedType.LINE && drawLine == null && selected != null)
 					{
-						//System.out.print("new drawLine: ");
 						drawLine = new Connection(selected, e.getPoint());
 						selected = null;
 						repaint();
@@ -267,7 +297,6 @@ public class WorkPanel extends JPanel implements MouseListener, MouseMotionListe
 			}
 			else if (seltype == SelectedType.DEVICE)
 			{
-			//	System.out.println("place item");
 				placeNewItem(e);
 			}
 		}
@@ -295,8 +324,6 @@ public class WorkPanel extends JPanel implements MouseListener, MouseMotionListe
 	private void placeNewItem(MouseEvent e)
 	{
 		seltype = SelectedType.NOTHING;
-//		System.out.println("\tNew item: " + selected.getText() + ".");
-//		selected.setBounds(e.getX() - (32), e.getY() - (32), (int)selected.getPreferredSize().getWidth(), (int)selected.getPreferredSize().getHeight());
 		selected.setLocation(e.getX() - (32), e.getY() - (32));
 		selected.setSolidity(1.0f);
 		_dragFromX = 32;
@@ -351,8 +378,6 @@ public class WorkPanel extends JPanel implements MouseListener, MouseMotionListe
 						doMouseOver(j);
 						break;
 					}
-		//System.out.println(e.getPoint());
-		//if (newItem)
 		}
 		if (seltype == SelectedType.DEVICE)
 			if (selected != null)
@@ -407,6 +432,7 @@ public class WorkPanel extends JPanel implements MouseListener, MouseMotionListe
 	}
 	private void showPopup(MouseEvent e)
 	{
+		selectItem(e);
 		popupMenu.show(e.getComponent(),e.getX(),e.getY());
 	}
 	
@@ -415,17 +441,14 @@ public class WorkPanel extends JPanel implements MouseListener, MouseMotionListe
 		//System.out.println("delete key pressed");
 		if(key.getKeyCode()==KeyEvent.VK_DELETE)
 		{
-			//System.out.println("delete key pressed");
 		}
 	}
 	
 	@Override
 	public void keyReleased(KeyEvent key) {
 		// TODO Auto-generated method stub
-
 		if(key.getKeyChar()==KeyEvent.VK_DELETE)
 		{
-		//	System.out.println("delete key pressed");
 		}
 		
 	}
@@ -433,21 +456,33 @@ public class WorkPanel extends JPanel implements MouseListener, MouseMotionListe
 	@Override
 	public void keyTyped(KeyEvent key) {
 		// TODO Auto-generated method stub
-
 		if(key.getKeyCode()==KeyEvent.VK_DELETE)
 		{
-	//		System.out.println("delete key pressed");
 		}
 	}
 	
-	public static ArrayList<JLabel> getItemsList()
-	{
-		return items;
-	}
+	public static ArrayList<JLabel> getItemsList() { return items; }
 	
-	public static ArrayList<Connection> getConnList()
-	{
-		return connections;
-	}
+	public static ArrayList<Connection> getConnList() { return connections; }
 	
+	
+	private void scaleOrigin() { scale = 1; }
+	private void scaleMinus() { if (scale > 0) scale -= 0.1; }
+	private void scalePlus() { if (scale < 2) scale += 0.1; }
+	
+	private Point checkFocus(Point t)
+	{
+		int newX = (int)t.getX();
+		int newY = (int)t.getY();
+
+        //--- Don't move focus off the screen sides
+        newX = Math.max(newX, 1024 / 2);
+        newX = Math.min(newX, getWidth() / 2);
+        
+        //--- Don't move focus off top or bottom
+        newY = Math.max(newY, 720 / 2);
+        newY = Math.min(newY, getHeight() / 2);
+		
+		return new Point(newX, newY);
+	}
 }

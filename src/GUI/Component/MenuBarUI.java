@@ -23,10 +23,9 @@ import GUI.Component.Labels.Connection;
 import GUI.Component.Labels.JLabel;
 
 public class MenuBarUI extends JPanel {
-	//private JLabel btnNew, btnSave, btnLoad, btnPrint, btnCopy, btnPaste, btnUndo, btnRedo, btnZoomIn, btnZoomOut, btnZoomDef = null;
-	private ImageIcon imgNew, imgSave, imgLoad, imgPrint, imgCopy, imgPaste, imgUndo, imgRedo, imgZoomIn, imgZoomOut, imgZoomDef = null;
-	private JButton btnNew, btnSave, btnLoad, btnPrint, btnCopy, btnPaste, btnUndo, btnRedo, btnZoomIn, btnZoomOut, btnZoomDef = null;
-	private JPanel projPane, editPane, zoomPane = null;
+	private ImageIcon imgNew, imgSave, imgLoad, imgPrint, imgCopy, imgPaste, imgUndo, imgRedo = null;
+	private JButton btnNew, btnSave, btnLoad, btnPrint, btnCopy, btnPaste, btnUndo, btnRedo = null;
+	private JPanel projPane, editPane = null;
 	
 	public MenuBarUI(){
 		int iconSize = 24;
@@ -113,39 +112,8 @@ public class MenuBarUI extends JPanel {
 		editPane.add(btnUndo);
 		editPane.add(btnRedo);
 		
-		
-		imgZoomIn = new ImageIcon(getClass().getResource("/Images/1403889420_519953-014_ZoomIn.png"));
-		imgZoomOut = new ImageIcon(getClass().getResource("/Images/1403889424_519894-015_ZoomOut.png"));
-		imgZoomDef = new ImageIcon(getClass().getResource("/Images/1403889427_519895-013_MagnifyingGlass.png"));
-		
-		btnZoomIn = new JButton();
-		btnZoomIn.setIcon(new ImageIcon(imgZoomIn.getImage().getScaledInstance(iconSize, iconSize, 0)));
-		btnZoomIn.setMargin(new Insets(0, 0, 0, 0));
-		btnZoomIn.setBorderPainted(false);
-		btnZoomIn.setOpaque(false);
-		
-		btnZoomOut = new JButton();
-		btnZoomOut.setIcon(new ImageIcon(imgZoomOut.getImage().getScaledInstance(iconSize, iconSize, 0)));
-		btnZoomOut.setMargin(new Insets(0, 0, 0, 0));
-		btnZoomOut.setBorderPainted(false);
-		btnZoomOut.setOpaque(false);
-		
-		btnZoomDef = new JButton();
-		btnZoomDef.setIcon(new ImageIcon(imgZoomDef.getImage().getScaledInstance(iconSize, iconSize, 0)));
-		btnZoomDef.setMargin(new Insets(0, 0, 0, 0));
-		btnZoomDef.setBorderPainted(false);
-		btnZoomDef.setOpaque(false);
-		
-		zoomPane = new JPanel(new FlowLayout(FlowLayout.LEFT, 0, 0));
-		zoomPane.setBackground(Color.WHITE);
-		zoomPane.setBorder(BorderFactory.createCompoundBorder(BorderFactory.createMatteBorder(1, 0, 1, 1, Color.LIGHT_GRAY), BorderFactory.createEmptyBorder(0, 2, 0, 5)));
-		zoomPane.add(btnZoomIn);
-		zoomPane.add(btnZoomOut);
-		zoomPane.add(btnZoomDef);
-		
 		this.add(projPane);
 		this.add(editPane);
-		this.add(zoomPane);
 	}
 	
 	public void save()

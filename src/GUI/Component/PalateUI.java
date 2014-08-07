@@ -281,8 +281,8 @@ public class PalateUI extends JPanel{
 		toolPalate.add(deleteButton);
 		toolPalate.add(new JLabel());
 		toolPalate.add(zoomInButton);
-		toolPalate.add(zoomOutButton);
 		toolPalate.add(zoomButton);
+		toolPalate.add(zoomOutButton);
 		
 		tab.addTab(vertTool, toolPalate);
 		tab.addChangeListener(new ChangeListener() {

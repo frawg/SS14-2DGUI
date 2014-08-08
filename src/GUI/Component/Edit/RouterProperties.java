@@ -25,7 +25,6 @@ import javax.swing.JOptionPane;
 
 public class RouterProperties extends JFrame
 {
-	
 	private JButton jbApply, jbCancel;
 	private JLabel jlHostName, jlReceiveBuff,jlSendBuff,jlProtocols;
 	private JLabel jlIPV4, jlGateway,jlSubnet,jlMacAddress;
@@ -34,7 +33,8 @@ public class RouterProperties extends JFrame
 	private JPanel mainPanel, topPanel,midPanel,btmPanel,containerPanel,comboBoxPanel;
 	private TitledBorder deviceTitle = null,portTitle = null;
 	
-	public RouterProperties(final Nodes.ROUTER router, final WorkPanel wp) {
+	public RouterProperties(final Nodes.ROUTER router) {
+		this.requestFocus();
 		final JFrame frame = this;
 		mainPanel = new JPanel();
 		topPanel = new JPanel();
@@ -145,7 +145,6 @@ public class RouterProperties extends JFrame
 			public void actionPerformed(ActionEvent e)
 			{
 				//Execute when button is pressed
-				wp.invalidateMouseOver();
 				frame.dispose();
 			}
         }); 

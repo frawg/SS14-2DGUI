@@ -32,7 +32,8 @@ public class ComputerProperties extends JFrame
 	private JPanel mainPanel, topPanel,midPanel,btmPanel,containerPanel,comboBoxPanel;
 	private TitledBorder deviceTitle = null,portTitle = null;
 	
-	public ComputerProperties(final Nodes.COMPUTER comp, final WorkPanel wp) {
+	public ComputerProperties(final Nodes.COMPUTER comp) {
+		this.requestFocus();
 		final JFrame frame = this;
 		mainPanel = new JPanel();
 		topPanel = new JPanel();
@@ -143,7 +144,6 @@ public class ComputerProperties extends JFrame
 			public void actionPerformed(ActionEvent e)
 			{
 				//Execute when button is pressed
-				wp.invalidateMouseOver();
 				frame.dispose();
 			}
 		}); 

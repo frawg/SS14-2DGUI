@@ -13,6 +13,8 @@ import java.awt.event.KeyListener;
 import java.awt.event.MouseEvent;
 import java.awt.event.MouseListener;
 import java.awt.event.MouseMotionListener;
+import java.awt.event.WindowAdapter;
+import java.awt.event.WindowEvent;
 import java.awt.geom.AffineTransform;
 import java.awt.geom.Line2D;
 import java.awt.geom.NoninvertibleTransformException;
@@ -90,13 +92,23 @@ public class WorkPanel extends JPanel implements MouseListener, MouseMotionListe
 					if (element.type == Globals.Globals.Type.COMPUTER) { 
 						System.out.println("Edit menu for computer");
 						Nodes.COMPUTER c = Globals.Globals.computerList.get(element.index);
-						new ComputerProperties(c, getThis());                                      
+						new ComputerProperties(c).addWindowListener(new WindowAdapter() {
+							@Override
+						    public void windowOpened(WindowEvent we) { resetSelects(); }
+							@Override
+						    public void windowClosed(WindowEvent we) { getThis().requestFocus(); }
+						});
 					}
 					else if (element.type == Globals.Globals.Type.ROUTER) {
 						System.out.println("Edit menu for router");
 						Nodes.ROUTER r = Globals.Globals.routerList.get(element.index);
-						new RouterProperties(r, getThis());
-					}                                
+						new RouterProperties(r).addWindowListener(new WindowAdapter() {
+							@Override
+						    public void windowOpened(WindowEvent we) { resetSelects(); }
+							@Override
+						    public void windowClosed(WindowEvent we) { getThis().requestFocus(); }
+						});
+					}
 				}
 			}
 		});
@@ -417,7 +429,7 @@ public class WorkPanel extends JPanel implements MouseListener, MouseMotionListe
 		selected = null;
 	}
 	
-	public void invalidateMouseOver()
+	private void invalidateMouseOver()
 	{
 		Globals.Element element = new Globals.Element();
 		element = Globals.Parser.getSelectedElement();
@@ -445,7 +457,6 @@ public class WorkPanel extends JPanel implements MouseListener, MouseMotionListe
         	c.setUnSelected();
         }              
         mouseOver = null;
-        selected = null;
 		repaint();
 	}
 	
@@ -541,4 +552,10 @@ public class WorkPanel extends JPanel implements MouseListener, MouseMotionListe
 	private int unscaleInt(int i)
 	{ return (int)Math.round(i * scale); }
 	private WorkPanel getThis() { return this; }
+	
+	public void resetSelects()
+	{
+		invalidateMouseOver();
+		selected = null;
+	}
 }

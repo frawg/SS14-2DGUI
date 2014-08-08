@@ -1,48 +1,41 @@
 package GUI;
 
-import java.awt.BorderLayout;
-import java.awt.Component;
 import java.awt.Dimension;
 import java.awt.EventQueue;
-import java.awt.FlowLayout;
-import java.awt.MenuBar;
-import java.awt.event.AdjustmentEvent;
-import java.awt.event.AdjustmentListener;
-import java.awt.event.MouseEvent;
-import java.awt.event.MouseListener;
-import java.awt.event.MouseWheelEvent;
-import java.awt.event.MouseWheelListener;
+import java.util.ArrayList;
 
-import javax.swing.BoxLayout;
 import javax.swing.JApplet;
-import javax.swing.JFrame;
 import javax.swing.JLayeredPane;
-import javax.swing.JPanel;
-import javax.swing.event.ChangeEvent;
-import javax.swing.event.ChangeListener;
 
 import GUI.Component.MenuBarUI;
 import GUI.Component.PDUPanel;
 import GUI.Component.PalateUI;
 import GUI.Component.WorkAreaUI;
+import Nodes.COMPUTER;
+import Nodes.HUB;
+import Nodes.ROUTER;
+import Nodes.SWITCH;
 
 public class GUI extends JApplet {
-	public GUI() {
-	}
 	JLayeredPane mainPanel;
 	private PalateUI palate = null;
 	private PDUPanel stats = null;
 	private MenuBarUI menu = null;
 	private WorkAreaUI work = null;
 	
+	public GUI() {
+        Globals.Globals.computerList = new ArrayList<COMPUTER>();
+        Globals.Globals.hubList = new ArrayList<HUB>();
+        Globals.Globals.switchList = new ArrayList<SWITCH>();
+        Globals.Globals.routerList = new ArrayList<ROUTER>();
+	}
+	
 	public void init(){
 		EventQueue.invokeLater(new Runnable() {
 			
 			@Override
 			public void run() {
-				// TODO Auto-generated method stub
 				JApplet app = GUI.this;
-				
 
 				int bottomBar = 0;//24;
 				//this.setResizable(false);

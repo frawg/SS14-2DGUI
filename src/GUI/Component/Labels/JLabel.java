@@ -6,11 +6,9 @@ import java.awt.Graphics2D;
 import java.awt.Point;
 
 public class JLabel extends javax.swing.JLabel{
-	public enum Type{
-		COMPUTER,SWITCH,HUB,ROUTER
-	};
+	private int id;
 	
-	private Type type;
+	private Globals.Globals.Type type;
 	private float solidity;
 	
 	public JLabel() {
@@ -40,6 +38,12 @@ public class JLabel extends javax.swing.JLabel{
 	public JLabel(java.lang.String arg0, javax.swing.Icon arg1, int arg2)
 	{
 		super(arg0, arg1, arg2);
+		solidity = 1.0f;
+	}
+	public JLabel(java.lang.String arg0, javax.swing.Icon arg1, int arg2, int id)
+	{                
+		super(arg0, arg1, arg2);
+        this.id = id;
 		solidity = 1.0f;
 	}
 	
@@ -76,15 +80,19 @@ public class JLabel extends javax.swing.JLabel{
 					&& getLocation().getY() < (double)y && (getLocation().getY() + (double)getHeight()) > (double)y);
 	}
 	
-	public void setType(Type t)
+	public void setType(Globals.Globals.Type t)
 	{
 		type = t;
 	}
 	
-	public Type getType()
+	public Globals.Globals.Type getType()
 	{
 		return type;
 	}
+	
+	public int getID(){
+        return id;
+    }
 	
 	public Point getMiddleOfIcon() { return new Point(getX() + 25 , getY() + 25); }
 	public Point getBottomRightOfIcon() { return new Point(getX() + getWidth(), getY() + getHeight()); }

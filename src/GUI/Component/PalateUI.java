@@ -14,12 +14,14 @@ import javax.swing.JPanel;
 import javax.swing.JTabbedPane;
 import javax.swing.JToggleButton;
 import javax.swing.border.LineBorder;
-
 import javax.swing.event.ChangeEvent;
 import javax.swing.event.ChangeListener;
 
 import GUI.Component.Labels.JCustomBtnLabel;
-import GUI.Component.Labels.JLabel.Type;
+import Nodes.COMPUTER;
+import Nodes.HUB;
+import Nodes.ROUTER;
+import Nodes.SWITCH;
 
 public class PalateUI extends JPanel{
 	private final String vertDev = "<html><p style=\"padding:1\">D<br/>E<br/>V<br/>I<br/>C<br/>E</p></html>";
@@ -35,7 +37,7 @@ public class PalateUI extends JPanel{
 	private int x, y = 50;
 	private JCustomBtnLabel hubLabel, switchLabel, routLabel, pcLabel = null;
 	private WorkAreaUI work = null;
-	private int com, hub, swi = 0;
+	private int com, hub, swi, rout = 0;
 	
 	public PalateUI(WorkAreaUI twork)
 	{
@@ -67,8 +69,14 @@ public class PalateUI extends JPanel{
 			public void mouseReleased(MouseEvent arg0) {}
 			@Override
 			public void mousePressed(MouseEvent arg0) {
-				GUI.Component.Labels.JLabel temp = new GUI.Component.Labels.JLabel("Computer"+com, new ImageIcon(iconPC.getImage().getScaledInstance(50, 50, 0)), JLabel.CENTER);
-				temp.setType(Type.COMPUTER);
+				COMPUTER pc = new COMPUTER(Globals.Globals.pcCounter);
+                Globals.Globals.pcCounter++; // increment the COMPUTER Counter                                
+                Globals.Globals.computerList.add(pc); // add this node to nodeList
+            
+                GUI.Component.Labels.JLabel temp = new GUI.Component.Labels.JLabel("Computer"+pc.getID(),
+                        new ImageIcon(iconPC.getImage().getScaledInstance(50, 50, 0)), JLabel.CENTER, pc.getID());
+				//GUI.Component.Labels.JLabel temp = new GUI.Component.Labels.JLabel("Computer"+com, new ImageIcon(iconPC.getImage().getScaledInstance(50, 50, 0)), JLabel.CENTER);
+				temp.setType(Globals.Globals.Type.COMPUTER);
 				temp.setVerticalTextPosition(JLabel.BOTTOM);
 				temp.setHorizontalTextPosition(JLabel.CENTER);
 				work.setSelected(temp);
@@ -88,13 +96,17 @@ public class PalateUI extends JPanel{
 			public void mouseReleased(MouseEvent arg0) {}
 			@Override
 			public void mousePressed(MouseEvent arg0) {
-                            
+				ROUTER r = new ROUTER(Globals.Globals.routerCounter);
+                Globals.Globals.routerCounter++; // increment the COMPUTER Counter                                
+                Globals.Globals.routerList.add(r); // add this node to nodeList
+				
 				GUI.Component.Labels.JLabel temp = new GUI.Component.Labels.JLabel("Router",
-                                        new ImageIcon(iconROUTER.getImage().getScaledInstance(50, 50, 0)), JLabel.CENTER);
-				temp.setType(Type.ROUTER);
+                                        new ImageIcon(iconROUTER.getImage().getScaledInstance(50, 50, 0)), JLabel.CENTER, r.getID());
+				temp.setType(Globals.Globals.Type.ROUTER);
 				temp.setVerticalTextPosition(JLabel.BOTTOM);
 				temp.setHorizontalTextPosition(JLabel.CENTER);
 				work.setSelected(temp);
+				rout += 1;
 			}
 			@Override
 			public void mouseExited(MouseEvent arg0) {}
@@ -110,8 +122,13 @@ public class PalateUI extends JPanel{
 			public void mouseReleased(MouseEvent arg0) {}
 			@Override
 			public void mousePressed(MouseEvent arg0) {
-				GUI.Component.Labels.JLabel temp = new GUI.Component.Labels.JLabel("HUB"+hub, new ImageIcon(iconHUB.getImage().getScaledInstance(50, 50, 0)), JLabel.CENTER);
-				temp.setType(Type.HUB);
+				HUB h = new HUB(Globals.Globals.hubCounter);
+                Globals.Globals.hubCounter++; // increment the Hub Counter                                
+                Globals.Globals.hubList.add(h); // add this node to nodeList
+                
+                GUI.Component.Labels.JLabel temp = new GUI.Component.Labels.JLabel("HUB"+h.getID(), 
+                        new ImageIcon(iconHUB.getImage().getScaledInstance(50, 50, 0)), JLabel.CENTER,h.getID());
+                temp.setType(Globals.Globals.Type.HUB);
 				temp.setVerticalTextPosition(JLabel.BOTTOM);
 				temp.setHorizontalTextPosition(JLabel.CENTER);
 				work.setSelected(temp);
@@ -131,8 +148,13 @@ public class PalateUI extends JPanel{
 			public void mouseReleased(MouseEvent arg0) {}
 			@Override
 			public void mousePressed(MouseEvent arg0) {
-				GUI.Component.Labels.JLabel temp = new GUI.Component.Labels.JLabel("Switch"+swi, new ImageIcon(iconSWITCH.getImage().getScaledInstance(50, 50, 0)), JLabel.CENTER);
-				temp.setType(Type.SWITCH);
+				SWITCH s = new SWITCH(Globals.Globals.switchCounter);
+                Globals.Globals.switchCounter++; // increment the Switch Counter                                
+                Globals.Globals.switchList.add(s); // add this node to nodeList
+                
+                GUI.Component.Labels.JLabel temp = new GUI.Component.Labels.JLabel("Switch"+s.getID(), 
+                        new ImageIcon(iconSWITCH.getImage().getScaledInstance(50, 50, 0)), JLabel.CENTER,s.getID());
+                temp.setType(Globals.Globals.Type.SWITCH);
 				temp.setVerticalTextPosition(JLabel.BOTTOM);
 				temp.setHorizontalTextPosition(JLabel.CENTER);
 				work.setSelected(temp);

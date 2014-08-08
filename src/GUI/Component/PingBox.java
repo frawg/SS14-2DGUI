@@ -62,13 +62,7 @@ public class PingBox extends JFrame
 	    frame.pack();
 	    frame.setVisible(true);
 	}
-	
 
-	public static void main(String[] args) 
-	{
-		PingBox pb = new PingBox();
-	}
-	
 	private class ButtonListener implements ActionListener
 	{
 		@Override

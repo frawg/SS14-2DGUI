@@ -33,6 +33,8 @@ import javax.swing.JPopupMenu;
 import javax.swing.JToggleButton;
 import javax.swing.SwingUtilities;
 
+import GUI.Component.Edit.ComputerProperties;
+import GUI.Component.Edit.RouterProperties;
 import GUI.Component.Labels.Connection;
 //import javax.swing.JLabel;
 import GUI.Component.Labels.JLabel;
@@ -40,7 +42,6 @@ import GUI.Component.Labels.JLabel;
 import javax.swing.JPanel;
 import javax.swing.event.PopupMenuEvent;
 import javax.swing.event.PopupMenuListener;
-
 
 public class WorkPanel extends JPanel implements MouseListener, MouseMotionListener,KeyListener{
 	public enum SelectedType { NOTHING, LINE, DEVICE, DELETE, ZOOMIN, ZOOMOUT, ZOOMORIGIN };
@@ -82,10 +83,25 @@ public class WorkPanel extends JPanel implements MouseListener, MouseMotionListe
 		{
 			public void actionPerformed(ActionEvent e)
 			{ 
-				if(isDevicePropertiesOpen == false && selected != null)
+//				if(isDevicePropertiesOpen == false && selected != null)
+//				{
+//					new DeviceProperties(selected.getText());
+//					selected = null;
+//				}
+				if(isDevicePropertiesOpen == false)
 				{
-					new DeviceProperties(selected.getText());
-					selected = null;
+					Globals.Element element = new Globals.Element();
+					element = Globals.Parser.getSelectedElement();
+					if(element.type == Globals.Globals.Type.COMPUTER){ 
+						System.out.println("Edit menu for computer");
+						Nodes.COMPUTER c = Globals.Globals.computerList.get(element.index);
+						ComputerProperties cp = new ComputerProperties(c);                                      
+					}
+					else if(element.type == Globals.Globals.Type.ROUTER){
+						System.out.println("Edit menu for router");
+						Nodes.ROUTER r = Globals.Globals.routerList.get(element.index);
+						RouterProperties rp = new RouterProperties(r);
+					}                                
 				}
 			}
 		});
@@ -358,39 +374,86 @@ public class WorkPanel extends JPanel implements MouseListener, MouseMotionListe
 	private void doMouseOver()
 	{
 		mouseOver = selected;
-		devtip = new DeviceToolTip(selected.getText(), "Device");
-		devtip.Add();
-		devtip.refreshSize();
 		
-        int newX = (int)selected.getX() + _initX;
-        int newY = (int)selected.getBottomRightOfIcon().getY();// + _initY;
+		Globals.Globals.Type t = mouseOver.getType();
+        int id = mouseOver.getID();
+        int index=Globals.Parser.getIndexByID(t,id);            
+        int nodeId = Globals.Parser.getIDByIndexAndType(t, index);
         
-        //--- Don't move the image off the screen sides
-        newX = Math.max(newX, 0);
-        newX = Math.min(newX, scaleInt(getParent().getWidth()) - devtip.getWidth() - selected.getWidth());
-        
-        //--- Don't move the image off top or bottom
-        newY = Math.max(newY, 0);
-        newY = Math.min(newY, scaleInt(getParent().getHeight()) - devtip.getHeight() - selected.getHeight());
+        if (t == Globals.Globals.Type.COMPUTER) {
+        	System.out.println("Computer"+nodeId+" selected");
+        	Globals.Globals.computerList.get(index).setSelected();
+        	devtip = new DeviceToolTip(Globals.Globals.computerList.get(index));
+        	devtip.AddRowForComputer(Globals.Globals.computerList.get(index));
+        	devtip.refreshSize();
+        	add(devtip, 0);
+        	devtip.revalidate();
+        }
+        else if (t == Globals.Globals.Type.HUB){
+        	System.out.println("Hub"+nodeId+" selected");
+        	Globals.Globals.hubList.get(index).setSelected();
+        } 
+        else if (t == Globals.Globals.Type.SWITCH){
+          System.out.println("Switch"+nodeId+" selected");
+          Globals.Globals.switchList.get(index).setSelected();
+        }  
+        else if (t == Globals.Globals.Type.ROUTER){
+          System.out.println("Router"+nodeId+" selected");
+          Globals.Globals.routerList.get(index).setSelected();
+        }  
 		
-		devtip.setLocation(newX, newY);
-		add(devtip, 0);
-		devtip.revalidate();
+        if (devtip != null)
+	    {
+        	int newX = (int)selected.getX() + _initX;
+	        int newY = (int)selected.getBottomRightOfIcon().getY();// + _initY;
+	        
+	        //--- Don't move the image off the screen sides
+	        newX = Math.max(newX, 0);
+	        newX = Math.min(newX, scaleInt(getParent().getWidth()) - devtip.getWidth() - selected.getWidth());
+	        
+	        //--- Don't move the image off top or bottom
+	        newY = Math.max(newY, 0);
+	        newY = Math.min(newY, scaleInt(getParent().getHeight()) - devtip.getHeight() - selected.getHeight());
+			
+			devtip.setLocation(newX, newY);
+        }
 		selected = null;
 	}
 	
 	private void invalidateMouseOver()
 	{
-		mouseOver = null;
-		remove(devtip);
-		devtip = null;
+		Globals.Element element = new Globals.Element();
+		element = Globals.Parser.getSelectedElement();
+        if (element.type == Globals.Globals.Type.COMPUTER)
+        {
+        	System.out.println("unselecting computer");
+        	Nodes.COMPUTER c = Globals.Globals.computerList.get(element.index);
+        	c.setUnSelected();
+        	remove(devtip);
+        	devtip = null;
+        } else if (element.type == Globals.Globals.Type.ROUTER)
+        {
+        	System.out.println("unselecting router");
+        	Nodes.ROUTER c = Globals.Globals.routerList.get(element.index);
+        	c.setUnSelected();
+        } else if (element.type == Globals.Globals.Type.HUB)
+        {
+        	System.out.println("unselecting hub");
+        	Nodes.HUB c = Globals.Globals.hubList.get(element.index);
+        	c.setUnSelected();
+        } else if (element.type == Globals.Globals.Type.SWITCH)
+        {
+        	System.out.println("unselecting switch");
+        	Nodes.SWITCH c = Globals.Globals.switchList.get(element.index);
+        	c.setUnSelected();
+        }              
+        mouseOver = null;
 		repaint();
 	}
 	
 	// handles scaling
 	private void moveItem(MouseEvent e)
 	{
-//		System.out.println(getWidth() + " " + getHeight());
 		if (selected != null) {   // Non-null if pressed inside card image.
             
             int newX = scaleInt(e.getX()) - _dragFromX;
@@ -406,8 +469,6 @@ public class WorkPanel extends JPanel implements MouseListener, MouseMotionListe
             selected.setLocation(newX, newY);
             remove(selected);
             add(selected, 0);
-         //   items.remove(selected);
-         //   items.add(selected);
 		}
 	}
 	

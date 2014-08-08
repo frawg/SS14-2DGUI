@@ -17,6 +17,34 @@ public class DeviceToolTip extends JPanel {
 	private ToolTipPortRow header = null;
 	private JPanel headPanel = null;
 	
+	public DeviceToolTip(Nodes.COMPUTER c){
+        System.out.println("hovering above computer");
+    
+		this.setLayout(new BoxLayout(this, BoxLayout.Y_AXIS));
+		
+		this.hostname = new JLabel(c.getguiID());
+		        type = new JLabel("Computer");
+		        
+		headPanel = new JPanel(new FlowLayout(FlowLayout.LEFT));
+		headPanel.add(new JLabel("Hostname: "));
+		headPanel.add(this.hostname);
+		
+		JLabel blank = new JLabel();
+		blank.setPreferredSize(new Dimension(20,20));
+		headPanel.add(blank);
+		
+		headPanel.add(new JLabel("Type: "));
+		headPanel.add(this.type);
+		
+		add(headPanel);
+		
+		header = new ToolTipPortRow();
+		add(header);                                
+		add(new JSeparator(JSeparator.HORIZONTAL));
+		
+		refreshSize();
+	}
+	
 	public DeviceToolTip(String hostname, String type){
 		this.setLayout(new BoxLayout(this, BoxLayout.Y_AXIS));
 		
@@ -52,4 +80,10 @@ public class DeviceToolTip extends JPanel {
 		add(new ToolTipPortRow());
 	}
 	public void refreshSize() { this.setSize(this.getPreferredSize()); }
+	
+	public void AddRowForComputer(Nodes.COMPUTER c)
+	{
+		add(new ToolTipPortRow(c.ipInterface.getinterfaceID(),c.ipInterface.getIPAddress(),
+                        "UP",c.ipInterface.getMACAddress()));
+	}      
 }

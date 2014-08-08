@@ -16,17 +16,17 @@ public class ToolTipPortRow extends JPanel {
 		this.setPreferredSize(new Dimension(420, 20));
 		this.setMaximumSize(this.getPreferredSize());
 
-		portname = new JLabel("Port"/*"FastEthernet 0/1/30"*/);
-		portname.setPreferredSize(new Dimension(100,10));
+		portname = new JLabel("Interface #"/*"FastEthernet 0/1/30"*/);
+		portname.setPreferredSize(new Dimension(85,10));
 		
-		this.ipv4 = new JLabel("IPv4 Address"/*"255.255.255.255"*/);
-		this.ipv4.setPreferredSize(new Dimension(90,10));
+		this.ipv4 = new JLabel("IP Address"/*"255.255.255.255"*/);
+		this.ipv4.setPreferredSize(new Dimension(80,10));
 		
 		this.status = new JLabel("Status");
 		this.status.setPreferredSize(new Dimension(40,10));
 		
 		macaddress = new JLabel("MAC Address"/*"0000.0000.0000"*/);
-		macaddress.setPreferredSize(new Dimension(90,10));
+		macaddress.setPreferredSize(new Dimension(120,10));
 		
 		JLabel blank = new JLabel();
 		blank.setPreferredSize(new Dimension(20,10));

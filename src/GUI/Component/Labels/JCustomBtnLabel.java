@@ -21,7 +21,6 @@ public class JCustomBtnLabel extends JLabel {
 
 	private void setCommon(ImageIcon icon){
 		transparency = 100;
-		//this.setIcon(new ImageIcon(new ImageIcon(this.getClass().getResource("/Images/hub.gif"), "Switch").getImage().getScaledInstance(50, 50, 0)));
 		this.setIcon(new ImageIcon(icon.getImage().getScaledInstance(50, 50, 0)));
 		this.setHorizontalTextPosition(JLabel.CENTER);
 		this.setVerticalTextPosition(JLabel.BOTTOM);
@@ -35,36 +34,24 @@ public class JCustomBtnLabel extends JLabel {
 			
 			@Override
 			public void mouseReleased(MouseEvent e) {
-				// TODO Auto-generated method stub
 				falseOpaque();
 				repaint();
 			}
 			
 			@Override
 			public void mousePressed(MouseEvent e) {
-				// TODO Auto-generated method stub
-				
 				trueOpaque();
 				repaint();
 			}
 			
 			@Override
-			public void mouseExited(MouseEvent e) {
-				// TODO Auto-generated method stub
-				setBorder(null);
-			}
+			public void mouseExited(MouseEvent e) { setBorder(null); }
 			
 			@Override
-			public void mouseEntered(MouseEvent e) {
-				// TODO Auto-generated method stub
-				setBorder(BorderFactory.createEtchedBorder(EtchedBorder.LOWERED));
-			}
+			public void mouseEntered(MouseEvent e) { setBorder(BorderFactory.createEtchedBorder(EtchedBorder.LOWERED)); }
 			
 			@Override
-			public void mouseClicked(MouseEvent e) {
-				// TODO Auto-generated method stub
-				//setColor(Color.LIGHT_GRAY);
-			}
+			public void mouseClicked(MouseEvent e) { }
 		});
 	}
 	

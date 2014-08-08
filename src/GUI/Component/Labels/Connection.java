@@ -36,9 +36,8 @@ public class Connection{
 	
 	public boolean contains(Point e)
 	{
-		Line2D temp = new Line2D.Float(jlStart.getLocation(), jlEnd.getLocation());
-		if (temp.ptLineDist(e) <= 10)
-			{return true;}
+		Line2D temp = new Line2D.Float(jlStart.getMiddleOfIcon(), jlEnd.getMiddleOfIcon());
+		if (temp.ptLineDist(e) <= 10 ) return true;
 		return false;
 	}
 	

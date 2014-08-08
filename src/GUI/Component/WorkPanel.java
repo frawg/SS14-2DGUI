@@ -518,13 +518,13 @@ public class WorkPanel extends JPanel implements MouseListener, MouseMotionListe
 	
 	private void scaleOrigin() { scale = 1; cancelTool(); }
 	private void scaleMinus() { 
-		if (scale > 0.8)
+		if (scale > 0.81)
 			scale -= 0.02;
 		else
 			cancelTool();
 	}
 	private void scalePlus() { 
-		if (scale < 1.2) 
+		if (scale < 1.21) 
 			scale += 0.02;
 		else
 			cancelTool();

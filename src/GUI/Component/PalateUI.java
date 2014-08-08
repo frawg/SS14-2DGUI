@@ -58,7 +58,7 @@ public class PalateUI extends JPanel{
 		iconHUB = new ImageIcon(PalateUI.class.getResource("/Images/hub.gif"), "Hub");
 		iconROUTER = new ImageIcon(PalateUI.class.getResource("/Images/router.jpeg"), "Router");
 		iconLINE = new ImageIcon(PalateUI.class.getResource("/Images/line.jpg"), "Line");
-		iconDELETE = new ImageIcon(PalateUI.class.getResource("/Images/cross.png"), "Cross");
+		iconDELETE = new ImageIcon(PalateUI.class.getResource("/Images/delete.png"), "Cross");//"/Images/cross.png"), "Cross");
 		iconZoomIn = new ImageIcon(getClass().getResource("/Images/1403889420_519953-014_ZoomIn.png"));
 		iconZoomOut = new ImageIcon(getClass().getResource("/Images/1403889424_519894-015_ZoomOut.png"));
 		iconZoom = new ImageIcon(getClass().getResource("/Images/1403889427_519895-013_MagnifyingGlass.png"));

@@ -1,12 +1,15 @@
 package Nodes;
 
+import java.awt.Point;
+
 public class HUB {
    private int id;
    private boolean isSelected;
    private String macAddress;
-   private String guiID = "HUB"+this.id;
+   private String guiID = "HUB" + this.id;
    private enum STATUS { UP, DOWN, DELETED };
    private STATUS status;
+   private Point position;
 
    public HUB(int id)
    {
@@ -18,8 +21,7 @@ public class HUB {
    public void setSelected(){ isSelected = Boolean.TRUE;}
    public void setUnSelected(){ isSelected = Boolean.FALSE;}
    public Boolean isSelected(){ 
-       
-       if(isSelected == Boolean.TRUE)
+       if (isSelected == Boolean.TRUE)
            return Boolean.TRUE;
        else 
            return Boolean.FALSE;
@@ -33,7 +35,9 @@ public class HUB {
         return macAddress;
     }
    public String getguiID(){ return guiID; }
-   public STATUS getStatus(){
-       return status;
+   public STATUS getStatus(){ return status; }
+    public void setPosition(int x, int y){
+       position.x = x;
+       position.y = y;
    }
 }

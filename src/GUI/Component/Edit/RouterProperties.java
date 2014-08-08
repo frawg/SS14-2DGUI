@@ -22,7 +22,6 @@ import java.awt.event.ActionListener;
 
 import javax.swing.JOptionPane;
 
-
 public class RouterProperties extends JFrame
 {
 	private JButton jbApply, jbCancel;

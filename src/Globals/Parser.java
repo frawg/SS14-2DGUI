@@ -5,37 +5,33 @@ import Globals.Globals;
 public class Parser {
     
     static public int getIndexByID(Globals.Type type, int id){
-        int index=0;
+        int index = 0;
         if(type == Globals.Type.COMPUTER) {            
-            for(int i=0; i < Globals.computerList.size(); i++){
+            for (int i = 0; i < Globals.computerList.size(); i++){
                 int currID = Globals.computerList.get(i).getID();
-                if(id == currID){
+                if (id == currID){
                     index = i;
                     break;
                 }
             }
-        }
-        else if(type == Globals.Type.HUB) {            
-            for(int i=0; i < Globals.hubList.size(); i++){
+        } else if (type == Globals.Type.HUB) {            
+            for (int i = 0; i < Globals.hubList.size(); i++) {
                 int currID = Globals.hubList.get(i).getID();
-                if(id == currID){
+                if (id == currID){
                     index = i;
                     break;
                 }
             }
-        }
-        
-        else if(type == Globals.Type.SWITCH) {            
-            for(int i=0; i < Globals.switchList.size(); i++){
+        } else if (type == Globals.Type.SWITCH) {            
+            for (int i = 0; i < Globals.switchList.size(); i++){
                 int currID = Globals.switchList.get(i).getID();
-                if(id == currID){
+                if (id == currID){
                     index = i;
                     break;
                 }
             }
-        }
-        else if(type == Globals.Type.ROUTER) {            
-            for(int i=0; i < Globals.routerList.size(); i++){
+        } else if (type == Globals.Type.ROUTER) {            
+            for(int i = 0; i < Globals.routerList.size(); i++){
                 int currID = Globals.routerList.get(i).getID();
                 if(id == currID){
                     index = i;
@@ -48,67 +44,63 @@ public class Parser {
     
     static public int getIDByIndexAndType(Globals.Type type, int index){
         int returnIndex=0;
-        if(type==Globals.Type.COMPUTER){
-            returnIndex=Globals.computerList.get(index).getID();
+        if (type == Globals.Type.COMPUTER){
+            returnIndex = Globals.computerList.get(index).getID();
         }
         
-        else if(type==Globals.Type.HUB){
-            returnIndex= Globals.hubList.get(index).getID();
+        else if (type == Globals.Type.HUB){
+            returnIndex = Globals.hubList.get(index).getID();
         }
          
-        else  if(type==Globals.Type.SWITCH){
-            returnIndex= Globals.switchList.get(index).getID();
+        else if (type == Globals.Type.SWITCH){
+            returnIndex = Globals.switchList.get(index).getID();
         }
           
-        else if(type==Globals.Type.ROUTER){
+        else if (type == Globals.Type.ROUTER){
             returnIndex= Globals.routerList.get(index).getID();
         }
-            
-      
         return index;
     }
     
     /* This method returns the type of the element on which the mouse is hovering */
     static public Element getSelectedElement(){
          Element e = new Element();
-         for(int i=0; i < Globals.computerList.size(); i++){                
-                if(Globals.computerList.get(i).isSelected() == Boolean.TRUE){                    
+         for (int i = 0; i < Globals.computerList.size(); i++) {                
+                if (Globals.computerList.get(i).isSelected() == Boolean.TRUE){                    
                     e.ID = Globals.computerList.get(i).getID();
                     e.index = i;
                     e.type = Globals.Type.COMPUTER;
                 }
          }
          
-         for(int i=0; i < Globals.hubList.size(); i++){                
-                if(Globals.hubList.get(i).isSelected() == Boolean.TRUE){                    
+         for (int i = 0; i < Globals.hubList.size(); i++){                
+                if (Globals.hubList.get(i).isSelected() == Boolean.TRUE){                    
                     e.ID = Globals.hubList.get(i).getID();
                     e.index = i;
                     e.type = Globals.Type.HUB;
                 }
          }
          
-         for(int i=0; i < Globals.switchList.size(); i++){                
-                if(Globals.switchList.get(i).isSelected() == Boolean.TRUE){                    
+         for (int i = 0; i < Globals.switchList.size(); i++){                
+                if (Globals.switchList.get(i).isSelected() == Boolean.TRUE){                    
                     e.ID = Globals.switchList.get(i).getID();
                     e.index = i;
                     e.type = Globals.Type.SWITCH;
                 }
          }
          
-         for(int i=0; i < Globals.routerList.size(); i++){                
-                if(Globals.routerList.get(i).isSelected() == Boolean.TRUE){                    
+         for (int i = 0; i < Globals.routerList.size(); i++){                
+                if (Globals.routerList.get(i).isSelected() == Boolean.TRUE){                    
                     e.ID = Globals.routerList.get(i).getID();
                     e.index = i;
                     e.type = Globals.Type.ROUTER;
                 }
          }
-         
          return e;
-         
     }
     
      static public String getNextGlobalIPAddress(){
-       String ip = "192.168.1."+Globals.GlobalIP;
+       String ip = "192.168.1." + Globals.GlobalIP;
        Globals.GlobalIP++;
        return ip;
     }

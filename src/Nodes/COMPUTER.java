@@ -1,10 +1,13 @@
 package Nodes;
 
+import java.awt.Point;
+
 import Globals.Globals.*;
 import Network.*;
 
 public class COMPUTER {
    private String guiID;
+   private Point position;
    private int id;
    private int recvBuffer;
    private int sendBuffer;
@@ -16,10 +19,10 @@ public class COMPUTER {
    {
        status = STATUS.UP;
        this.id = id;
-       guiID = "Computer"+this.id;
+       guiID = "Computer" + this.id;
        ipInterface = new IPInterface();  // creating this also assigns global IP dynamically.
-       recvBuffer=100; // default 100 packets
-       sendBuffer=100; // detault 100 packets
+       recvBuffer = 100; // default 100 packets
+       sendBuffer = 100; // detault 100 packets
        
        
    }
@@ -27,7 +30,7 @@ public class COMPUTER {
    public void setUnSelected(){ isSelected = Boolean.FALSE;}
    public Boolean isSelected(){ 
        
-       if(isSelected == Boolean.TRUE)
+       if (isSelected == Boolean.TRUE)
            return Boolean.TRUE;
        else 
            return Boolean.FALSE;
@@ -44,6 +47,10 @@ public class COMPUTER {
    public void setrecvBuffer(int buff){ recvBuffer=buff; }
    public int getsendBuffer(){ return sendBuffer; }
    public void setsendBuffer(int buff){ sendBuffer=buff; }
+   public void setPosition(int x, int y){
+       position.x = x;
+       position.y = y;
+   }
    
    public STATUS getStatus(){
        return status;

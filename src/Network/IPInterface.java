@@ -20,24 +20,23 @@ public class IPInterface {
     
     public void setIPAddress(String ip){
        StringTokenizer st = new StringTokenizer(ip, ".");
-       if(st.countTokens() > 4){          
+       if (st.countTokens() > 4){          
            return;
        }
        while(st.hasMoreElements()){
-	  if(Integer.parseInt(st.nextElement().toString()) < 0 ||
+	  if (Integer.parseInt(st.nextElement().toString()) < 0 ||
                  Integer.parseInt(st.nextElement().toString()) > 255){
                  System.err.println("Error in IP Address");
                  return;
           }
        }
-        ipAddress=ip;
+        ipAddress = ip;
     }   
     
     public String getMACAddress(){
         return macAddress;
     }
     
-     
     public String getinterfaceID(){
         return interfaceID;
     }            

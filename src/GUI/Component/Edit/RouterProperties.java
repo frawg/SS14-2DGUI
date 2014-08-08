@@ -14,9 +14,12 @@ import javax.swing.JTextField;
 import javax.swing.border.Border;
 import javax.swing.border.TitledBorder;
 
+import GUI.Component.WorkPanel;
 import GUI.Component.Labels.JLabel;
+
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+
 import javax.swing.JOptionPane;
 
 
@@ -31,7 +34,7 @@ public class RouterProperties extends JFrame
 	private JPanel mainPanel, topPanel,midPanel,btmPanel,containerPanel,comboBoxPanel;
 	private TitledBorder deviceTitle = null,portTitle = null;
 	
-	public RouterProperties(final Nodes.ROUTER router) {
+	public RouterProperties(final Nodes.ROUTER router, final WorkPanel wp) {
 		final JFrame frame = this;
 		mainPanel = new JPanel();
 		topPanel = new JPanel();
@@ -142,6 +145,7 @@ public class RouterProperties extends JFrame
 			public void actionPerformed(ActionEvent e)
 			{
 				//Execute when button is pressed
+				wp.invalidateMouseOver();
 				frame.dispose();
 			}
         }); 

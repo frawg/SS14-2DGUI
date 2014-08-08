@@ -83,24 +83,19 @@ public class WorkPanel extends JPanel implements MouseListener, MouseMotionListe
 		{
 			public void actionPerformed(ActionEvent e)
 			{ 
-//				if(isDevicePropertiesOpen == false && selected != null)
-//				{
-//					new DeviceProperties(selected.getText());
-//					selected = null;
-//				}
 				if(isDevicePropertiesOpen == false)
 				{
 					Globals.Element element = new Globals.Element();
 					element = Globals.Parser.getSelectedElement();
-					if(element.type == Globals.Globals.Type.COMPUTER){ 
+					if (element.type == Globals.Globals.Type.COMPUTER) { 
 						System.out.println("Edit menu for computer");
 						Nodes.COMPUTER c = Globals.Globals.computerList.get(element.index);
-						ComputerProperties cp = new ComputerProperties(c);                                      
+						new ComputerProperties(c, getThis());                                      
 					}
-					else if(element.type == Globals.Globals.Type.ROUTER){
+					else if (element.type == Globals.Globals.Type.ROUTER) {
 						System.out.println("Edit menu for router");
 						Nodes.ROUTER r = Globals.Globals.routerList.get(element.index);
-						RouterProperties rp = new RouterProperties(r);
+						new RouterProperties(r, getThis());
 					}                                
 				}
 			}
@@ -377,11 +372,11 @@ public class WorkPanel extends JPanel implements MouseListener, MouseMotionListe
 		
 		Globals.Globals.Type t = mouseOver.getType();
         int id = mouseOver.getID();
-        int index=Globals.Parser.getIndexByID(t,id);            
+        int index=Globals.Parser.getIndexByID(t, id);            
         int nodeId = Globals.Parser.getIDByIndexAndType(t, index);
         
         if (t == Globals.Globals.Type.COMPUTER) {
-        	System.out.println("Computer"+nodeId+" selected");
+        	System.out.println("Computer" + nodeId + " selected");
         	Globals.Globals.computerList.get(index).setSelected();
         	devtip = new DeviceToolTip(Globals.Globals.computerList.get(index));
         	devtip.AddRowForComputer(Globals.Globals.computerList.get(index));
@@ -390,15 +385,15 @@ public class WorkPanel extends JPanel implements MouseListener, MouseMotionListe
         	devtip.revalidate();
         }
         else if (t == Globals.Globals.Type.HUB){
-        	System.out.println("Hub"+nodeId+" selected");
+        	System.out.println("Hub" + nodeId + " selected");
         	Globals.Globals.hubList.get(index).setSelected();
         } 
         else if (t == Globals.Globals.Type.SWITCH){
-          System.out.println("Switch"+nodeId+" selected");
+          System.out.println("Switch" + nodeId + " selected");
           Globals.Globals.switchList.get(index).setSelected();
         }  
         else if (t == Globals.Globals.Type.ROUTER){
-          System.out.println("Router"+nodeId+" selected");
+          System.out.println("Router" + nodeId + " selected");
           Globals.Globals.routerList.get(index).setSelected();
         }  
 		
@@ -417,10 +412,12 @@ public class WorkPanel extends JPanel implements MouseListener, MouseMotionListe
 			
 			devtip.setLocation(newX, newY);
         }
+        else
+        	mouseOver = null;
 		selected = null;
 	}
 	
-	private void invalidateMouseOver()
+	public void invalidateMouseOver()
 	{
 		Globals.Element element = new Globals.Element();
 		element = Globals.Parser.getSelectedElement();
@@ -448,6 +445,7 @@ public class WorkPanel extends JPanel implements MouseListener, MouseMotionListe
         	c.setUnSelected();
         }              
         mouseOver = null;
+        selected = null;
 		repaint();
 	}
 	
@@ -542,5 +540,5 @@ public class WorkPanel extends JPanel implements MouseListener, MouseMotionListe
 	{ return (int)Math.round(i / scale); }
 	private int unscaleInt(int i)
 	{ return (int)Math.round(i * scale); }
-
+	private WorkPanel getThis() { return this; }
 }

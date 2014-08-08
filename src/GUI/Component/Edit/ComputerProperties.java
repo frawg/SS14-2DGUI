@@ -8,16 +8,18 @@ import javax.swing.BorderFactory;
 import javax.swing.Box;
 import javax.swing.BoxLayout;
 import javax.swing.JButton;
-import javax.swing.JCheckBox;
 import javax.swing.JFrame;
 import javax.swing.JPanel;
 import javax.swing.JTextField;
 import javax.swing.border.Border;
 import javax.swing.border.TitledBorder;
 
+import GUI.Component.WorkPanel;
 import GUI.Component.Labels.JLabel;
+
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+
 import javax.swing.JOptionPane;
 
 public class ComputerProperties extends JFrame
@@ -27,11 +29,10 @@ public class ComputerProperties extends JFrame
 	private JLabel jlIPV4, jlGateway,jlSubnet,jlMacAddress;
 	private JTextField jtfHostName, jtfReceiveBuff,jtfSendBuff,jtfProtocols,jlMacAddressDisplay;
 	private JTextField jtfIPV4, jtfGateway, jtfSubnet;
-	private JCheckBox jcbDeviceShutdown, jcbPortShutdown;
 	private JPanel mainPanel, topPanel,midPanel,btmPanel,containerPanel,comboBoxPanel;
 	private TitledBorder deviceTitle = null,portTitle = null;
 	
-	public ComputerProperties(final Nodes.COMPUTER comp) {
+	public ComputerProperties(final Nodes.COMPUTER comp, final WorkPanel wp) {
 		final JFrame frame = this;
 		mainPanel = new JPanel();
 		topPanel = new JPanel();
@@ -42,8 +43,8 @@ public class ComputerProperties extends JFrame
 		
 		mainPanel.setLayout(new FlowLayout());
 		containerPanel.setLayout(new BoxLayout(containerPanel,BoxLayout.Y_AXIS));
-		topPanel.setLayout(new GridLayout(7,2));
-		midPanel.setLayout(new GridLayout(7,2));
+		topPanel.setLayout(new GridLayout(7, 2));
+		midPanel.setLayout(new GridLayout(7, 2));
 		btmPanel.setLayout(new FlowLayout());
 		comboBoxPanel.setLayout(new FlowLayout());
 		
@@ -82,15 +83,15 @@ public class ComputerProperties extends JFrame
 		
 		/* Populate Values */
 		jtfHostName.setText(comp.getguiID());
-		jtfReceiveBuff.setText(""+comp.getrecvBuffer());
-		jtfSendBuff.setText(""+comp.getsendBuffer());
+		jtfReceiveBuff.setText("" + comp.getrecvBuffer());
+		jtfSendBuff.setText("" + comp.getsendBuffer());
 		jtfProtocols.setText("Ethernet, ARP, IPv4");
 		jtfIPV4.setText(comp.ipInterface.getIPAddress());
 		jtfGateway.setText("Not Assigned");
 		jtfSubnet.setText("255.255.255.0");
 		jlMacAddressDisplay.setText(comp.ipInterface.getMACAddress());
              
-		Border paneEdge = BorderFactory.createEmptyBorder(10,10,10,10);
+		Border paneEdge = BorderFactory.createEmptyBorder(10, 10, 10, 10);
 		deviceTitle = BorderFactory.createTitledBorder("Device Properties");
 		portTitle = BorderFactory.createTitledBorder("Network Interface");
 		
@@ -142,6 +143,7 @@ public class ComputerProperties extends JFrame
 			public void actionPerformed(ActionEvent e)
 			{
 				//Execute when button is pressed
+				wp.invalidateMouseOver();
 				frame.dispose();
 			}
 		}); 

@@ -42,12 +42,10 @@ public class WorkAreaUI extends JPanel {
 	
 	public void setSelected(GUI.Component.Labels.JLabel temp) { work.setSelected(temp); }
 	public void setLine(JToggleButton t){ work.setLine(t); }
-	public void cancelLine(){ work.cancelLine(); }
-	public void deleteLine(JToggleButton u){ work.deleteLine(u); }
-	public void cancelDelete(){ work.cancelDelete(); }
+	public void cancelTool(){ work.cancelTool(); }
+	public void deleteLine(JToggleButton u){ work.setDelete(u); }
 	
 	public void zoomIn(JToggleButton t) { work.setZoomIn(t); }
 	public void zoomOut(JToggleButton t) { work.setZoomOut(t); }
 	public void zoom(JToggleButton t) { work.setZoom(t); }
-	public void cancelZoom(){ work.cancelZoom(); }
 }

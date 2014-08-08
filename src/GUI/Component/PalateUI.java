@@ -177,7 +177,7 @@ public class PalateUI extends JPanel{
 					zoomOutButton.setSelected(false);
 					work.setLine(lineButton);
 				}
-				if(evt.getStateChange()==ItemEvent.DESELECTED) { work.cancelLine(); }
+				if(evt.getStateChange()==ItemEvent.DESELECTED) { work.cancelTool(); }
 			}
 		});
 		
@@ -200,7 +200,7 @@ public class PalateUI extends JPanel{
 					zoomOutButton.setSelected(false);
 					work.deleteLine(deleteButton);
 				}
-				if(evt.getStateChange()==ItemEvent.DESELECTED) { work.cancelDelete(); }
+				if(evt.getStateChange()==ItemEvent.DESELECTED) { work.cancelTool(); }
 			}
 		});
 		
@@ -223,7 +223,7 @@ public class PalateUI extends JPanel{
 					zoomOutButton.setSelected(false);
 					work.zoomIn(zoomInButton);
 				}
-				if(evt.getStateChange()==ItemEvent.DESELECTED) { work.cancelZoom(); }
+				if(evt.getStateChange()==ItemEvent.DESELECTED) { work.cancelTool(); }
 			}
 		});
 		
@@ -246,7 +246,7 @@ public class PalateUI extends JPanel{
 					zoomInButton.setSelected(false);
 					work.zoomOut(zoomOutButton);
 				}
-				if(evt.getStateChange()==ItemEvent.DESELECTED) { work.cancelZoom(); }
+				if(evt.getStateChange()==ItemEvent.DESELECTED) { work.cancelTool(); }
 			}
 		});
 		
@@ -269,7 +269,7 @@ public class PalateUI extends JPanel{
 					zoomInButton.setSelected(false);
 					work.zoom(zoomButton);
 				}
-				if(evt.getStateChange()==ItemEvent.DESELECTED) { work.cancelZoom(); }
+				if(evt.getStateChange()==ItemEvent.DESELECTED) { work.cancelTool(); }
 			}
 		});
 		
@@ -297,7 +297,7 @@ public class PalateUI extends JPanel{
 					zoomOutButton.setSelected(false);
 					zoomInButton.setSelected(false);
 					zoomButton.setSelected(false);
-					work.cancelLine();
+					work.cancelTool();
 				}
 			}
 		});

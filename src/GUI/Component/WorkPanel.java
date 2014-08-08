@@ -55,7 +55,6 @@ public class WorkPanel extends JPanel implements MouseListener, MouseMotionListe
 	private JPopupMenu popupMenu = new JPopupMenu();
 	private JMenuItem menuEdit = new JMenuItem("Edit");
 	private JMenuItem menuDelete = new JMenuItem("Delete");
-	public boolean checkMouseOverItem = false;
 	private boolean isDevicePropertiesOpen = false;
 	
 	private double scale;
@@ -66,7 +65,6 @@ public class WorkPanel extends JPanel implements MouseListener, MouseMotionListe
 	public WorkPanel()
 	{
 		super();
-		checkMouseOverItem = false;
 		seltype = SelectedType.NOTHING;
 		items = new ArrayList<JLabel>();
 		connections = new ArrayList<Connection>();
@@ -78,7 +76,7 @@ public class WorkPanel extends JPanel implements MouseListener, MouseMotionListe
 		popupMenu.add(menuDelete);
 		setFocusable(true);
 		
-		scale = 0.9;
+		scale = 1;
 		
 		menuEdit.addActionListener(new ActionListener()
 		{
@@ -226,7 +224,7 @@ public class WorkPanel extends JPanel implements MouseListener, MouseMotionListe
 	@Override
 	public void mousePressed(MouseEvent e)
 	{	
-		if (SwingUtilities.isRightMouseButton(e) && checkMouseOverItem == true)
+		if (SwingUtilities.isRightMouseButton(e))
 		{		
 			showPopup(e);
 		}
@@ -270,18 +268,22 @@ public class WorkPanel extends JPanel implements MouseListener, MouseMotionListe
 	// handles scaling
 	private void selectItem(Point e)
 	{
-		for (int crd=items.size()-1; crd>=0; crd--) //... Find card image this is in.  Check from top down.
+		//for (int crd=items.size()-1; crd>=0; crd--) //... Find card image this is in.  Check from top down.
 //		for (int crd = 0; crd < items.size(); crd++)
+		for (int crd = 0; crd < getComponents().length; crd++)
 		{
-			JLabel testCard = items.get(crd);
-			if (testCard.contains(scaleInt((int)e.getX()), scaleInt((int)e.getY())))
+			if (getComponents()[crd] instanceof JLabel)
 			{
-				//... Found, remember this card for dragging.
-				_dragFromX = scaleInt((int)e.getX()) - testCard.getX();  // how far from left
-				_dragFromY = scaleInt((int)e.getY()) - testCard.getY();  // how far from top
-				selected = testCard;  // Remember what we're dragging.
-				break;	
-			}	
+				JLabel testCard = (JLabel)getComponents()[crd];//items.get(crd);
+				if (testCard.contains(scaleInt((int)e.getX()), scaleInt((int)e.getY())))
+				{
+					//... Found, remember this card for dragging.
+					_dragFromX = scaleInt((int)e.getX()) - testCard.getX();  // how far from left
+					_dragFromY = scaleInt((int)e.getY()) - testCard.getY();  // how far from top
+					selected = testCard;  // Remember what we're dragging.
+					break;	
+				}
+			}
 		}
 	}
 	
@@ -328,22 +330,20 @@ public class WorkPanel extends JPanel implements MouseListener, MouseMotionListe
 	public void mouseMoved(MouseEvent e) {
 		if (seltype == SelectedType.NOTHING)
 		{
-			if (mouseOver != null)
-				{
-					checkMouseOverItem = true;
-					if (!mouseOver.contains(scaleInt(e.getX()), scaleInt(e.getY())));
-					{
-						invalidateMouseOver();
-					}
-				}
+			if (mouseOver != null && !mouseOver.contains(scaleInt(e.getX()), scaleInt(e.getY())))
+			{
+				invalidateMouseOver();
+			}
 			if (selected == null && mouseOver == null)
-				checkMouseOverItem = false;
-			for (JLabel j : items)
-				if (j.contains(scaleInt(e.getX()), scaleInt(e.getY())) && mouseOver ==  null)
+			{
+				selectItem(e.getPoint());
+				if (selected != null)
 				{
-					doMouseOver(j);
-					break;
+					_initX = _dragFromX;
+					_initY = _dragFromY;
+					doMouseOver();
 				}
+			}
 		}
 		if (seltype == SelectedType.DEVICE)
 			if (selected != null)
@@ -355,16 +355,28 @@ public class WorkPanel extends JPanel implements MouseListener, MouseMotionListe
 		repaint();
 	}
 	
-	private void doMouseOver(JLabel j)
+	private void doMouseOver()
 	{
-		mouseOver = j;
-		devtip = new DeviceToolTip(j.getText(), "Device");
-		devtip.setLocation(j.getMiddleRightOfIcon());
-		devtip.Add();
+		mouseOver = selected;
+		devtip = new DeviceToolTip(selected.getText(), "Device");
 		devtip.Add();
 		devtip.refreshSize();
+		
+        int newX = (int)selected.getX() + _initX;
+        int newY = (int)selected.getBottomRightOfIcon().getY();// + _initY;
+        
+        //--- Don't move the image off the screen sides
+        newX = Math.max(newX, 0);
+        newX = Math.min(newX, scaleInt(getParent().getWidth()) - devtip.getWidth() - selected.getWidth());
+        
+        //--- Don't move the image off top or bottom
+        newY = Math.max(newY, 0);
+        newY = Math.min(newY, scaleInt(getParent().getHeight()) - devtip.getHeight() - selected.getHeight());
+		
+		devtip.setLocation(newX, newY);
 		add(devtip, 0);
 		devtip.revalidate();
+		selected = null;
 	}
 	
 	private void invalidateMouseOver()
@@ -399,11 +411,11 @@ public class WorkPanel extends JPanel implements MouseListener, MouseMotionListe
 		}
 	}
 	
-	//handle the scaling
+	// apparently no need to scale
 	private void showPopup(MouseEvent e)
 	{
 		selectItem(e.getPoint());
-		popupMenu.show(e.getComponent(), scaleInt(e.getX()), scaleInt(e.getY()));
+		popupMenu.show(e.getComponent(), e.getX(), e.getY());
 	}
 	
 	public void keyPressed(KeyEvent key)
@@ -437,13 +449,13 @@ public class WorkPanel extends JPanel implements MouseListener, MouseMotionListe
 	private void scaleOrigin() { scale = 1; cancelTool(); }
 	private void scaleMinus() { 
 		if (scale > 0.8)
-			scale -= 0.05;
+			scale -= 0.02;
 		else
 			cancelTool();
 	}
 	private void scalePlus() { 
 		if (scale < 1.2) 
-			scale += 0.05;
+			scale += 0.02;
 		else
 			cancelTool();
 	}
@@ -455,17 +467,19 @@ public class WorkPanel extends JPanel implements MouseListener, MouseMotionListe
 		int newY = scaleInt((int)t.getY());
 
         //--- Don't move focus off the screen sides
-        newX = Math.max(newX, 1024 / 2);
-        newX = Math.min(newX, getWidth() / 2);
+        newX = Math.max(newX, 0);
+        newX = Math.min(newX, scaleInt(getParent().getWidth()) / 2);
         
         //--- Don't move focus off top or bottom
-        newY = Math.max(newY, 720 / 2);
-        newY = Math.min(newY, getHeight() / 2);
+        newY = Math.max(newY, 0);
+        newY = Math.min(newY, scaleInt(getParent().getHeight()) / 2);
 		
 		return new Point(newX, newY);
 	}
 	
 	private int scaleInt(int i)
 	{ return (int)Math.round(i / scale); }
+	private int unscaleInt(int i)
+	{ return (int)Math.round(i * scale); }
 
 }

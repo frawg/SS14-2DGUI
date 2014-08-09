@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<PackageAnalysis>
+    <Package name="Globals" x="218" y="189">
+        <DependencyLink destination="Nodes"/>
+    </Package>
+    <Package name="GUI" x="87" y="30">
+        <DependencyLink destination="Nodes"/>
+        <DependencyLink destination="GUI.Component"/>
+    </Package>
+    <Package name="GUI.Component" x="306" y="233">
+        <DependencyLink destination="Nodes"/>
+        <DependencyLink destination="GUI.Component.Labels"/>
+        <DependencyLink destination="GUI.Component.Edit"/>
+    </Package>
+    <Package name="GUI.Component.Edit" x="299" y="315">
+        <DependencyLink destination="GUI.Component.Labels"/>
+        <DependencyLink destination="GUI.Component"/>
+    </Package>
+    <Package name="GUI.Component.Labels" x="543" y="252"/>
+    <Package name="Network" x="256" y="378"/>
+    <Package name="Nodes" x="81" y="194">
+        <DependencyLink destination="Network"/>
+    </Package>
+    <Package name="Packets" x="74" y="318"/>
+</PackageAnalysis>

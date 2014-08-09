@@ -1,0 +1,516 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ClassDiagram>
+    <Class name="Globals.Globals.Type" x="871" y="501">
+        <AttributesDisplayFilter public-accepted="true"
+            private-accepted="true" protected-accepted="true"
+            default-accepted="true" static-accepted="false"/>
+        <MethodDisplayFilter public-accepted="true"
+            private-accepted="false" protected-accepted="false"
+            default-accepted="false" static-accepted="false"
+            accessors-accepted="false" constructors-accepted="false"/>
+    </Class>
+    <Class name="Nodes.ROUTER" x="1497" y="411">
+        <AttributesDisplayFilter public-accepted="true"
+            private-accepted="true" protected-accepted="true"
+            default-accepted="true" static-accepted="false"/>
+        <MethodDisplayFilter public-accepted="true"
+            private-accepted="false" protected-accepted="false"
+            default-accepted="false" static-accepted="false"
+            accessors-accepted="false" constructors-accepted="false"/>
+        <Association destinationClassName="Network.IPInterface"
+            endpointName="ipInterface" kind="Simple"/>
+        <Association destinationClassName="Globals.Globals.STATUS"
+            endpointName="status" kind="Simple"/>
+    </Class>
+    <Class name="Packets.MACPacket" x="380" y="950">
+        <AttributesDisplayFilter public-accepted="true"
+            private-accepted="true" protected-accepted="true"
+            default-accepted="true" static-accepted="false"/>
+        <MethodDisplayFilter public-accepted="true"
+            private-accepted="false" protected-accepted="false"
+            default-accepted="false" static-accepted="false"
+            accessors-accepted="false" constructors-accepted="false"/>
+        <Association destinationClassName="Packets.IPPacket"
+            endpointName="ipPacket" kind="Simple"/>
+    </Class>
+    <Class name="Network.NetworkOperations" x="64" y="663">
+        <AttributesDisplayFilter public-accepted="true"
+            private-accepted="true" protected-accepted="true"
+            default-accepted="true" static-accepted="false"/>
+        <MethodDisplayFilter public-accepted="true"
+            private-accepted="false" protected-accepted="false"
+            default-accepted="false" static-accepted="false"
+            accessors-accepted="false" constructors-accepted="false"/>
+    </Class>
+    <Class name="GUI.Component.WorkAreaUI" x="581" y="-5">
+        <AttributesDisplayFilter public-accepted="true"
+            private-accepted="true" protected-accepted="true"
+            default-accepted="true" static-accepted="false"/>
+        <MethodDisplayFilter public-accepted="true"
+            private-accepted="false" protected-accepted="false"
+            default-accepted="false" static-accepted="false"
+            accessors-accepted="false" constructors-accepted="false"/>
+        <Association destinationClassName="GUI.Component.WorkPanel"
+            endpointName="work" kind="Simple"/>
+        <Communication destinationClassName="GUI.Component.WorkPanel"/>
+    </Class>
+    <Class name="Nodes.COMPUTER" x="1125" y="727">
+        <AttributesDisplayFilter public-accepted="true"
+            private-accepted="true" protected-accepted="true"
+            default-accepted="true" static-accepted="false"/>
+        <MethodDisplayFilter public-accepted="true"
+            private-accepted="false" protected-accepted="false"
+            default-accepted="false" static-accepted="false"
+            accessors-accepted="false" constructors-accepted="false"/>
+        <Association destinationClassName="Network.IPInterface"
+            endpointName="ipInterface" kind="Simple"/>
+        <Association destinationClassName="Globals.Globals.STATUS"
+            endpointName="status" kind="Simple"/>
+    </Class>
+    <Class name="GUI.Component.DeviceToolTipComputer" x="128" y="535">
+        <AttributesDisplayFilter public-accepted="true"
+            private-accepted="true" protected-accepted="true"
+            default-accepted="true" static-accepted="false"/>
+        <MethodDisplayFilter public-accepted="true"
+            private-accepted="false" protected-accepted="false"
+            default-accepted="false" static-accepted="false"
+            accessors-accepted="false" constructors-accepted="false"/>
+        <Association destinationClassName="GUI.Component.Labels.JLabel"
+            endpointName="hostname" kind="Simple"/>
+        <Association
+            destinationClassName="GUI.Component.Labels.ToolTipPortRow"
+            endpointName="header" kind="Simple"/>
+        <Communication destinationClassName="Nodes.COMPUTER"/>
+    </Class>
+    <Class name="GUI.Component.Edit.ComputerProperties" x="861" y="148">
+        <AttributesDisplayFilter public-accepted="true"
+            private-accepted="true" protected-accepted="true"
+            default-accepted="true" static-accepted="false"/>
+        <MethodDisplayFilter public-accepted="true"
+            private-accepted="false" protected-accepted="false"
+            default-accepted="false" static-accepted="false"
+            accessors-accepted="false" constructors-accepted="false"/>
+        <Association destinationClassName="GUI.Component.Labels.JLabel"
+            endpointName="jlHostName" kind="Simple"/>
+        <Association destinationClassName="GUI.Component.Labels.JLabel"
+            endpointName="jlIPV4" kind="Simple"/>
+    </Class>
+    <Class name="Nodes.LINK" x="1444" y="755">
+        <AttributesDisplayFilter public-accepted="true"
+            private-accepted="true" protected-accepted="true"
+            default-accepted="true" static-accepted="false"/>
+        <MethodDisplayFilter public-accepted="true"
+            private-accepted="false" protected-accepted="false"
+            default-accepted="false" static-accepted="false"
+            accessors-accepted="false" constructors-accepted="false"/>
+        <Association destinationClassName="Globals.Globals.STATUS"
+            endpointName="status" kind="Simple"/>
+        <Communication destinationClassName="Globals.Parser"/>
+    </Class>
+    <Class name="Nodes.HUB.STATUS" x="887" y="907">
+        <AttributesDisplayFilter public-accepted="true"
+            private-accepted="true" protected-accepted="true"
+            default-accepted="true" static-accepted="false"/>
+        <MethodDisplayFilter public-accepted="true"
+            private-accepted="false" protected-accepted="false"
+            default-accepted="false" static-accepted="false"
+            accessors-accepted="false" constructors-accepted="false"/>
+    </Class>
+    <Class name="GUI.Component.Labels.Connection" x="1282" y="529">
+        <AttributesDisplayFilter public-accepted="true"
+            private-accepted="true" protected-accepted="true"
+            default-accepted="true" static-accepted="false"/>
+        <MethodDisplayFilter public-accepted="true"
+            private-accepted="false" protected-accepted="false"
+            default-accepted="false" static-accepted="false"
+            accessors-accepted="false" constructors-accepted="false"/>
+        <Association destinationClassName="GUI.Component.Labels.JLabel"
+            endpointName="jlStart" kind="Simple"/>
+        <Communication destinationClassName="GUI.Component.Labels.JLabel"/>
+    </Class>
+    <Class name="Globals.Element" x="1170" y="53">
+        <AttributesDisplayFilter public-accepted="true"
+            private-accepted="true" protected-accepted="true"
+            default-accepted="true" static-accepted="false"/>
+        <MethodDisplayFilter public-accepted="true"
+            private-accepted="false" protected-accepted="false"
+            default-accepted="false" static-accepted="false"
+            accessors-accepted="false" constructors-accepted="false"/>
+        <Association destinationClassName="Globals.Globals.Type"
+            endpointName="type" kind="Simple"/>
+    </Class>
+    <Class name="Nodes.SWITCH" x="1476" y="284">
+        <AttributesDisplayFilter public-accepted="true"
+            private-accepted="true" protected-accepted="true"
+            default-accepted="true" static-accepted="false"/>
+        <MethodDisplayFilter public-accepted="true"
+            private-accepted="false" protected-accepted="false"
+            default-accepted="false" static-accepted="false"
+            accessors-accepted="false" constructors-accepted="false"/>
+        <Association destinationClassName="Globals.Globals.STATUS"
+            endpointName="status" kind="Simple"/>
+        <Communication destinationClassName="Globals.Parser"/>
+    </Class>
+    <Class name="GUI.Component.DeviceProperties" x="1235" y="857">
+        <AttributesDisplayFilter public-accepted="true"
+            private-accepted="true" protected-accepted="true"
+            default-accepted="true" static-accepted="false"/>
+        <MethodDisplayFilter public-accepted="true"
+            private-accepted="false" protected-accepted="false"
+            default-accepted="false" static-accepted="false"
+            accessors-accepted="false" constructors-accepted="false"/>
+        <Association destinationClassName="GUI.Component.Labels.JLabel"
+            endpointName="jlHostName" kind="Simple"/>
+        <Association destinationClassName="GUI.Component.Labels.JLabel"
+            endpointName="jlIPV4" kind="Simple"/>
+    </Class>
+    <Class name="GUI.Component.PDUPanel" x="13" y="203">
+        <AttributesDisplayFilter public-accepted="true"
+            private-accepted="true" protected-accepted="true"
+            default-accepted="true" static-accepted="false"/>
+        <MethodDisplayFilter public-accepted="true"
+            private-accepted="false" protected-accepted="false"
+            default-accepted="false" static-accepted="false"
+            accessors-accepted="false" constructors-accepted="false"/>
+    </Class>
+    <Class name="Globals.Parser" x="204" y="887">
+        <AttributesDisplayFilter public-accepted="true"
+            private-accepted="true" protected-accepted="true"
+            default-accepted="true" static-accepted="false"/>
+        <MethodDisplayFilter public-accepted="true"
+            private-accepted="false" protected-accepted="false"
+            default-accepted="false" static-accepted="false"
+            accessors-accepted="false" constructors-accepted="false"/>
+        <Communication destinationClassName="Nodes.ROUTER"/>
+        <Communication destinationClassName="Nodes.COMPUTER"/>
+        <Communication destinationClassName="Nodes.SWITCH"/>
+        <Communication destinationClassName="Nodes.HUB"/>
+    </Class>
+    <Class name="GUI.Component.Labels.JLabel" x="701" y="746">
+        <AttributesDisplayFilter public-accepted="true"
+            private-accepted="true" protected-accepted="true"
+            default-accepted="true" static-accepted="false"/>
+        <MethodDisplayFilter public-accepted="true"
+            private-accepted="false" protected-accepted="false"
+            default-accepted="false" static-accepted="false"
+            accessors-accepted="false" constructors-accepted="false"/>
+        <Association destinationClassName="Globals.Globals.Type"
+            endpointName="type" kind="Simple"/>
+    </Class>
+    <Class name="GUI.Component.PalateUI" x="329" y="71">
+        <AttributesDisplayFilter public-accepted="true"
+            private-accepted="true" protected-accepted="true"
+            default-accepted="true" static-accepted="false"/>
+        <MethodDisplayFilter public-accepted="true"
+            private-accepted="false" protected-accepted="false"
+            default-accepted="false" static-accepted="false"
+            accessors-accepted="false" constructors-accepted="false"/>
+        <Association destinationClassName="GUI.Component.WorkAreaUI"
+            endpointName="work" kind="Simple"/>
+        <Association
+            destinationClassName="GUI.Component.Labels.JCustomBtnLabel"
+            endpointName="hubLabel" kind="Simple"/>
+    </Class>
+    <Class name="Globals.Globals" x="944" y="316">
+        <AttributesDisplayFilter public-accepted="true"
+            private-accepted="true" protected-accepted="true"
+            default-accepted="true" static-accepted="false"/>
+        <MethodDisplayFilter public-accepted="true"
+            private-accepted="false" protected-accepted="false"
+            default-accepted="false" static-accepted="false"
+            accessors-accepted="false" constructors-accepted="false"/>
+        <Association destinationClassName="Globals.Globals.Type"
+            endpointName="lastSelectedType" kind="Simple"/>
+        <Association destinationClassName="Nodes.ROUTER"
+            endpointName="routerList" kind="Simple"/>
+        <Association destinationClassName="Nodes.COMPUTER"
+            endpointName="computerList" kind="Simple"/>
+        <Association destinationClassName="Nodes.LINK"
+            endpointName="linkList" kind="Simple"/>
+        <Association destinationClassName="Nodes.HUB"
+            endpointName="hubList" kind="Simple"/>
+        <Association destinationClassName="Nodes.SWITCH"
+            endpointName="switchList" kind="Simple"/>
+    </Class>
+    <Class name="Packets.IPPacket" x="383" y="787">
+        <AttributesDisplayFilter public-accepted="true"
+            private-accepted="true" protected-accepted="true"
+            default-accepted="true" static-accepted="false"/>
+        <MethodDisplayFilter public-accepted="true"
+            private-accepted="false" protected-accepted="false"
+            default-accepted="false" static-accepted="false"
+            accessors-accepted="false" constructors-accepted="false"/>
+    </Class>
+    <Class name="Globals.Globals.STATUS" x="1027" y="202">
+        <AttributesDisplayFilter public-accepted="true"
+            private-accepted="true" protected-accepted="true"
+            default-accepted="true" static-accepted="false"/>
+        <MethodDisplayFilter public-accepted="true"
+            private-accepted="false" protected-accepted="false"
+            default-accepted="false" static-accepted="false"
+            accessors-accepted="false" constructors-accepted="false"/>
+    </Class>
+    <Class name="GUI.Component.LoginUI" x="105" y="760">
+        <AttributesDisplayFilter public-accepted="true"
+            private-accepted="true" protected-accepted="true"
+            default-accepted="true" static-accepted="false"/>
+        <MethodDisplayFilter public-accepted="true"
+            private-accepted="false" protected-accepted="false"
+            default-accepted="false" static-accepted="false"
+            accessors-accepted="false" constructors-accepted="false"/>
+    </Class>
+    <Class name="Network.IPInterface" x="356" y="689">
+        <AttributesDisplayFilter public-accepted="true"
+            private-accepted="true" protected-accepted="true"
+            default-accepted="true" static-accepted="false"/>
+        <MethodDisplayFilter public-accepted="true"
+            private-accepted="false" protected-accepted="false"
+            default-accepted="false" static-accepted="false"
+            accessors-accepted="false" constructors-accepted="false"/>
+        <Communication destinationClassName="Globals.Parser"/>
+    </Class>
+    <Class name="GUI.Component.Labels.StatisticRow" x="11" y="788">
+        <AttributesDisplayFilter public-accepted="true"
+            private-accepted="true" protected-accepted="true"
+            default-accepted="true" static-accepted="false"/>
+        <MethodDisplayFilter public-accepted="true"
+            private-accepted="false" protected-accepted="false"
+            default-accepted="false" static-accepted="false"
+            accessors-accepted="false" constructors-accepted="false"/>
+    </Class>
+    <Class name="GUI.GUI" x="20" y="18">
+        <AttributesDisplayFilter public-accepted="true"
+            private-accepted="true" protected-accepted="true"
+            default-accepted="true" static-accepted="false"/>
+        <MethodDisplayFilter public-accepted="true"
+            private-accepted="false" protected-accepted="false"
+            default-accepted="false" static-accepted="false"
+            accessors-accepted="false" constructors-accepted="false"/>
+        <Association destinationClassName="GUI.Component.WorkAreaUI"
+            endpointName="work" kind="Simple"/>
+        <Association destinationClassName="GUI.Component.PDUPanel"
+            endpointName="stats" kind="Simple"/>
+        <Association destinationClassName="GUI.Component.MenuBarUI"
+            endpointName="menu" kind="Simple"/>
+        <Association destinationClassName="GUI.Component.PalateUI"
+            endpointName="palate" kind="Simple"/>
+    </Class>
+    <Class name="GUI.Component.DeviceToolTipSwitch" x="1032" y="565">
+        <AttributesDisplayFilter public-accepted="true"
+            private-accepted="true" protected-accepted="true"
+            default-accepted="true" static-accepted="false"/>
+        <MethodDisplayFilter public-accepted="true"
+            private-accepted="false" protected-accepted="false"
+            default-accepted="false" static-accepted="false"
+            accessors-accepted="false" constructors-accepted="false"/>
+        <Association destinationClassName="GUI.Component.Labels.JLabel"
+            endpointName="hostname" kind="Simple"/>
+        <Association
+            destinationClassName="GUI.Component.Labels.ToolTipPortRow"
+            endpointName="header" kind="Simple"/>
+        <Communication destinationClassName="Nodes.SWITCH"/>
+    </Class>
+    <Class name="GUI.Component.MenuBarUI.ButtonListener" x="9" y="881">
+        <AttributesDisplayFilter public-accepted="true"
+            private-accepted="true" protected-accepted="true"
+            default-accepted="true" static-accepted="false"/>
+        <MethodDisplayFilter public-accepted="true"
+            private-accepted="false" protected-accepted="false"
+            default-accepted="false" static-accepted="false"
+            accessors-accepted="false" constructors-accepted="false"/>
+        <Communication destinationClassName="GUI.Component.MenuBarUI"/>
+    </Class>
+    <Class name="GUI.Component.PingBox" x="249" y="784">
+        <AttributesDisplayFilter public-accepted="true"
+            private-accepted="true" protected-accepted="true"
+            default-accepted="true" static-accepted="false"/>
+        <MethodDisplayFilter public-accepted="true"
+            private-accepted="false" protected-accepted="false"
+            default-accepted="false" static-accepted="false"
+            accessors-accepted="false" constructors-accepted="false"/>
+    </Class>
+    <Class name="GUI.Component.Labels.JCustomBtnLabel" x="57" y="392">
+        <AttributesDisplayFilter public-accepted="true"
+            private-accepted="true" protected-accepted="true"
+            default-accepted="true" static-accepted="false"/>
+        <MethodDisplayFilter public-accepted="true"
+            private-accepted="false" protected-accepted="false"
+            default-accepted="false" static-accepted="false"
+            accessors-accepted="false" constructors-accepted="false"/>
+    </Class>
+    <Class name="Network.MACInterface" x="216" y="654">
+        <AttributesDisplayFilter public-accepted="true"
+            private-accepted="true" protected-accepted="true"
+            default-accepted="true" static-accepted="false"/>
+        <MethodDisplayFilter public-accepted="true"
+            private-accepted="false" protected-accepted="false"
+            default-accepted="false" static-accepted="false"
+            accessors-accepted="false" constructors-accepted="false"/>
+    </Class>
+    <Class name="Nodes.HUB" x="1099" y="900">
+        <AttributesDisplayFilter public-accepted="true"
+            private-accepted="true" protected-accepted="true"
+            default-accepted="true" static-accepted="false"/>
+        <MethodDisplayFilter public-accepted="true"
+            private-accepted="false" protected-accepted="false"
+            default-accepted="false" static-accepted="false"
+            accessors-accepted="false" constructors-accepted="false"/>
+        <Association destinationClassName="Nodes.HUB.STATUS"
+            endpointName="status" kind="Simple"/>
+        <Communication destinationClassName="Globals.Parser"/>
+    </Class>
+    <Class name="GUI.Component.WorkPanel" x="578" y="133">
+        <AttributesDisplayFilter public-accepted="true"
+            private-accepted="true" protected-accepted="true"
+            default-accepted="true" static-accepted="false"/>
+        <MethodDisplayFilter public-accepted="true"
+            private-accepted="false" protected-accepted="false"
+            default-accepted="false" static-accepted="false"
+            accessors-accepted="false" constructors-accepted="false"/>
+        <Association destinationClassName="GUI.Component.Labels.JLabel"
+            endpointName="selected" kind="Simple"/>
+        <Association
+            destinationClassName="GUI.Component.DeviceToolTipRouter"
+            endpointName="devtipRouter" kind="Simple"/>
+        <Association destinationClassName="GUI.Component.Labels.JLabel"
+            endpointName="items" kind="Simple"/>
+        <Association
+            destinationClassName="GUI.Component.DeviceToolTipSwitch"
+            endpointName="devtipSwitch" kind="Simple"/>
+        <Association
+            destinationClassName="GUI.Component.Labels.Connection"
+            endpointName="drawLine" kind="Simple"/>
+        <Association
+            destinationClassName="GUI.Component.Labels.Connection"
+            endpointName="connections" kind="Simple"/>
+        <Association
+            destinationClassName="GUI.Component.DeviceToolTipComputer"
+            endpointName="devtipComputer" kind="Simple"/>
+        <Association
+            destinationClassName="GUI.Component.WorkPanel.SelectedType"
+            endpointName="seltype" kind="Simple"/>
+        <Communication destinationClassName="Nodes.ROUTER"/>
+        <Communication destinationClassName="Nodes.COMPUTER"/>
+        <Communication destinationClassName="GUI.Component.DeviceToolTipComputer"/>
+        <Communication destinationClassName="Nodes.LINK"/>
+        <Communication destinationClassName="GUI.Component.Labels.Connection"/>
+        <Communication destinationClassName="Nodes.SWITCH"/>
+        <Communication destinationClassName="Nodes.HUB"/>
+        <Communication destinationClassName="Globals.Parser"/>
+        <Communication destinationClassName="GUI.Component.DeviceToolTipRouter"/>
+        <Communication destinationClassName="GUI.Component.DeviceToolTipSwitch"/>
+        <Communication destinationClassName="GUI.Component.Labels.JLabel"/>
+    </Class>
+    <Class name="GUI.Component.Edit.HubProperties" x="1213" y="344">
+        <AttributesDisplayFilter public-accepted="true"
+            private-accepted="true" protected-accepted="true"
+            default-accepted="true" static-accepted="false"/>
+        <MethodDisplayFilter public-accepted="true"
+            private-accepted="false" protected-accepted="false"
+            default-accepted="false" static-accepted="false"
+            accessors-accepted="false" constructors-accepted="false"/>
+        <Association destinationClassName="GUI.Component.Labels.JLabel"
+            endpointName="jlHostName" kind="Simple"/>
+        <Association destinationClassName="GUI.Component.Labels.JLabel"
+            endpointName="jlIPV4" kind="Simple"/>
+    </Class>
+    <Class name="GUI.Component.DeviceToolTipRouter" x="250" y="353">
+        <AttributesDisplayFilter public-accepted="true"
+            private-accepted="true" protected-accepted="true"
+            default-accepted="true" static-accepted="false"/>
+        <MethodDisplayFilter public-accepted="true"
+            private-accepted="false" protected-accepted="false"
+            default-accepted="false" static-accepted="false"
+            accessors-accepted="false" constructors-accepted="false"/>
+        <Association destinationClassName="GUI.Component.Labels.JLabel"
+            endpointName="hostname" kind="Simple"/>
+        <Association
+            destinationClassName="GUI.Component.Labels.ToolTipPortRow"
+            endpointName="header" kind="Simple"/>
+        <Communication destinationClassName="Nodes.ROUTER"/>
+    </Class>
+    <Class name="GUI.Component.PingBox.ButtonListener" x="9" y="944">
+        <AttributesDisplayFilter public-accepted="true"
+            private-accepted="true" protected-accepted="true"
+            default-accepted="true" static-accepted="false"/>
+        <MethodDisplayFilter public-accepted="true"
+            private-accepted="false" protected-accepted="false"
+            default-accepted="false" static-accepted="false"
+            accessors-accepted="false" constructors-accepted="false"/>
+    </Class>
+    <Class name="GUI.Component.Edit.SwitchProperties" x="582" y="906">
+        <AttributesDisplayFilter public-accepted="true"
+            private-accepted="true" protected-accepted="true"
+            default-accepted="true" static-accepted="false"/>
+        <MethodDisplayFilter public-accepted="true"
+            private-accepted="false" protected-accepted="false"
+            default-accepted="false" static-accepted="false"
+            accessors-accepted="false" constructors-accepted="false"/>
+        <Association destinationClassName="GUI.Component.Labels.JLabel"
+            endpointName="portNumbHeading" kind="Simple"/>
+        <Association destinationClassName="GUI.Component.Labels.JLabel"
+            endpointName="jlMacAddress" kind="Simple"/>
+        <Association destinationClassName="GUI.Component.Labels.JLabel"
+            endpointName="macAddressHeading" kind="Simple"/>
+        <Association destinationClassName="GUI.Component.Labels.JLabel"
+            endpointName="jlHostName" kind="Simple"/>
+    </Class>
+    <Class name="GUI.Component.MenuBarUI" x="152" y="150">
+        <AttributesDisplayFilter public-accepted="true"
+            private-accepted="true" protected-accepted="true"
+            default-accepted="true" static-accepted="false"/>
+        <MethodDisplayFilter public-accepted="true"
+            private-accepted="false" protected-accepted="false"
+            default-accepted="false" static-accepted="false"
+            accessors-accepted="false" constructors-accepted="false"/>
+        <Communication destinationClassName="GUI.Component.WorkPanel"/>
+    </Class>
+    <Class name="GUI.Component.Labels.ToolTipPortRow" x="829" y="436">
+        <AttributesDisplayFilter public-accepted="true"
+            private-accepted="true" protected-accepted="true"
+            default-accepted="true" static-accepted="false"/>
+        <MethodDisplayFilter public-accepted="true"
+            private-accepted="false" protected-accepted="false"
+            default-accepted="false" static-accepted="false"
+            accessors-accepted="false" constructors-accepted="false"/>
+        <Association destinationClassName="GUI.Component.Labels.JLabel"
+            endpointName="portname" kind="Simple"/>
+    </Class>
+    <Class name="GUI.Component.WorkPanel.SelectedType" x="788" y="-6">
+        <AttributesDisplayFilter public-accepted="true"
+            private-accepted="true" protected-accepted="true"
+            default-accepted="true" static-accepted="false"/>
+        <MethodDisplayFilter public-accepted="true"
+            private-accepted="false" protected-accepted="false"
+            default-accepted="false" static-accepted="false"
+            accessors-accepted="false" constructors-accepted="false"/>
+    </Class>
+    <Class name="GUI.Component.Edit.RouterProperties" x="470" y="564">
+        <AttributesDisplayFilter public-accepted="true"
+            private-accepted="true" protected-accepted="true"
+            default-accepted="true" static-accepted="false"/>
+        <MethodDisplayFilter public-accepted="true"
+            private-accepted="false" protected-accepted="false"
+            default-accepted="false" static-accepted="false"
+            accessors-accepted="false" constructors-accepted="false"/>
+        <Association destinationClassName="GUI.Component.Labels.JLabel"
+            endpointName="jlHostName" kind="Simple"/>
+        <Association destinationClassName="GUI.Component.Labels.JLabel"
+            endpointName="jlIPV4" kind="Simple"/>
+    </Class>
+    <Class name="GUI.Component.DeviceToolTip" x="1279" y="119">
+        <AttributesDisplayFilter public-accepted="true"
+            private-accepted="true" protected-accepted="true"
+            default-accepted="true" static-accepted="false"/>
+        <MethodDisplayFilter public-accepted="true"
+            private-accepted="false" protected-accepted="false"
+            default-accepted="false" static-accepted="false"
+            accessors-accepted="false" constructors-accepted="false"/>
+        <Association destinationClassName="GUI.Component.Labels.JLabel"
+            endpointName="hostname" kind="Simple"/>
+        <Association
+            destinationClassName="GUI.Component.Labels.ToolTipPortRow"
+            endpointName="header" kind="Simple"/>
+        <Communication destinationClassName="Nodes.COMPUTER"/>
+    </Class>
+</ClassDiagram>
